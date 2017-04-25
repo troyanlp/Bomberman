@@ -5,6 +5,9 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleParticles.h"
+
+#include "ModuleSceneMenu.h"
 #include "ModuleSceneLevel.h"
 #include "ModulePlayer.h"
 
@@ -21,8 +24,11 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(scene_menu = new ModuleSceneMenu(false));
 	modules.push_back(scene_level = new ModuleSceneLevel(false));
 	modules.push_back(player = new ModulePlayer(false));
+
+	// Modules to draw on top of game logic
 	modules.push_back(fade = new ModuleFadeToBlack());
 }
 
@@ -46,7 +52,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_level, nullptr, 3.0f);
+	fade->FadeToBlack(scene_menu, nullptr, 3.0f);
 
 	return ret;
 }

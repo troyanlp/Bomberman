@@ -11,8 +11,11 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
+
+// Game modules ---
 class ModulePlayer;
-class ModuleSceneKen;
+class ModuleSceneMenu;
+class ModuleSceneLevel;
 
 class Application
 {
@@ -32,13 +35,15 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
+
+	// Game modules ---
 	ModulePlayer* player;
+	ModuleSceneMenu* scene_menu;
 	ModuleSceneLevel* scene_level;
 
 private:
 
 	std::list<Module*> modules;
-
 };
 
 extern Application* App;

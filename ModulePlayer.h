@@ -1,9 +1,8 @@
-#ifndef __MODULEPLAYER_H__
-#define __MODULEPLAYER_H__
+#ifndef __ModulePlayer_H__
+#define __ModulePlayer_H__
 
 #include "Module.h"
 #include "Animation.h"
-#include "Globals.h"
 #include "Point.h"
 
 struct SDL_Texture;
@@ -11,7 +10,7 @@ struct SDL_Texture;
 class ModulePlayer : public Module
 {
 public:
-	ModulePlayer(bool start_enabled = true);
+	ModulePlayer(bool active = true);
 	~ModulePlayer();
 
 	bool Start();
@@ -21,12 +20,12 @@ public:
 public:
 
 	SDL_Texture* graphics = nullptr;
+	Animation* current_animation = nullptr;
 	Animation idle;
-	Animation right;
-	Animation left;
 	Animation up;
 	Animation down;
 	iPoint position;
+	bool destroyed = false;
 };
 
-#endif // __MODULEPLAYER_H__
+#endif
