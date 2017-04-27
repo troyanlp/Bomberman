@@ -21,11 +21,16 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-	Animation idle;
+	Animation idleDown;
+	Animation idleUp;
+	Animation idleLeft;
+	Animation idleRight;
 	Animation walkLeft;
 	Animation walkRight;
 	Animation walkUp;
 	Animation walkDown;
+	Animation celebrate;
+	Animation die;
 	iPoint position;
 	bool destroyed = false;
 };

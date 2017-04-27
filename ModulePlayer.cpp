@@ -13,10 +13,10 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	position.y = 100;
 	
 	// idle animation
-	idle.frames.push_back({ 113, 2, 17, 30 });
-	idle.frames.push_back({ 133, 2, 17, 30 });
-	idle.frames.push_back({ 153, 2, 17, 30 });
-	idle.speed = 0.075f;
+	idleDown.frames.push_back({ 113, 2, 17, 30 });
+	idleDown.frames.push_back({ 133, 2, 17, 30 });
+	idleDown.frames.push_back({ 153, 2, 17, 30 });
+	idleDown.speed = 0.075f;
 	
 	// walk right animation
 	walkRight.frames.push_back({ 5, 36, 17, 29 });
@@ -53,6 +53,27 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	walkDown.frames.push_back({ 87, 3, 17, 29 });
 	walkDown.frames.push_back({ 45, 3, 17, 29 });
 	walkDown.speed = 0.1f;
+
+	// celebrate animation
+	celebrate.frames.push_back({ 177, 98, 15, 29 });
+	celebrate.frames.push_back({ 195, 98, 21, 29 });
+	celebrate.frames.push_back({ 219, 98, 19, 29 });
+	celebrate.speed = 0.1f;
+
+	// die animation
+	die.frames.push_back({ 1, 135, 17, 30 });
+	die.frames.push_back({ 22, 135, 17, 30 });
+	die.frames.push_back({ 44, 135, 21, 30 });
+	die.frames.push_back({ 69, 135, 19, 30 });
+	die.frames.push_back({ 93, 135, 21, 30 });
+	die.frames.push_back({ 118, 135, 17, 30 });
+	die.frames.push_back({ 139, 135, 26, 30 });
+	die.frames.push_back({ 167, 135, 20, 30 });
+	die.frames.push_back({ 191, 135, 17, 30 });
+	die.frames.push_back({ 211, 135, 19, 30 });
+	die.speed = 0.1f;
+	die.loop = false;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -117,7 +138,7 @@ update_status ModulePlayer::Update()
 		&& App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-			current_animation = &idle;
+			current_animation = &idleDown;
 
 	// Draw everything --------------------------------------
 	if (destroyed == false)
