@@ -5,7 +5,6 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
-#include "ModuleParticles.h"
 
 #include "ModuleSceneMenu.h"
 #include "ModuleSceneLevel.h"

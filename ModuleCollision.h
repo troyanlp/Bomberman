@@ -4,19 +4,14 @@
 #include<list>
 #include "Module.h"
 
-// TODO 9: Create a matrix of game specific types of collision for early discard
-// Example: lasers should not collide with lasers but should collider with walls
-// enemy shots will collide with other enemies ? and against walls ?
-
 struct Collider
 {
 	SDL_Rect rect = { 0,0,0,0 };
 	bool to_delete = false;
 
-	// TODO 10: Add a way to notify other classes that a collision happened
 	bool collided = false;
 
-	Collider(SDL_Rect rectangle) : // expand this call if you need to
+	Collider(SDL_Rect rectangle) :
 		rect(rectangle)
 	{}
 
