@@ -4,14 +4,12 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleCollision.h"
 #include "SDL/include/SDL.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
-	// initial position of the player
-	position.x = 100;
-	position.y = 100;
-	
+
 	// idle animation
 	idleDown.frames.push_back({ 113, 2, 17, 30 });
 	idleDown.frames.push_back({ 133, 2, 17, 30 });
@@ -87,6 +85,15 @@ bool ModulePlayer::Start()
 
 	graphics = App->textures->Load("Bomberman.png");
 
+	destroyed = false;
+
+	// initial position of the player
+	position.x = 100;
+	position.y = 100;
+
+	//Set colliider
+	collider = App->collision->AddCollider({ position.x, position.y, 30, 10 });
+
 	return true;
 }
 
@@ -110,28 +117,28 @@ update_status ModulePlayer::Update()
 	{
 		position.x -= speed;
 		current_animation = &walkLeft;
-		//collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 30, 10 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
 		current_animation = &walkRight;
-		//collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 30, 10 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += speed;
 		current_animation = &walkDown;
-		//collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 30, 10 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= speed;
 		current_animation = &walkUp;
-		//collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 30, 10 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE

@@ -11,6 +11,7 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
+class ModuleCollision;
 
 // Game modules ---
 class ModulePlayer;
@@ -35,6 +36,7 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
+	ModuleCollision* collision;
 
 	// Game modules ---
 	ModulePlayer* player;

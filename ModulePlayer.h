@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Point.h"
+#include "ModuleCollision.h"
 
 struct SDL_Texture;
 
@@ -33,6 +34,7 @@ public:
 	Animation die;
 	iPoint position;
 	bool destroyed = false;
+	Collider* collider;
 };
 
 #endif
