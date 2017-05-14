@@ -151,5 +151,6 @@ update_status ModulePlayer::Update()
 	if (destroyed == false)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
 
+
 	return UPDATE_CONTINUE;
 }

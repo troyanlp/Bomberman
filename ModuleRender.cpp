@@ -107,6 +107,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
 	rect.w *= SCREEN_SIZE;
 	rect.h *= SCREEN_SIZE;
+	//rect.w = SCREEN_WIDTH * SCREEN_SIZE;
+	//rect.h = SCREEN_HEIGHT * SCREEN_SIZE;
 
 	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
 	{
