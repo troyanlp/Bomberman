@@ -46,6 +46,7 @@ typedef unsigned int uint;
 #define SCREEN_SIZE 1
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define SCREEN_CONVERT 2
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Bomberman Tribute"
