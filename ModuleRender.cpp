@@ -5,6 +5,8 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 
+//http://lazyfoo.net/SDL_tutorials/lesson06/index.php
+
 ModuleRender::ModuleRender()
 {
 	camera.x = camera.y = 0;
@@ -90,8 +92,10 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y,const SDL_Rect* section, float speed)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y,const SDL_Rect* section, const SDL_Rect* destSize, float speed)
 {
+	SDL_Rect dest = { 0, 0, 100, 100 };
+
 	bool ret = true;
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
@@ -112,7 +116,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y,const SDL_Rect* secti
 	//rect.w = SCREEN_WIDTH * SCREEN_SIZE;
 	//rect.h = SCREEN_HEIGHT * SCREEN_SIZE;
 
-	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
+	if(SDL_RenderCopy(renderer, texture, section, destSize) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

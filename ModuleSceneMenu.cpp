@@ -47,7 +47,8 @@ update_status ModuleSceneMenu::Update()
 	texr.y = 0;
 	texr.w = SCREEN_WIDTH; 
 	texr.h = SCREEN_HEIGHT;
-	App->renderer->Blit(background, 0, 0, &texr);
+	SDL_Rect dest = { 0, 0, 800, 400 };
+	App->renderer->Blit(background, 0, 0, &texr, &dest);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->fade->isFading() == false)
 	{

@@ -92,7 +92,7 @@ bool ModulePlayer::Start()
 	position.y = 100;
 
 	//Set colliider
-	collider = App->collision->AddCollider({ position.x, position.y, 30, 10 });
+	collider = App->collision->AddCollider({ position.x, position.y, 17, 30 });
 
 	return true;
 }
@@ -112,33 +112,32 @@ update_status ModulePlayer::Update()
 {
 	// Player movement
 	int speed = 1;
-
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
 		current_animation = &walkLeft;
-		collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 15, 28 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
 		current_animation = &walkRight;
-		collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 17, 29 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		position.y += speed;
 		current_animation = &walkDown;
-		collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 15, 28 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		position.y -= speed;
 		current_animation = &walkUp;
-		collider->rect = { position.x, position.y, 30, 10 };
+		collider->rect = { position.x, position.y, 17, 26 };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
@@ -149,7 +148,7 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	if (destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),&(collider->rect));
 
 
 	return UPDATE_CONTINUE;
