@@ -18,7 +18,18 @@ bool ModuleSceneLevel::Start()
 {
 	LOG("Loading space scene");
 	
-	background = App->textures->Load("background.png");
+	graphics = App->textures->Load("background.png");
+
+	//Set up background rect
+	background.h = SCREEN_HEIGHT;
+	background.w = SCREEN_WIDTH;
+	background.x = 0;
+	background.y = 100;
+	//Set up hud rect
+	hud.h = 100;
+	hud.w = SCREEN_WIDTH;
+	hud.x = 0;
+	hud.y = 0;
 
 	App->player->Enable();
 	//App->particles->Enable();
@@ -28,6 +39,8 @@ bool ModuleSceneLevel::Start()
 	
 	//create some colliders for the walls
 
+	
+
 	return true;
 }
 
@@ -36,12 +49,23 @@ bool ModuleSceneLevel::CleanUp()
 {
 	LOG("Unloading space scene");
 
- 	App->textures->Unload(background);
+ 	App->textures->Unload(graphics);
 	App->player->Disable();
 	//App->collision->Disable();
 	//App->particles->Disable();
 	
 	return true;
+}
+
+// Update: draw background
+update_status ModuleSceneLevel::PreUpdate()
+{
+	
+	//Draw hud background color
+	App->renderer->DrawQuad(hud, 136, 136, 136, 255, true);
+	//Draw background floor color
+	App->renderer->DrawQuad(background, 64, 120, 16, 255, true);
+	return UPDATE_CONTINUE;
 }
 
 // Update: draw background
@@ -55,7 +79,7 @@ update_status ModuleSceneLevel::Update()
 	//App->renderer->camera.x -= 3;
 	
 	// Draw everything --------------------------------------
-	App->renderer->Blit(background, 0, 0, NULL, NULL);
+	App->renderer->Blit(graphics, 0, 0, NULL, NULL);
 	
 	return UPDATE_CONTINUE;
 }

@@ -12,12 +12,15 @@ public:
 	~ModuleSceneLevel();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 
 public:
-	
-	SDL_Texture* background = nullptr;
+	SDL_Texture* graphics = nullptr;
+private:
+	SDL_Rect background;
+	SDL_Rect hud;
 };
 
 #endif // __MODULESCENELEVEL_H__

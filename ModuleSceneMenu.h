@@ -12,13 +12,15 @@ public:
 	~ModuleSceneMenu();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 
 public:
-	
-	SDL_Texture* background = nullptr;
+	SDL_Texture* graphics = nullptr;
 	uint fx = 0;
+private:
+	SDL_Rect background;
 };
 
 #endif // __MODULESCENEMENU_H__
