@@ -18,6 +18,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+private:
+	float playerSpeed = 1.5;
 public:
 
 	SDL_Texture* graphics = nullptr;

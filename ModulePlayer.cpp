@@ -88,8 +88,8 @@ bool ModulePlayer::Start()
 	destroyed = false;
 
 	// initial position of the player
-	position.x = 100;
-	position.y = 100;
+	position.x = 50;
+	position.y = 150;
 
 	//Set colliider
 	collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
@@ -111,31 +111,30 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	// Player movement
-	int speed = 1;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		position.x -= speed;
+		position.x -= playerSpeed;
 		current_animation = &walkLeft;
 		collider->rect = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT};
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		position.x += speed;
+		position.x += playerSpeed;
 		current_animation = &walkRight;
 		collider->rect = { position.x, position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed;
+		position.y += playerSpeed;
 		current_animation = &walkDown;
 		collider->rect = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		position.y -= speed;
+		position.y -= playerSpeed;
 		current_animation = &walkUp;
 		collider->rect = { position.x, position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
 	}

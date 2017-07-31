@@ -58,9 +58,7 @@ update_status ModuleSceneMenu::PreUpdate()
 // Update: draw background
 update_status ModuleSceneMenu::Update()
 {
-	
-
-	//Drar Bomberman logo
+	//Draw Bomberman logo
 	SDL_Rect texr; 
 	texr.x = 0;
 	texr.y = 0;

@@ -44,7 +44,7 @@ typedef unsigned int uint;
 
 // Configuration -----------
 #define SCREEN_SIZE 1
-#define SCREEN_WIDTH 800
+#define SCREEN_WIDTH 750
 #define SCREEN_HEIGHT 600
 #define SCREEN_CONVERT 2
 #define FULLSCREEN false
