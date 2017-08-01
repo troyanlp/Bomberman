@@ -6,6 +6,7 @@
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "ModuleSceneLevel.h"
+//#include "Object.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -56,7 +57,8 @@ bool ModuleSceneLevel::Start()
 	//App->audio->PlayMusic("stage1.ogg", 1.0f);
 	
 	//create some colliders for the walls
-
+	CreateExternalBlocks();
+	CreateBlocks();
 	
 
 	return true;
@@ -69,6 +71,13 @@ bool ModuleSceneLevel::CleanUp()
 
  	App->textures->Unload(graphics);
 	App->player->Disable();
+	int count = 0;
+	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); ++it) {
+		count++;
+		LOG("%d",count);
+		RELEASE(*it);
+	}
+	objects.clear();
 	//App->collision->Disable();
 	//App->particles->Disable();
 	
@@ -101,6 +110,40 @@ update_status ModuleSceneLevel::Update()
 	DrawBricks();
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleSceneLevel::CreateExternalBlocks()
+{
+	//Left
+	for (int i = 0; i < 11; i++) {
+		Object *obj = new Object(Object::objectType::BLOCK, 0, 50 + (50 * i));
+		objects.push_back(obj);
+	}
+	//Up
+	for (int i = 1; i <= 14; i++) {
+		Object *obj = new Object(Object::objectType::BLOCK, 0 + (50 * i), 50);
+		objects.push_back(obj);
+	}
+	//Right
+	for (int i = 1; i <= 10; i++) {
+		Object *obj = new Object(Object::objectType::BLOCK, 700, 50 + (50 * i));
+		objects.push_back(obj);
+	}
+	//Down
+	for (int i = 1; i <= 13; i++) {
+		Object *obj = new Object(Object::objectType::BLOCK, 0 + (50 * i), 550);
+		objects.push_back(obj);
+	}
+}
+
+void ModuleSceneLevel::CreateBlocks()
+{
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 6; j++) {
+			Object *obj = new Object(Object::objectType::BLOCK, 100 + (100 * j), 150 + (100 * i));
+			objects.push_back(obj);
+		}
+	}
 }
 
 void ModuleSceneLevel::DrawExternalBlocks()

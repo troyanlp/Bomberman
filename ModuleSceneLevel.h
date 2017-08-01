@@ -2,6 +2,7 @@
 #define __MODULESCENELEVEL_H__
 
 #include "Module.h"
+#include "Object.h"
 
 struct SDL_Texture;
 
@@ -17,6 +18,8 @@ public:
 	
 	bool CleanUp();
 private:
+	void CreateExternalBlocks();
+	void CreateBlocks();
 	void DrawExternalBlocks();
 	void DrawBlocks();
 	void DrawBricks();
@@ -26,6 +29,7 @@ public:
 	SDL_Rect externalBlock;
 	SDL_Rect block;
 	SDL_Rect brick;
+	std::list<Object*> objects;
 
 private:
 	SDL_Rect background;
