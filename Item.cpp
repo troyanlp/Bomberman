@@ -4,7 +4,7 @@
 
 Item::Item()
 {
-	type = objectType::ITEM;
+	type = EntityType::ITEM;
 }
 
 

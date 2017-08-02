@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
+#include "ModuleBomb.h"
 #include "SDL/include/SDL.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
@@ -109,7 +110,7 @@ bool ModulePlayer::CleanUp()
 
 // Update
 update_status ModulePlayer::Update()
-{
+{	
 	// Player movement
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
@@ -130,6 +131,11 @@ update_status ModulePlayer::Update()
 		position.y += playerSpeed;
 		current_animation = &walkDown;
 		collider->rect = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		App->bombs->AddBomb(position.x, position.y);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)

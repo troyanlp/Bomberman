@@ -4,7 +4,7 @@
 
 Block::Block()
 {
-	type = objectType::BLOCK;
+	type = EntityType::BLOCK;
 }
 
 

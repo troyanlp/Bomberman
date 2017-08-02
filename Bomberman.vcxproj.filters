@@ -67,18 +67,25 @@
     <ClInclude Include="ModuleCollision.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Game Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
-      <Filter>Game Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
       <Filter>Game Classes</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Game Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleBomb.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -120,17 +127,26 @@
     <ClCompile Include="ModuleCollision.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Game Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Block.cpp">
-      <Filter>Game Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
       <Filter>Game Classes</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleBomb.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

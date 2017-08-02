@@ -1,9 +1,9 @@
 #ifndef __BLOCK_H__
 #define __BLOCK_H__
 
-#include "Object.h"
+#include "Entity.h"
 class Block :
-	public Object
+	public Entity
 {
 public:
 	Block();

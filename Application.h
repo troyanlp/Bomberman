@@ -17,6 +17,7 @@ class ModuleCollision;
 class ModulePlayer;
 class ModuleSceneMenu;
 class ModuleSceneLevel;
+class ModuleBomb;
 
 class Application
 {
@@ -42,6 +43,7 @@ public:
 	ModulePlayer* player;
 	ModuleSceneMenu* scene_menu;
 	ModuleSceneLevel* scene_level;
+	ModuleBomb* bombs;
 
 private:
 

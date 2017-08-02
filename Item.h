@@ -1,9 +1,9 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include "Object.h"
+#include "Entity.h"
 class Item :
-	public Object
+	public Entity
 {
 public:
 	Item();

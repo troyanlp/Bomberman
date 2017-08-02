@@ -1,12 +1,12 @@
-#include "Object.h"
+#include "Entity.h"
 #include "Application.h"
 #include "ModuleCollision.h"
 
-Object::Object()
+Entity::Entity()
 {
 }
 
-Object::Object(objectType type, int x, int y) : type(type)
+Entity::Entity(EntityType type, int x, int y) : type(type)
 {
 	position.x = x;
 	position.y = y;
@@ -15,6 +15,10 @@ Object::Object(objectType type, int x, int y) : type(type)
 
 
 
-Object::~Object()
+Entity::~Entity()
 {	
+}
+
+void Entity::Draw()
+{
 }

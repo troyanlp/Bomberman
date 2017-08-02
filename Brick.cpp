@@ -4,7 +4,6 @@
 
 Brick::Brick()
 {
-	type = objectType::BRICK;
 }
 
 

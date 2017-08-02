@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity.h"
-class Brick :
+class Player :
 	public Entity
 {
 public:
-	Brick();
-	~Brick();
+	Player();
+	~Player();
 };
 

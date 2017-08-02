@@ -2,7 +2,7 @@
 #define __MODULESCENELEVEL_H__
 
 #include "Module.h"
-#include "Object.h"
+#include "Entity.h"
 
 struct SDL_Texture;
 
@@ -29,7 +29,7 @@ public:
 	SDL_Rect externalBlock;
 	SDL_Rect block;
 	SDL_Rect brick;
-	std::list<Object*> objects;
+	std::list<Entity*> Entitys;
 
 private:
 	SDL_Rect background;

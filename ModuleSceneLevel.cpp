@@ -6,7 +6,8 @@
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "ModuleSceneLevel.h"
-//#include "Object.h"
+#include "ModuleBomb.h"
+#include "Entity.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -51,6 +52,7 @@ bool ModuleSceneLevel::Start()
 	brick.h = 15;
 
 	App->player->Enable();
+	App->bombs->Enable();
 	//App->particles->Enable();
 	//App->collision->Enable();
 
@@ -71,13 +73,14 @@ bool ModuleSceneLevel::CleanUp()
 
  	App->textures->Unload(graphics);
 	App->player->Disable();
+	App->bombs->Disable();
 	int count = 0;
-	for (std::list<Object*>::iterator it = objects.begin(); it != objects.end(); ++it) {
+	for (std::list<Entity*>::iterator it = Entitys.begin(); it != Entitys.end(); ++it) {
 		count++;
-		LOG("%d",count);
+		//LOG("%d",count);
 		RELEASE(*it);
 	}
-	objects.clear();
+	Entitys.clear();
 	//App->collision->Disable();
 	//App->particles->Disable();
 	
@@ -116,23 +119,23 @@ void ModuleSceneLevel::CreateExternalBlocks()
 {
 	//Left
 	for (int i = 0; i < 11; i++) {
-		Object *obj = new Object(Object::objectType::BLOCK, 0, 50 + (50 * i));
-		objects.push_back(obj);
+		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0, 50 + (50 * i));
+		Entitys.push_back(obj);
 	}
 	//Up
 	for (int i = 1; i <= 14; i++) {
-		Object *obj = new Object(Object::objectType::BLOCK, 0 + (50 * i), 50);
-		objects.push_back(obj);
+		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0 + (50 * i), 50);
+		Entitys.push_back(obj);
 	}
 	//Right
 	for (int i = 1; i <= 10; i++) {
-		Object *obj = new Object(Object::objectType::BLOCK, 700, 50 + (50 * i));
-		objects.push_back(obj);
+		Entity *obj = new Entity(Entity::EntityType::BLOCK, 700, 50 + (50 * i));
+		Entitys.push_back(obj);
 	}
 	//Down
 	for (int i = 1; i <= 13; i++) {
-		Object *obj = new Object(Object::objectType::BLOCK, 0 + (50 * i), 550);
-		objects.push_back(obj);
+		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0 + (50 * i), 550);
+		Entitys.push_back(obj);
 	}
 }
 
@@ -140,8 +143,8 @@ void ModuleSceneLevel::CreateBlocks()
 {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 6; j++) {
-			Object *obj = new Object(Object::objectType::BLOCK, 100 + (100 * j), 150 + (100 * i));
-			objects.push_back(obj);
+			Entity *obj = new Entity(Entity::EntityType::BLOCK, 100 + (100 * j), 150 + (100 * i));
+			Entitys.push_back(obj);
 		}
 	}
 }
