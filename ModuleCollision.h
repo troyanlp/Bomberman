@@ -41,7 +41,7 @@ public:
 	bool CleanUp();
 
 	Collider* AddCollider(const SDL_Rect& rect);
-	//void RemoveCollider(Collider* c);
+	void RemoveCollider(Collider* c);
 	void DebugDraw();
 
 private:

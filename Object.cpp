@@ -16,9 +16,5 @@ Object::Object(objectType type, int x, int y) : type(type)
 
 
 Object::~Object()
-{
-	if (collider != nullptr) {
-		//RELEASE(collider);
-	}
-	
+{	
 }

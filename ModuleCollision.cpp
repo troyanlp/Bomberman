@@ -88,6 +88,10 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
 	return ret;
 }
 
+void ModuleCollision::RemoveCollider(Collider * c)
+{
+}
+
 /*void ModuleCollision::RemoveCollider(Collider* c)
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
