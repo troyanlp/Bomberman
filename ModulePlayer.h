@@ -7,6 +7,7 @@
 #include "ModuleCollision.h"
 
 struct SDL_Texture;
+class Player;
 
 class ModulePlayer : public Module
 {
@@ -18,8 +19,17 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void CreatePlayer1(iPoint position, bool AI = false);
+	void CreatePlayer2(iPoint position, bool AI = false);
+	iPoint CalculateBombPosition(int idPlayer);
+
+	void ControlPlayer1();
+	void ControlPlayer2();
+	void Player1AI();
+	void Player2AI();
+
 private:
-	float playerSpeed = 1.5;
+	int playerSpeed = 2;
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -37,6 +47,10 @@ public:
 	iPoint position;
 	bool destroyed = false;
 	Collider* collider;
+	//refactoring
+	int numPlayers = 0;
+	Player* player1 = nullptr;
+	Player* player2 = nullptr;
 };
 
 #endif

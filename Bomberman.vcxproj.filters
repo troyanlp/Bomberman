@@ -85,7 +85,9 @@
     <ClInclude Include="ModuleBomb.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h" />
+    <ClInclude Include="Brick.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -146,7 +148,7 @@
       <Filter>Game Modules</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

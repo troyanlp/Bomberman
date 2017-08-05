@@ -18,7 +18,7 @@ bool ModuleBomb::Start()
 
 update_status ModuleBomb::Update()
 {
-	LOG("Update ModuleBomb");
+	//LOG("Update ModuleBomb");
 
 	for (list<Bomb*>::iterator it = bombs.begin(); it != bombs.end(); ++it) {
 		if ((*it)->exploded) {
