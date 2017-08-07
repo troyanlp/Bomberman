@@ -10,7 +10,7 @@ class Player :
 	public Entity
 {
 public:
-	Player(int id, bool AI, iPoint spawnPosition);
+	Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition);
 	~Player();
 
 	void Draw();

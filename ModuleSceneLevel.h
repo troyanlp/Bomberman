@@ -20,16 +20,14 @@ public:
 private:
 	void CreateExternalBlocks();
 	void CreateBlocks();
-	void DrawExternalBlocks();
-	void DrawBlocks();
-	void DrawBricks();
+	void CreateBricks();
 
 public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect externalBlock;
 	SDL_Rect block;
 	SDL_Rect brick;
-	std::list<Entity*> Entitys;
+	std::list<Entity*> Entities;
 
 private:
 	SDL_Rect background;

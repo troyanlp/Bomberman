@@ -94,12 +94,7 @@ bool ModulePlayer::Start()
 	position.y = 150;
 
 	CreatePlayer1(position,false);
-	player1->graphics = graphics;
-	player1->collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
-	// initial position of the player
-	player1->position.x = 50;
-	player1->position.y = 150;
-	int a = 1;
+	//player1->collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
 	//Set colliider
 	//collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
 
@@ -123,7 +118,7 @@ void ModulePlayer::CreatePlayer1(iPoint position, bool AI)
 {
 	if (numPlayers < 2) {
 		numPlayers++;
-		player1 = new Player(1,false,position);
+		player1 = new Player(1, false, graphics, position);
 	}
 }
 
@@ -131,7 +126,7 @@ void ModulePlayer::CreatePlayer2(iPoint position, bool AI)
 {
 	if (numPlayers < 2) {
 		numPlayers++;
-		player2 = new Player(2, true, position);
+		player2 = new Player(2, true, graphics, position);
 	}
 }
 

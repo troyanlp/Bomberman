@@ -8,6 +8,8 @@
 #include "ModuleSceneLevel.h"
 #include "ModuleBomb.h"
 #include "Entity.h"
+#include "Block.h"
+#include "Brick.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -61,6 +63,7 @@ bool ModuleSceneLevel::Start()
 	//create some colliders for the walls
 	CreateExternalBlocks();
 	CreateBlocks();
+	CreateBricks();
 	
 
 	return true;
@@ -75,12 +78,12 @@ bool ModuleSceneLevel::CleanUp()
 	App->player->Disable();
 	App->bombs->Disable();
 	int count = 0;
-	for (std::list<Entity*>::iterator it = Entitys.begin(); it != Entitys.end(); ++it) {
+	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
 		count++;
 		//LOG("%d",count);
 		RELEASE(*it);
 	}
-	Entitys.clear();
+	Entities.clear();
 	//App->collision->Disable();
 	//App->particles->Disable();
 	
@@ -108,9 +111,9 @@ update_status ModuleSceneLevel::Update()
 	
 	// Draw everything --------------------------------------
 	//App->renderer->Blit(graphics, 0, 0, NULL, NULL);
-	DrawExternalBlocks();
-	DrawBlocks();
-	DrawBricks();
+	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
+		(*it)->Draw();
+	}
 	
 	return UPDATE_CONTINUE;
 }
@@ -119,23 +122,23 @@ void ModuleSceneLevel::CreateExternalBlocks()
 {
 	//Left
 	for (int i = 0; i < 11; i++) {
-		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0, 50 + (50 * i));
-		Entitys.push_back(obj);
+		Block *obj = new Block(iPoint(0, 50 + (50 * i)), true, graphics, externalBlock);
+		Entities.push_back(obj);
 	}
 	//Up
 	for (int i = 1; i <= 14; i++) {
-		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0 + (50 * i), 50);
-		Entitys.push_back(obj);
+		Block *obj = new Block(iPoint(0 + (50 * i), 50), true, graphics, externalBlock);
+		Entities.push_back(obj);
 	}
 	//Right
 	for (int i = 1; i <= 10; i++) {
-		Entity *obj = new Entity(Entity::EntityType::BLOCK, 700, 50 + (50 * i));
-		Entitys.push_back(obj);
+		Block *obj = new Block(iPoint(700, 50 + (50 * i)), true, graphics, externalBlock);
+		Entities.push_back(obj);
 	}
 	//Down
 	for (int i = 1; i <= 13; i++) {
-		Entity *obj = new Entity(Entity::EntityType::BLOCK, 0 + (50 * i), 550);
-		Entitys.push_back(obj);
+		Block *obj = new Block(iPoint(0 + (50 * i), 550), true, graphics, externalBlock);
+		Entities.push_back(obj);
 	}
 }
 
@@ -143,54 +146,17 @@ void ModuleSceneLevel::CreateBlocks()
 {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 6; j++) {
-			Entity *obj = new Entity(Entity::EntityType::BLOCK, 100 + (100 * j), 150 + (100 * i));
-			Entitys.push_back(obj);
+			Block *obj = new Block(iPoint(100 + (100 * j), 150 + (100 * i)), false, graphics, block);
+			Entities.push_back(obj);
 		}
 	}
 }
 
-void ModuleSceneLevel::DrawExternalBlocks()
+void ModuleSceneLevel::CreateBricks()
 {
 	SDL_Rect dest;
-	//Left
-	for (int i = 0; i < 11; i++) {
-		dest = { 0, 50+(50*i), 50, 50 };
-		App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-	}
-	//Up
-	for (int i = 1; i <= 14; i++) {
-		dest = { 0+(50*i), 50, 50, 50 };
-		App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-	}
-	//Right
-	for (int i = 1; i <= 10; i++) {
-		dest = { 700, 50 + (50 * i), 50, 50 };
-		App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-	}
-	//Down
-	for (int i = 1; i <= 13; i++) {
-		dest = { 0 + (50 * i), 550, 50, 50 };
-		App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-	}
-}
-
-void ModuleSceneLevel::DrawBlocks()
-{
-	SDL_Rect dest;
-
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 6; j++) {
-			dest = { 100 + (100*j), 150 + (100 * i), 50, 50 };
-			App->renderer->Blit(graphics, NULL, NULL, &block, &dest);
-		}
-	}
-}
-
-void ModuleSceneLevel::DrawBricks()
-{
-	SDL_Rect dest;
-	dest = { 150, 100, 50, 50 };
-	App->renderer->Blit(graphics, NULL, NULL, &brick, &dest);
-	dest = { 200, 100, 50, 50 };
-	App->renderer->Blit(graphics, NULL, NULL, &brick, &dest);
+	Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
+	Entities.push_back(obj);
+	obj = new Brick(iPoint(200, 100), graphics, brick);
+	Entities.push_back(obj);
 }
