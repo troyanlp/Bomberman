@@ -19,11 +19,10 @@ public:
 		ITEM
 	};
 
-	Entity();
-	Entity(EntityType type, int x, int y);
-	~Entity();
+	Entity() {}
+	~Entity() {}
 
-	virtual void Draw();
+	virtual void Draw() {}
 
 public:
 	EntityType type;

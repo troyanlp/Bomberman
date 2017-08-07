@@ -147,8 +147,5 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Game Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Game Classes</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
