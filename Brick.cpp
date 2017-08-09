@@ -10,6 +10,7 @@ Brick::Brick(iPoint spawnPosition, SDL_Texture* gfx, SDL_Rect brick) : brickSpri
 	type = EntityType::BRICK;
 	position = spawnPosition;
 	collider = App->collision->AddCollider({ position.x, position.y, 50, 50 });
+	collider->type = CBRICK;
 	spriteDest = { position.x, position.y, 50, 50 };
 }
 

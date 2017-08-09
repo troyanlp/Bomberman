@@ -9,6 +9,8 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	type = EntityType::PLAYER;
 	position = spawnPosition;
 	collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
+	if(!AI) collider->type = CPLAYER;
+	else collider->type = CIA;
 }
 
 

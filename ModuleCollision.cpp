@@ -3,7 +3,6 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
-#include <iostream>
 
 using namespace std;
 
@@ -43,8 +42,8 @@ update_status ModuleCollision::Update()
 			Collider* c2 = *jt;
 			if (c1 != c2) {
 				if (c1->CheckCollision(c2->rect)) {
-				LOG("BOOM!!!");
-				c1->to_delete = true;
+					LOG("BOOM!!!");
+					//c1->to_delete = true;
 				}
 			}
 		}
@@ -64,6 +63,11 @@ void ModuleCollision::DebugDraw()
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
 		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+}
+
+bool ModuleCollision::FindCollision(const SDL_Rect rect)
+{
+	return false;
 }
 
 // Called before quitting
@@ -89,6 +93,14 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
 }
 
 void ModuleCollision::RemoveCollider(Collider * c)
+{
+	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
+		RELEASE(*it);
+
+	colliders.clear();
+}
+
+void ModuleCollision::RemoveAllColliders()
 {
 }
 

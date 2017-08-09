@@ -9,6 +9,8 @@ Block::Block(iPoint spawnPosition, bool ext, SDL_Texture* gfx, SDL_Rect block) :
 	type = EntityType::BLOCK;
 	position = spawnPosition;
 	collider = App->collision->AddCollider({ position.x, position.y, 50, 50 });
+	if (ext) collider->type = CEXTERNALBLOCK;
+	else collider->type = CINTERNALBLOCK;
 	spriteDest = { position.x, position.y, 50, 50 };
 }
 

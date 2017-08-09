@@ -22,6 +22,7 @@ private:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Animation bomb;
+	SDL_Rect spriteDest;
 	int timeToLive = 20;
 	int timer = 0;
 };

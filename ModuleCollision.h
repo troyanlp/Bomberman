@@ -4,12 +4,25 @@
 #include<list>
 #include "Module.h"
 
+enum ColliderType {
+	CPLAYER,
+	CBOMB,
+	CIA,
+	CEXTERNALBLOCK,
+	CINTERNALBLOCK,
+	CBRICK,
+	CITEM,
+	CNULL
+};
+
 struct Collider
 {
 	SDL_Rect rect = { 0,0,0,0 };
 	bool to_delete = false;
 
 	bool collided = false;
+
+	ColliderType type = CNULL;
 
 	Collider(SDL_Rect rectangle) :
 		rect(rectangle)
@@ -42,7 +55,11 @@ public:
 
 	Collider* AddCollider(const SDL_Rect& rect);
 	void RemoveCollider(Collider* c);
+	void RemoveAllColliders();
 	void DebugDraw();
+
+	bool FindCollision(const SDL_Rect rect);
+
 
 private:
 

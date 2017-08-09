@@ -5,6 +5,7 @@
 Item::Item()
 {
 	type = EntityType::ITEM;
+
 }
 
 
