@@ -44,8 +44,8 @@ void Bomb::Draw()
 	//dest = { position.x, position.y, 50, 50 };
 	if (current_animation->GetCurrentFrame().x == bomb.frames.front().x) {
 		timer++;
-		if (timer == 25) current_animation->speed = 0.125;
-		else if (timer == 50) current_animation->speed = 0.2;
+		if (timer == 25) current_animation->speed = 0.125f;
+		else if (timer == 50) current_animation->speed = 0.2f;
 		else if (timer >= 60) Explode();
 	}
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);

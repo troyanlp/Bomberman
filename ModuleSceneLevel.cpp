@@ -154,7 +154,7 @@ void ModuleSceneLevel::CreateBlocks()
 
 void ModuleSceneLevel::CreateBricks()
 {
-	SDL_Rect dest;
+	//SDL_Rect dest;
 	Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
 	Entities.push_back(obj);
 	obj = new Brick(iPoint(200, 100), graphics, brick);

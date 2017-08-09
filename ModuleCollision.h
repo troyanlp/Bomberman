@@ -1,7 +1,8 @@
 #ifndef __ModuleCollision_H__
 #define __ModuleCollision_H__
 
-#include<list>
+#include <list>
+#include <map>
 #include "Module.h"
 
 enum ColliderType {
@@ -59,10 +60,12 @@ public:
 	void DebugDraw();
 
 	bool FindCollision(const SDL_Rect rect);
+	bool CheckColliderTypes(ColliderType type, ColliderType otherType);
 
 
 private:
 
+	std::map<std::pair<ColliderType, ColliderType>, bool> collisionMatrix;
 	std::list<Collider*> colliders;
 	bool debug = true;
 };
