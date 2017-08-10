@@ -6,6 +6,8 @@
 
 using namespace std;
 
+//https://github.com/SergiLedesma/FinalFightTribute/blob/master/ModuleCollision.cpp
+
 ModuleCollision::ModuleCollision()
 {
 	//Fill collision matrix
@@ -57,6 +59,19 @@ update_status ModuleCollision::Update()
 			}
 		}
 	}*/
+
+	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
+		if ((*it)->type == CPLAYER) {
+			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
+				if ((*it2)->type == CEXTERNALBLOCK || (*it2)->type == CINTERNALBLOCK || (*it2)->type == CBRICK) {
+					if ((*it)->CheckCollision((*it2)->rect)) {
+						LOG("COLISION DE PLAYER Y %d", (*it2)->type);
+					}
+				}
+			}
+		}
+		
+	}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -132,10 +147,18 @@ void ModuleCollision::RemoveAllColliders()
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	if (rect.x >= r.x && rect.x <= (rect.x + rect.w)) {
+	/*if (rect.x >= r.x && rect.x <= (rect.x + rect.w)) {
 		if (rect.y >= r.y && rect.y <= (rect.y + rect.h)) {
 			return true;
 		}
-	}
-	return false;
+	}*/
+
+	//Calculate when is NOT colliding
+	if (rect.x < r.x && (rect.x + rect.w) < r.x) return false;
+	if (rect.x > (r.x + r.w) && (rect.x + rect.w) > (r.x + r.w)) return false;
+	if (rect.y < r.y && (rect.y + rect.h) < r.y) return false;
+	if (rect.y > (r.y + r.h) && (rect.y + rect.h) > (r.y + r.h)) return false;
+
+	//return false;
+	return true;
 }
