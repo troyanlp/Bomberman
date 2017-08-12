@@ -202,33 +202,37 @@ update_status ModulePlayer::Update()
 void ModulePlayer::ControlPlayer1()
 {
 	// Player movement
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player1->CanMove(-playerSpeed,0))
 	{
 		player1->position.x -= playerSpeed;
 		player1->current_animation = &walkLeft;
-		player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
+		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
+		player1->ChangeAnimation(PLAYER_LEFT);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player1->CanMove(playerSpeed,0))
 	{
 		player1->position.x += playerSpeed;
 		//LOG("La posicion x es: %d", player1->position.x);
 		player1->current_animation = &walkRight;
-		player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
+		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
+		player1->ChangeAnimation(PLAYER_RIGHT);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && player1->CanMove(0,playerSpeed))
 	{
 		player1->position.y += playerSpeed;
 		player1->current_animation = &walkDown;
-		player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
+		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
+		player1->ChangeAnimation(PLAYER_DOWN);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player1->CanMove(0,-playerSpeed))
 	{
 		player1->position.y -= playerSpeed;
 		player1->current_animation = &walkUp;
-		player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
+		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
+		player1->ChangeAnimation(PLAYER_UP);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
@@ -242,7 +246,8 @@ void ModulePlayer::ControlPlayer1()
 		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
 		player1->current_animation = &idleDown;
-		player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT };
+		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT };
+		player1->ChangeAnimation(PLAYER_IDLE);
 	}
 
 	player1->Draw();

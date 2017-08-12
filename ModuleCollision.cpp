@@ -65,7 +65,7 @@ update_status ModuleCollision::Update()
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CEXTERNALBLOCK || (*it2)->type == CINTERNALBLOCK || (*it2)->type == CBRICK) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
-						LOG("COLISION DE PLAYER Y %d", (*it2)->type);
+						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
 					}
 				}
 			}
@@ -91,6 +91,19 @@ void ModuleCollision::DebugDraw()
 
 bool ModuleCollision::FindCollision(const SDL_Rect rect)
 {
+	LOG("Hola");
+	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
+		if ((*it)->type == CEXTERNALBLOCK || (*it)->type == CINTERNALBLOCK || (*it)->type == CBRICK) {
+			double d = sqrt(pow((*it)->rect.x - rect.x, 2) + pow((*it)->rect.y - rect.y, 2));
+			if (d < 100) {
+				if ((*it)->CheckCollision(rect)) {
+					LOG("El tipo de la colision es: %d", (*it)->type);
+					LOG("TRUEEEEEE");
+					return true;
+				}
+			}
+		}
+	}
 	return false;
 }
 
@@ -147,18 +160,11 @@ void ModuleCollision::RemoveAllColliders()
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	/*if (rect.x >= r.x && rect.x <= (rect.x + rect.w)) {
-		if (rect.y >= r.y && rect.y <= (rect.y + rect.h)) {
-			return true;
-		}
-	}*/
-
 	//Calculate when is NOT colliding
 	if (rect.x < r.x && (rect.x + rect.w) < r.x) return false;
 	if (rect.x > (r.x + r.w) && (rect.x + rect.w) > (r.x + r.w)) return false;
 	if (rect.y < r.y && (rect.y + rect.h) < r.y) return false;
 	if (rect.y > (r.y + r.h) && (rect.y + rect.h) > (r.y + r.h)) return false;
 
-	//return false;
 	return true;
 }
