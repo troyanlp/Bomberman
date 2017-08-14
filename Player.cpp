@@ -51,16 +51,16 @@ void Player::ChangeAnimation(PlayerAnimation anim)
 	switch (anim) {
 	case PLAYER_LEFT:
 	case PLAYER_DOWN:
-		collider->rect = { position.x, position.y + offsetColliderAS.y, colliderAS.w, colliderAS.h };
+		//collider->rect = { position.x, position.y + offsetColliderAS.y, colliderAS.w, colliderAS.h };
 		spriteDest = { position.x, position.y, spriteAS.w, spriteAS.h };
 		break;
 	case PLAYER_RIGHT:
 	case PLAYER_UP:
-		collider->rect = { position.x, position.y + offsetColliderWD.y, colliderWD.w, colliderWD.h };
+		//collider->rect = { position.x, position.y + offsetColliderWD.y, colliderWD.w, colliderWD.h };
 		spriteDest = { position.x, position.y, spriteWD.w, spriteWD.h };
 		break;
 	case PLAYER_IDLE:
-		collider->rect = { position.x, position.y + offsetColliderIdle.y, colliderIdle.w, colliderIdle.h };
+		//collider->rect = { position.x, position.y + offsetColliderIdle.y, colliderIdle.w, colliderIdle.h };
 		spriteDest = { position.x, position.y, spriteIdle.w, spriteIdle.h };
 		break;
 	}
@@ -68,8 +68,10 @@ void Player::ChangeAnimation(PlayerAnimation anim)
 
 bool Player::CanMove(int x, int y)
 {
-	SDL_Rect newPos = {position.x + x, position.y + y, 0, 0};
-	switch (playerAnimation)
+	SDL_Rect newPos = {position.x + offsetColliderIdle.x + x, position.y + offsetColliderIdle.y + y, 0, 0};
+	newPos.w = colliderIdle.w;
+	newPos.h = colliderIdle.h;
+	/*switch (playerAnimation)
 	{
 	case PLAYER_IDLE:
 		newPos.w = colliderIdle.w;
@@ -85,8 +87,16 @@ bool Player::CanMove(int x, int y)
 		newPos.w = colliderWD.w;
 		newPos.h = colliderWD.h;
 		break;
-	}
+	}*/
+	//App->collision->FindCollision(newPos);
+	//return true;
 	LOG("El new pos es: %d, %d, %d, %d", newPos.x, newPos.y, newPos.w, newPos.h);
-	if (!App->collision->FindCollision(newPos)) return true;
-	return false;
+	if (App->collision->FindCollision(newPos)) {
+		//if (x != 0) position.x -= 1;
+		//if (y != 0) position.y -= 1;
+		return false;
+	}
+	else {
+		return true;
+	}
 }

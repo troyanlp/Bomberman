@@ -90,7 +90,7 @@ bool ModulePlayer::Start()
 	destroyed = false;
 
 	// initial position of the player
-	position.x = 50;
+	position.x = 55;
 	position.y = 150;
 
 	CreatePlayer1(position,false);
@@ -208,6 +208,7 @@ void ModulePlayer::ControlPlayer1()
 		player1->current_animation = &walkLeft;
 		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_LEFT);
+		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player1->CanMove(playerSpeed,0))
@@ -217,6 +218,7 @@ void ModulePlayer::ControlPlayer1()
 		player1->current_animation = &walkRight;
 		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_RIGHT);
+		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && player1->CanMove(0,playerSpeed))
@@ -225,6 +227,7 @@ void ModulePlayer::ControlPlayer1()
 		player1->current_animation = &walkDown;
 		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_DOWN);
+		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player1->CanMove(0,-playerSpeed))
@@ -233,6 +236,7 @@ void ModulePlayer::ControlPlayer1()
 		player1->current_animation = &walkUp;
 		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_UP);
+		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)

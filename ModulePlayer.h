@@ -29,7 +29,7 @@ public:
 	void Player2AI();
 
 private:
-	int playerSpeed = 2;
+	int playerSpeed = 1;
 public:
 
 	SDL_Texture* graphics = nullptr;
