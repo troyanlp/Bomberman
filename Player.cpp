@@ -41,7 +41,6 @@ void Player::Draw()
 
 bool Player::CleanUp()
 {
-	//if (current_animation != nullptr) RELEASE(current_animation);
 	return true;
 }
 

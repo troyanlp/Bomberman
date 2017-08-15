@@ -39,9 +39,6 @@ Bomb::~Bomb()
 
 void Bomb::Draw()
 {
-	//LOG("Pintando!!");
-	//SDL_Rect dest;
-	//dest = { position.x, position.y, 50, 50 };
 	if (current_animation->GetCurrentFrame().x == bomb.frames.front().x) {
 		timer++;
 		if (timer == 25) current_animation->speed = 0.125f;

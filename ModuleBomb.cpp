@@ -18,11 +18,12 @@ bool ModuleBomb::Start()
 
 update_status ModuleBomb::Update()
 {
-	//LOG("Update ModuleBomb");
-
+	LOG("Active Bombs: %d", bombs.size());
 	for (list<Bomb*>::iterator it = bombs.begin(); it != bombs.end(); ++it) {
 		if ((*it)->exploded) {
-			//it = bombs.erase(it);
+			RELEASE(*it);
+			it = bombs.erase(it);
+			if (it == bombs.end()) break;
 		}
 		else {
 			(*it)->Draw();

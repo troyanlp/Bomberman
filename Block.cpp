@@ -22,16 +22,6 @@ Block::~Block()
 void Block::Draw()
 {
 	App->renderer->Blit(graphics, NULL, NULL, &blockSprite, &spriteDest);
-/*	if (!destroyed) {
-		if (external) {
-			SDL_Rect dest;
-			dest = { 0, 50 + (50 * i), 50, 50 };
-			App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-		}
-		else {
-
-		}
-	}*/
 }
 
 bool Block::CleanUp()

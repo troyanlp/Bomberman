@@ -6,8 +6,6 @@
 
 using namespace std;
 
-//https://github.com/SergiLedesma/FinalFightTribute/blob/master/ModuleCollision.cpp
-
 ModuleCollision::ModuleCollision()
 {
 	//Fill collision matrix
@@ -44,22 +42,6 @@ update_status ModuleCollision::PreUpdate()
 
 update_status ModuleCollision::Update()
 {
-	//LOG("El size es: %d", colliders.size());
-	/*for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end();)
-	{
-		Collider* c1 = *it;
-		for (list<Collider*>::iterator jt = colliders.begin(); jt != colliders.end();)
-		{
-			Collider* c2 = *jt;
-			if (c1 != c2) {
-				if (c1->CheckCollision(c2->rect)) {
-					LOG("BOOM!!!");
-					//c1->to_delete = true;
-				}
-			}
-		}
-	}*/
-
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
 		if ((*it)->type == CPLAYER) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
@@ -91,14 +73,12 @@ void ModuleCollision::DebugDraw()
 
 bool ModuleCollision::FindCollision(const SDL_Rect rect)
 {
-	//LOG("Hola");
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
 		if ((*it)->type == CEXTERNALBLOCK || (*it)->type == CINTERNALBLOCK || (*it)->type == CBRICK) {
 			double d = sqrt(pow((*it)->rect.x - rect.x, 2) + pow((*it)->rect.y - rect.y, 2));
 			if (d < 100) {
 				if ((*it)->CheckCollision(rect)) {
 					//LOG("El tipo de la colision es: %d", (*it)->type);
-					//LOG("TRUEEEEEE");
 					return true;
 				}
 			}
@@ -135,26 +115,22 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
 	return ret;
 }
 
-void ModuleCollision::RemoveCollider(Collider * c)
+void ModuleCollision::RemoveCollider(Collider* c)
+{
+	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
+		if (*it == c) {
+			RELEASE(*it);
+		}
+	}
+}
+
+void ModuleCollision::RemoveAllColliders()
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
 		RELEASE(*it);
 
 	colliders.clear();
 }
-
-void ModuleCollision::RemoveAllColliders()
-{
-}
-
-/*void ModuleCollision::RemoveCollider(Collider* c)
-{
-	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
-		if (*it == c) {
-		RELEASE(*it);
-		}
-	}
-}*/
 
 // -----------------------------------------------------
 

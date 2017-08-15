@@ -51,22 +51,6 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	// debug camera
-	/*
-	int speed = 1;
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
-	*/
 
 	return UPDATE_CONTINUE;
 }
@@ -113,8 +97,6 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y,const SDL_Rect* secti
 
 	rect.w *= SCREEN_SIZE;
 	rect.h *= SCREEN_SIZE;
-	//rect.w = SCREEN_WIDTH * SCREEN_SIZE;
-	//rect.h = SCREEN_HEIGHT * SCREEN_SIZE;
 
 	if(SDL_RenderCopy(renderer, texture, section, destSize) != 0)
 	{

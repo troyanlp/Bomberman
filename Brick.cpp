@@ -22,16 +22,6 @@ Brick::~Brick()
 void Brick::Draw()
 {
 	App->renderer->Blit(graphics, NULL, NULL, &brickSprite, &spriteDest);
-	/*	if (!destroyed) {
-	if (external) {
-	SDL_Rect dest;
-	dest = { 0, 50 + (50 * i), 50, 50 };
-	App->renderer->Blit(graphics, NULL, NULL, &externalBlock, &dest);
-	}
-	else {
-
-	}
-	}*/
 }
 
 bool Brick::CleanUp()
