@@ -94,9 +94,6 @@ bool ModulePlayer::Start()
 	position.y = 150;
 
 	CreatePlayer1(position,false);
-	//player1->collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
-	//Set colliider
-	//collider = App->collision->AddCollider({ position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT });
 
 	return true;
 }
@@ -131,70 +128,14 @@ void ModulePlayer::CreatePlayer2(iPoint position, bool AI)
 }
 
 // Update
-/*update_status ModulePlayer::Update()
-{	
-	// Player movement
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		position.x -= playerSpeed;
-		current_animation = &walkLeft;
-		collider->rect = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT};
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		position.x += playerSpeed;
-		current_animation = &walkRight;
-		collider->rect = { position.x, position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		position.y += playerSpeed;
-		current_animation = &walkDown;
-		collider->rect = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		iPoint aux = CalculateBombPosition();
-		App->bombs->AddBomb(aux.x, aux.y);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		position.y -= playerSpeed;
-		current_animation = &walkUp;
-		collider->rect = { position.x, position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
-		&& App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE
-		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
-		&& App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
-			current_animation = &idleDown;
-			collider->rect = { position.x, position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT };
-	}
-
-	// Draw everything --------------------------------------
-	if (destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),&(collider->rect));
-
-	SDL_Rect aux = {position.x + collider->rect.w/2, position.y + collider->rect.h/2, 10, 10};
-	SDL_Rect auxSprite = { 182, 15, 18, 18 };
-	//App->renderer->Blit(graphics, position.x, position.y, &auxSprite, &aux);
-
-
-	return UPDATE_CONTINUE;
-}*/
-
 update_status ModulePlayer::Update()
 {
 	if (numPlayers == 1) {
 		ControlPlayer1();
 	}
 	else if (numPlayers == 2){
-
+		ControlPlayer1();
+		ControlPlayer2();
 	}
 	return UPDATE_CONTINUE;
 }
@@ -206,7 +147,6 @@ void ModulePlayer::ControlPlayer1()
 	{
 		player1->position.x -= playerSpeed;
 		player1->current_animation = &walkLeft;
-		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_LEFT);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
@@ -214,9 +154,7 @@ void ModulePlayer::ControlPlayer1()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player1->CanMove(playerSpeed,0))
 	{
 		player1->position.x += playerSpeed;
-		//LOG("La posicion x es: %d", player1->position.x);
 		player1->current_animation = &walkRight;
-		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 29 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_RIGHT);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
@@ -225,7 +163,6 @@ void ModulePlayer::ControlPlayer1()
 	{
 		player1->position.y += playerSpeed;
 		player1->current_animation = &walkDown;
-		//player1->collider->rect = { player1->position.x, player1->position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_DOWN);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
@@ -234,15 +171,17 @@ void ModulePlayer::ControlPlayer1()
 	{
 		player1->position.y -= playerSpeed;
 		player1->current_animation = &walkUp;
-		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 26 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_UP);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		iPoint aux = CalculateBombPosition(1);
-		App->bombs->AddBomb(aux.x, aux.y);
+		if (player1->CanPlantBomb()) {
+			iPoint aux = CalculateBombPosition(1);
+			App->bombs->AddBomb(aux.x, aux.y,1);
+		}
+		
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
@@ -250,22 +189,13 @@ void ModulePlayer::ControlPlayer1()
 		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE) {
 		player1->current_animation = &idleDown;
-		//player1->collider->rect = { player1->position.x, player1->position.y, 17 * SCREEN_CONVERT, 30 * SCREEN_CONVERT };
 		player1->ChangeAnimation(PLAYER_IDLE);
 	}
 
 	player1->Draw();
-
-	// Draw everything --------------------------------------
-	//if (destroyed == false)
-		//App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &(collider->rect));
 }
 
 void ModulePlayer::ControlPlayer2()
-{
-}
-
-void ModulePlayer::Player1AI()
 {
 }
 
@@ -285,24 +215,43 @@ iPoint ModulePlayer::CalculateBombPosition(int idPlayer)
 		else LOG("Player 2 doesnt exist!");
 	}
 
+	//aux->position.x += aux->spriteIdle.w / 2;
+	//aux->position.y += aux->spriteIdle.h / 2;
+
 	iPoint bombPosition;
 
 	if (aux != nullptr) {
 		
 		int quotient = (aux->position.x + aux->collider->rect.w / 2) / 50;
 		int residue = (aux->position.x + aux->collider->rect.w / 2) % 50;
-		if (residue > 40) bombPosition.x = 50 * (quotient + 1);
-		else bombPosition.x = 50 * quotient;
+		if (residue > 40 && BombCanBePlaced(iPoint(50*(quotient+1),aux->position.y))) {
+			bombPosition.x = 50 * (quotient + 1);
+		}
+		else {
+			bombPosition.x = 50 * quotient;
+		}
 		LOG("Quotient is: %d and residue is: %d", quotient, residue);
 
-		quotient = (aux->position.y + aux->collider->rect.h / 2) / 50;
-		residue = (aux->position.y + aux->collider->rect.h / 2) % 50;
-		if (residue > 40) bombPosition.y = 50 * (quotient + 1);
-		else bombPosition.y = 50 * quotient;
+		quotient = (aux->position.y + aux->collider->rect.h) / 50;
+		residue = (aux->position.y + aux->collider->rect.h) % 50;
+		if (residue < 20  && residue > 45 && BombCanBePlaced(iPoint(bombPosition.x, 50 * (quotient+1)))) {
+			bombPosition.y = 50 * (quotient);
+		}
+		else {
+			if(residue > 45) bombPosition.y = 50 * (quotient+1);
+			else bombPosition.y = 50 * quotient;
+		}
 	}
 	
 
 	return bombPosition;
+}
+
+bool ModulePlayer::BombCanBePlaced(iPoint testPosition)
+{
+	SDL_Rect dest = {testPosition.x, testPosition.y, 50, 50};
+	if (App->collision->FindCollision(dest)) return false;
+	else return true;
 }
 
 

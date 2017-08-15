@@ -5,13 +5,15 @@
 #include "ModuleCollision.h"
 
 
-Bomb::Bomb(int x, int y)
+Bomb::Bomb(int x, int y, int id)
 {
 	LOG("Loading Bomb");
 
 	graphics = App->textures->Load("Bomberman.png");
 
 	destroyed = false;
+
+	idPlayer = id;
 
 	// initial position of the bomb
 	position.x = x;

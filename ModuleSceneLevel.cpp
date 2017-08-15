@@ -102,15 +102,7 @@ update_status ModuleSceneLevel::PreUpdate()
 
 update_status ModuleSceneLevel::Update()
 {
-	// Move camera forward -----------------------------
-	//int scroll_speed = 1;
-
-	//App->player->position.x += 1;
-	//App->player->collider->SetPos(App->player->position.x, App->player->position.y);
-	//App->renderer->camera.x -= 3;
-	
 	// Draw everything --------------------------------------
-	//App->renderer->Blit(graphics, 0, 0, NULL, NULL);
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
 		(*it)->Draw();
 	}

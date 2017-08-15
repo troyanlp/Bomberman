@@ -98,6 +98,8 @@ bool Application::CleanUp()
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->CleanUp();
 
+	RELEASE(fpsTimer);
+
 	return ret;
 }
 

@@ -9,7 +9,7 @@ class Bomb :
 	public Entity
 {
 public:
-	Bomb(int x, int y);
+	Bomb(int x, int y, int id);
 	~Bomb();
 
 	void Draw();
@@ -18,6 +18,7 @@ public:
 	
 public:
 	bool exploded = false;
+	int idPlayer;
 private:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
@@ -25,5 +26,6 @@ private:
 	SDL_Rect spriteDest;
 	int timeToLive = 20;
 	int timer = 0;
+	
 };
 

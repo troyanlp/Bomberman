@@ -16,7 +16,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void AddBomb(int x, int y);
+	void AddBomb(int x, int y, int idPlayer);
+	int GetNumBombsFromPlayer(int id);
 
 
 public:

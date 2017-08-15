@@ -44,9 +44,18 @@ bool ModuleBomb::CleanUp()
 	return true;
 }
 
-void ModuleBomb::AddBomb(int x, int y)
+void ModuleBomb::AddBomb(int x, int y, int idPlayer)
 {
 	LOG("Adding bomb!");
-	Bomb* aux = new Bomb(x,y);
+	Bomb* aux = new Bomb(x,y,idPlayer);
 	bombs.push_back(aux);
+}
+
+int ModuleBomb::GetNumBombsFromPlayer(int id)
+{
+	int count = 0;
+	for (list<Bomb*>::iterator it = bombs.begin(); it != bombs.end(); ++it) {
+		if ((*it)->idPlayer == id) count++;
+	}
+	return count;
 }

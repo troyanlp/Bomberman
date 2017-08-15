@@ -27,10 +27,14 @@ public:
 	void ChangeAnimation(PlayerAnimation anim);
 	bool CanMove(int x, int y);
 
+	bool CanPlantBomb();
+
+	void Hurt();
 
 public:
 	SDL_Texture* graphics = nullptr;
 	int id;
+	int lives;
 	bool AI = false;
 	PlayerAnimation playerAnimation;
 	Animation* current_animation = nullptr;
@@ -44,6 +48,7 @@ public:
 	SDL_Rect spriteWD;
 	SDL_Rect spriteIdle;
 	SDL_Rect spriteDest;
+	int numBombs;
 };
 
 #endif

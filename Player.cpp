@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModuleBomb.h"
 
 Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id), AI(AI), graphics(gfx)
 {
@@ -12,11 +13,11 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	
 	offsetColliderAS = iPoint(0, 16 * SCREEN_CONVERT);
 	offsetColliderWD = iPoint(0, 14 * SCREEN_CONVERT);
-	offsetColliderIdle = iPoint(0, 18 * SCREEN_CONVERT);
+	offsetColliderIdle = iPoint(0, 16 * SCREEN_CONVERT);
 
 	colliderAS = { position.x, position.y + offsetColliderAS.y, 15 * SCREEN_CONVERT, 12 * SCREEN_CONVERT };
 	colliderWD = { position.x, position.y + offsetColliderWD.y, 17 * SCREEN_CONVERT, 12 * SCREEN_CONVERT };
-	colliderIdle = { position.x, position.y+ offsetColliderIdle.y, 17 * SCREEN_CONVERT, 12 * SCREEN_CONVERT };
+	colliderIdle = { position.x, position.y+ offsetColliderIdle.y, 17 * SCREEN_CONVERT, 15 * SCREEN_CONVERT };
 	collider = App->collision->AddCollider(colliderIdle);
 
 	spriteAS = { position.x, position.y, 15 * SCREEN_CONVERT, 28 * SCREEN_CONVERT };
@@ -26,6 +27,9 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	
 	if(!AI) collider->type = CPLAYER;
 	else collider->type = CIA;
+
+	numBombs = 1;
+	lives = 3;
 }
 
 
@@ -98,4 +102,16 @@ bool Player::CanMove(int x, int y)
 	else {
 		return true;
 	}
+}
+
+bool Player::CanPlantBomb()
+{
+	if (App->bombs->GetNumBombsFromPlayer(id) < numBombs) return true;
+	else return false;
+}
+
+void Player::Hurt()
+{
+	lives--;
+	if(lives == 0) LOG("YOU DIED!")
 }

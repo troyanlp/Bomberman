@@ -21,11 +21,12 @@ public:
 
 	void CreatePlayer1(iPoint position, bool AI = false);
 	void CreatePlayer2(iPoint position, bool AI = false);
+	
 	iPoint CalculateBombPosition(int idPlayer);
+	bool BombCanBePlaced(iPoint testPosition);
 
 	void ControlPlayer1();
 	void ControlPlayer2();
-	void Player1AI();
 	void Player2AI();
 
 private:
