@@ -4,6 +4,7 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
+#include "Timer.h"
 
 class ModuleRender;
 class ModuleWindow;
@@ -44,6 +45,9 @@ public:
 	ModuleSceneMenu* scene_menu;
 	ModuleSceneLevel* scene_level;
 	ModuleBomb* bombs;
+
+	//FPS
+	Timer* fpsTimer;
 
 private:
 

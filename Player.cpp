@@ -90,7 +90,7 @@ bool Player::CanMove(int x, int y)
 	}*/
 	//App->collision->FindCollision(newPos);
 	//return true;
-	LOG("El new pos es: %d, %d, %d, %d", newPos.x, newPos.y, newPos.w, newPos.h);
+	//LOG("El new pos es: %d, %d, %d, %d", newPos.x, newPos.y, newPos.w, newPos.h);
 	if (App->collision->FindCollision(newPos)) {
 		//if (x != 0) position.x -= 1;
 		//if (y != 0) position.y -= 1;

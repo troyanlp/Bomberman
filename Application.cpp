@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Timer.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -16,6 +17,9 @@ using namespace std;
 
 Application::Application()
 {
+	//FPS
+	fpsTimer = new Timer();
+
 	// Order matters: they will init/start/pre/update/post in this order
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
@@ -62,6 +66,10 @@ bool Application::Init()
 
 update_status Application::Update()
 {
+	//Frames
+	fpsTimer->Start();
+
+	//Updates
 	update_status ret = UPDATE_CONTINUE;
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -76,6 +84,9 @@ update_status Application::Update()
 		if((*it)->IsEnabled() == true) 
 			ret = (*it)->PostUpdate();
 
+	//Frames
+	LOG("FPS are: %f", 1/fpsTimer->EllapsedInSeconds());
+	fpsTimer->Stop();
 	return ret;
 }
 

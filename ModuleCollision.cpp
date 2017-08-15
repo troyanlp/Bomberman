@@ -91,14 +91,14 @@ void ModuleCollision::DebugDraw()
 
 bool ModuleCollision::FindCollision(const SDL_Rect rect)
 {
-	LOG("Hola");
+	//LOG("Hola");
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
 		if ((*it)->type == CEXTERNALBLOCK || (*it)->type == CINTERNALBLOCK || (*it)->type == CBRICK) {
 			double d = sqrt(pow((*it)->rect.x - rect.x, 2) + pow((*it)->rect.y - rect.y, 2));
 			if (d < 100) {
 				if ((*it)->CheckCollision(rect)) {
-					LOG("El tipo de la colision es: %d", (*it)->type);
-					LOG("TRUEEEEEE");
+					//LOG("El tipo de la colision es: %d", (*it)->type);
+					//LOG("TRUEEEEEE");
 					return true;
 				}
 			}
