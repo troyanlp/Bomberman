@@ -85,7 +85,7 @@ update_status Application::Update()
 			ret = (*it)->PostUpdate();
 
 	//Frames
-	LOG("FPS are: %f", 1/fpsTimer->EllapsedInSeconds());
+	//LOG("FPS are: %f", 1/fpsTimer->EllapsedInSeconds());
 	fpsTimer->Stop();
 	return ret;
 }

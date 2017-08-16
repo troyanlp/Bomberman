@@ -65,6 +65,7 @@ bool ModuleSceneLevel::Start()
 	CreateBlocks();
 	CreateBricks();
 	
+	InitializeSquareMatrix();
 
 	return true;
 }
@@ -110,6 +111,16 @@ update_status ModuleSceneLevel::Update()
 	return UPDATE_CONTINUE;
 }
 
+void ModuleSceneLevel::PrintLevelMap()
+{
+	for (int row = 0; row < 11; row++) {
+		LOG("%c, %c, %c, %c, %c, %c, %c, %c, %c, %c, %c, %c, %c, %c, %c", levelMap[row][0].type, levelMap[row][1].type,
+			levelMap[row][2].type, levelMap[row][3].type, levelMap[row][4].type, levelMap[row][5].type, levelMap[row][6].type,
+			levelMap[row][7].type, levelMap[row][8].type, levelMap[row][9].type, levelMap[row][10].type, levelMap[row][11].type,
+			levelMap[row][12].type, levelMap[row][13].type, levelMap[row][14].type);
+	}
+}
+
 void ModuleSceneLevel::CreateExternalBlocks()
 {
 	//Left
@@ -151,4 +162,53 @@ void ModuleSceneLevel::CreateBricks()
 	Entities.push_back(obj);
 	obj = new Brick(iPoint(200, 100), graphics, brick);
 	Entities.push_back(obj);
+}
+
+void ModuleSceneLevel::InitializeSquareMatrix()
+{
+	//External Blocks
+	int row = 0;
+	for (int column = 0; column < 15; column++) {
+		levelMap[row][column].type = 'e';
+	}
+	row = 10;
+	for (int column = 0; column < 15; column++) {
+		levelMap[row][column].type = 'e';
+	}
+	int column = 0;
+	for (int row = 0; row < 11; row++) {
+		levelMap[row][column].type = 'e';
+	}
+	column = 14;
+	for (int row = 0; row < 11; row++) {
+		levelMap[row][column].type = 'e';
+	}
+	//Internal Blocks
+	for (row = 2; row < 9; row += 2 ) {
+		for (column = 2; column < 13; column += 2) {
+			levelMap[row][column].type = 'i';
+		}
+	}
+	//All else will be empty
+	for (row = 0; row < 11; row++) {
+		for (column = 0; column < 15; column++) {
+			if(levelMap[row][column].type == 'n') levelMap[row][column].type = '0';
+		}
+	}
+	//Bricks
+	levelMap[1][3].type = 'b';
+	levelMap[1][4].type = 'b';
+	//Player
+	levelMap[2][1].type = '1';
+
+	//Fill position and rects
+	for (row = 0; row < 11; row++) {
+		for (column = 0; column < 15; column++) {
+			levelMap[row][column].position = iPoint(column * 50, 50 + row * 50);
+			levelMap[row][column].squareRect = { column * 50, 50 + row * 50, 50, 50 };
+		}
+	}
+
+	//Print matrix
+	PrintLevelMap();
 }
