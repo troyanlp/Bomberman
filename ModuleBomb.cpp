@@ -2,14 +2,16 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "Explotion.h"
+#include "Bomb.h"
 
 ModuleBomb::ModuleBomb(bool start_enabled) : Module(start_enabled)
 {
 	//Explotion animations
-	for (int i = 0; i < 7; i++) {
+	/*for (int i = 0; i < 7; i++) {
 		fourWay.frames.push_back({ 0 + (48*i), 0, 48, 48});
 	}
 	fourWay.speed = 0.075f;
+	fourWay.loop = true;
 	for (int i = 0; i < 7; i++) {
 		twoWay.frames.push_back({ 0 + (48 * i), 48, 48, 43 });
 	}
@@ -18,6 +20,7 @@ ModuleBomb::ModuleBomb(bool start_enabled) : Module(start_enabled)
 		ending.frames.push_back({ 0 + (48 * i), 91, 48, 43 });
 	}
 	ending.speed = 0.075f;
+	*/
 }
 
 
@@ -36,12 +39,24 @@ bool ModuleBomb::Start()
 
 update_status ModuleBomb::Update()
 {
+	//Update Bombs
 	//LOG("Active Bombs: %d", bombs.size());
 	for (list<Bomb*>::iterator it = bombs.begin(); it != bombs.end(); ++it) {
 		if ((*it)->exploded) {
 			RELEASE(*it);
 			it = bombs.erase(it);
 			if (it == bombs.end()) break;
+		}
+		else {
+			(*it)->Draw();
+		}
+	}
+	//Update Explotions
+	for (list<Explotion*>::iterator it = explotions.begin(); it != explotions.end(); ++it) {
+		if ((*it)->destroyed) {
+			RELEASE(*it);
+			it = explotions.erase(it);
+			if (it == explotions.end()) break;
 		}
 		else {
 			(*it)->Draw();
@@ -60,6 +75,11 @@ bool ModuleBomb::CleanUp()
 		RELEASE(*it);
 
 	bombs.clear();
+
+	for (list<Explotion*>::iterator it = explotions.begin(); it != explotions.end(); ++it)
+		RELEASE(*it);
+
+	explotions.clear();
 
 	return true;
 }
@@ -82,5 +102,6 @@ int ModuleBomb::GetNumBombsFromPlayer(int id)
 
 void ModuleBomb::AddExplotion(int x, int y)
 {
-	Explotion* ex = new Explotion(iPoint(x,y));
+	Explotion* aux = new Explotion(iPoint(x,y), explotionGraphics, ExplotionType::ENDING);
+	explotions.push_back(aux);
 }

@@ -3,7 +3,11 @@
 
 #include "Module.h"
 #include <list>
-#include "Bomb.h"
+#include "Animation.h"
+
+class Bomb;
+class Explotion;
+struct SDL_Texture;
 
 class ModuleBomb :
 	public Module
@@ -24,6 +28,7 @@ public:
 
 public:
 	std::list<Bomb*> bombs;
+	std::list<Explotion*> explotions;
 	//Graphics
 	SDL_Texture* bombGraphics = nullptr;
 	SDL_Texture* explotionGraphics = nullptr;

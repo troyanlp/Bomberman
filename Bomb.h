@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __BOMB_H__
+#define __BOMB_H__
+
 #include "Entity.h"
 #include "Animation.h"
 
@@ -28,3 +30,4 @@ private:
 	
 };
 
+#endif
