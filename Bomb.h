@@ -2,14 +2,13 @@
 #include "Entity.h"
 #include "Animation.h"
 
-
 struct SDL_Texture;
 
 class Bomb :
 	public Entity
 {
 public:
-	Bomb(int x, int y, int id);
+	Bomb(int x, int y, int id, SDL_Texture* gfx);
 	~Bomb();
 
 	void Draw();

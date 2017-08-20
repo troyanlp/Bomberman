@@ -44,7 +44,6 @@ private:
 
 	void InitializeSquareMatrix();
 
-
 public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect externalBlock;

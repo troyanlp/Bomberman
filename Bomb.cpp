@@ -3,17 +3,22 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModuleBomb.h"
 
 
-Bomb::Bomb(int x, int y, int id)
+Bomb::Bomb(int x, int y, int id, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
 {
 	LOG("Loading Bomb");
 
-	graphics = App->textures->Load("Bomberman.png");
-
 	destroyed = false;
 
-	idPlayer = id;
+	//Bomb animation
+	bomb.frames.push_back({ 177, 11, 18, 18 });
+	bomb.frames.push_back({ 195, 11, 18, 18 });
+	bomb.frames.push_back({ 211, 11, 18, 18 });
+	bomb.speed = 0.075f;
+
+	current_animation = &bomb;
 
 	// initial position of the bomb
 	position.x = x;
@@ -22,14 +27,6 @@ Bomb::Bomb(int x, int y, int id)
 	//collider
 	collider = App->collision->AddCollider({ position.x, position.y, 50, 50 });
 	collider->type = CBOMB;
-
-	// bomb animation
-	bomb.frames.push_back({ 177, 11, 18, 18 });
-	bomb.frames.push_back({ 195, 11, 18, 18 });
-	bomb.frames.push_back({ 211, 11, 18, 18 });
-	bomb.speed = 0.075f;
-
-	current_animation = &bomb;
 
 	spriteDest = { position.x, position.y, 50, 50 };
 }
@@ -55,6 +52,7 @@ void Bomb::Explode()
 	LOG("BOOM");
 	exploded = true;
 	collider->to_delete = true;
+	App->bombs->AddExplotion(position.x, position.y);
 }
 
 bool Bomb::CleanUp()

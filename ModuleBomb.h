@@ -19,9 +19,20 @@ public:
 	void AddBomb(int x, int y, int idPlayer);
 	int GetNumBombsFromPlayer(int id);
 
+	void AddExplotion(int x, int y);
+
 
 public:
 	std::list<Bomb*> bombs;
+	//Graphics
+	SDL_Texture* bombGraphics = nullptr;
+	SDL_Texture* explotionGraphics = nullptr;
+	//Bomb Animation
+	Animation bomb;
+	//Explotions Animation
+	Animation fourWay;
+	Animation twoWay;
+	Animation ending;
 };
 
 #endif
