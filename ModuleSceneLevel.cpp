@@ -212,3 +212,25 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 	//Print matrix
 	PrintLevelMap();
 }
+
+void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
+{
+	for (int row = 0; row < 11; row++) {
+		for (int column = 0; column < 15; column++) {
+			if (levelMap[row][column].position.x == x && levelMap[row][column].position.y == y) levelMap[row][column].type = 'o';
+		}
+	}
+	//Print matrix
+	PrintLevelMap();
+}
+
+void ModuleSceneLevel::RemoveBombToMapLevel(int x, int y)
+{
+	for (int row = 0; row < 11; row++) {
+		for (int column = 0; column < 15; column++) {
+			if (levelMap[row][column].position.x == x && levelMap[row][column].position.y == y) levelMap[row][column].type = '0';
+		}
+	}
+	//Print matrix
+	PrintLevelMap();
+}

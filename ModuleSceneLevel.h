@@ -15,6 +15,7 @@ i = internal block
 e = enemy
 b = brick
 t = item
+o = bomb
 x = explotion
 0 = empty
 */
@@ -35,15 +36,18 @@ public:
 	update_status Update();
 	
 	void PrintLevelMap();
+	void AddBombToMapLevel(int x, int y);
+	void RemoveBombToMapLevel(int x, int y);
 
 	bool CleanUp();
+
 private:
 	void CreateExternalBlocks();
 	void CreateBlocks();
 	void CreateBricks();
 
 	void InitializeSquareMatrix();
-
+	
 public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect externalBlock;

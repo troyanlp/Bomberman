@@ -3,6 +3,7 @@
 #include "ModuleTextures.h"
 #include "Explotion.h"
 #include "Bomb.h"
+#include "ModuleSceneLevel.h"
 
 ModuleBomb::ModuleBomb(bool start_enabled) : Module(start_enabled)
 {
@@ -89,6 +90,7 @@ void ModuleBomb::AddBomb(int x, int y, int idPlayer)
 	LOG("Adding bomb!");
 	Bomb* aux = new Bomb(x,y,idPlayer,bombGraphics);
 	bombs.push_back(aux);
+	App->scene_level->AddBombToMapLevel(x,y);
 }
 
 int ModuleBomb::GetNumBombsFromPlayer(int id)

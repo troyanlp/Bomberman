@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleBomb.h"
+#include "ModuleSceneLevel.h"
 
 
 Bomb::Bomb(int x, int y, int id, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
@@ -50,6 +51,7 @@ void Bomb::Draw()
 void Bomb::Explode()
 {
 	LOG("BOOM");
+	App->scene_level->RemoveBombToMapLevel();
 	exploded = true;
 	collider->to_delete = true;
 	App->bombs->AddExplotion(position.x, position.y);
