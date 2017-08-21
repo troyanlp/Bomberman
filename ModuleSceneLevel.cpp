@@ -254,6 +254,8 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		ExplotionInstance aux;
 		aux.type = ENDING;
 		aux.position = levelMap[row - 1][column].squareRect;
+		aux.rotation = -90;
+		aux.flipType = SDL_FLIP_NONE;
 		ex.push_back(aux);
 	}
 	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row - 1][column].type == '1')) {
@@ -261,6 +263,8 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		ExplotionInstance aux;
 		aux.type = ENDING;
 		aux.position = levelMap[row + 1][column].squareRect;
+		aux.rotation = 90;
+		aux.flipType = SDL_FLIP_NONE;
 		ex.push_back(aux);
 	}
 	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1')) {
@@ -268,6 +272,8 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		ExplotionInstance aux;
 		aux.type = ENDING;
 		aux.position = levelMap[row][column + 1].squareRect;
+		aux.rotation = 0;
+		aux.flipType = SDL_FLIP_NONE;
 		ex.push_back(aux);
 	}
 	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1')) {
@@ -275,17 +281,27 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		ExplotionInstance aux;
 		aux.type = ENDING;
 		aux.position = levelMap[row][column - 1].squareRect;
+		aux.rotation = 0;
+		aux.flipType = SDL_FLIP_HORIZONTAL;
 		ex.push_back(aux);
 	}
 	ExplotionInstance central;
 	central.position = center;
-	if (up && down && right && left) central.type = FOURWAY;
-	else if((up && down) || (right && left)) central.type = TWOWAY;
-	else central.type = ENDING;
+	if (up && down && right && left) {
+		central.type = FOURWAY;
+		central.rotation = 0;
+		central.flipType = SDL_FLIP_NONE;
+	}
+	else if ((up && down) || (right && left)) {
+		central.type = TWOWAY;
+		if (up && down) central.rotation = 90;
+		else central.rotation = 0;
+		central.flipType = SDL_FLIP_NONE;
+	}else central.type = ENDING;
 	ex.push_back(central);
 	
 	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
-		App->bombs->AddExplotion((it)->position, (it)->type);
+		App->bombs->AddExplotion((it)->position, (*it));
 	}
 	//Print matrix
 	PrintLevelMap();

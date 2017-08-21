@@ -9,6 +9,7 @@ class Bomb;
 class Explotion;
 struct SDL_Texture;
 enum ExplotionType;
+struct ExplotionInstance;
 
 class ModuleBomb :
 	public Module
@@ -24,7 +25,7 @@ public:
 	void AddBomb(int x, int y, int idPlayer);
 	int GetNumBombsFromPlayer(int id);
 
-	void AddExplotion(SDL_Rect position, ExplotionType type);
+	void AddExplotion(SDL_Rect position, ExplotionInstance instance);
 
 
 public:

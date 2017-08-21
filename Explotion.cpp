@@ -3,12 +3,16 @@
 #include "ModuleRender.h"
 
 
-Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionType type) : graphics(gfx), explotionType(type)
+Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance) : graphics(gfx)
 {
+	explotionType = instance.type;
+	rotation = instance.rotation;
+	flipType = instance.flipType;
+
 	position.x = pos.x;
 	position.y = pos.y;
 
-	switch (type) {
+	switch (explotionType) {
 		case FOURWAY:
 			for (int i = 0; i < 7; i++) {
 				animation.frames.push_back({ 0 + (48 * i), 0, 48, 48 });
