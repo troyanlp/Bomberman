@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
@@ -15,7 +16,8 @@ enum ExplotionType {
 struct ExplotionInstance {
 	ExplotionType type;
 	SDL_Rect position;
-	int rotation;
+	float rotation = 0;
+	SDL_RendererFlip flipType = SDL_FLIP_NONE;
 };
 
 class Explotion :
@@ -34,6 +36,8 @@ public:
 	ExplotionType explotionType;
 	Animation animation;
 	int idPlayer;
+	float rotation = 0;
+	SDL_RendererFlip flipType = SDL_FLIP_NONE;
 	iPoint position;
 	SDL_Rect spriteDest;
 };
