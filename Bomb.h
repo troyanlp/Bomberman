@@ -20,6 +20,7 @@ public:
 public:
 	bool exploded = false;
 	int idPlayer;
+	int flameLevel;
 private:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;

@@ -3,8 +3,10 @@
 
 #include "Module.h"
 #include "Entity.h"
+#include <list>
 
 struct SDL_Texture;
+struct ExplotionInstance;
 
 /*
 n = null
@@ -12,7 +14,7 @@ e = external block
 i = internal block
 1 = player 1
 2 = player 2
-e = enemy
+y = enemy
 b = brick
 t = item
 o = bomb
@@ -37,7 +39,7 @@ public:
 	
 	void PrintLevelMap();
 	void AddBombToMapLevel(int x, int y);
-	void RemoveBombToMapLevel(int x, int y);
+	std::list<ExplotionInstance> AddExplotionToMapLevel(int x, int y, int flameLevel);
 
 	bool CleanUp();
 

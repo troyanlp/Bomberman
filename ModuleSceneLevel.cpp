@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Block.h"
 #include "Brick.h"
+#include "Explotion.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -215,6 +216,7 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 
 void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
 {
+	//Add bomb from map
 	for (int row = 0; row < 11; row++) {
 		for (int column = 0; column < 15; column++) {
 			if (levelMap[row][column].position.x == x && levelMap[row][column].position.y == y) levelMap[row][column].type = 'o';
@@ -224,13 +226,69 @@ void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
 	PrintLevelMap();
 }
 
-void ModuleSceneLevel::RemoveBombToMapLevel(int x, int y)
+std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int y, int flameLevel)
 {
-	for (int row = 0; row < 11; row++) {
-		for (int column = 0; column < 15; column++) {
-			if (levelMap[row][column].position.x == x && levelMap[row][column].position.y == y) levelMap[row][column].type = '0';
+	std::list<ExplotionInstance> ex;
+	
+	//Remove bomb from map
+	int row;
+	int column;
+	SDL_Rect center;
+	for (int i = 0; i < 11; i++) {
+		for (int j = 0; j < 15; j++) {
+			if (levelMap[i][j].position.x == x && levelMap[i][j].position.y == y) {
+				row = i;
+				column = j;
+				center = levelMap[i][j].squareRect;
+				levelMap[i][j].type = '0';
+			}
 		}
+	}
+	//Calculate explotion
+	bool up = false;
+	bool down = false;
+	bool right = false;
+	bool left = false;
+	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1')) {
+		up = true;
+		ExplotionInstance aux;
+		aux.type = ENDING;
+		aux.position = levelMap[row - 1][column].squareRect;
+		ex.push_back(aux);
+	}
+	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row - 1][column].type == '1')) {
+		down = true;
+		ExplotionInstance aux;
+		aux.type = ENDING;
+		aux.position = levelMap[row + 1][column].squareRect;
+		ex.push_back(aux);
+	}
+	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1')) {
+		right = true;
+		ExplotionInstance aux;
+		aux.type = ENDING;
+		aux.position = levelMap[row][column + 1].squareRect;
+		ex.push_back(aux);
+	}
+	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1')) {
+		left = true;
+		ExplotionInstance aux;
+		aux.type = ENDING;
+		aux.position = levelMap[row][column - 1].squareRect;
+		ex.push_back(aux);
+	}
+	ExplotionInstance central;
+	central.position = center;
+	if (up && down && right && left) central.type = FOURWAY;
+	else if((up && down) || (right && left)) central.type = TWOWAY;
+	else central.type = ENDING;
+	ex.push_back(central);
+	
+	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
+		App->bombs->AddExplotion((it)->position, (it)->type);
 	}
 	//Print matrix
 	PrintLevelMap();
+
+	return ex;
 }

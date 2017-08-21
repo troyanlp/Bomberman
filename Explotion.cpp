@@ -3,8 +3,11 @@
 #include "ModuleRender.h"
 
 
-Explotion::Explotion(iPoint pos, SDL_Texture* gfx, ExplotionType type) : position(pos), graphics(gfx), explotionType(type)
+Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionType type) : graphics(gfx), explotionType(type)
 {
+	position.x = pos.x;
+	position.y = pos.y;
+
 	switch (type) {
 		case FOURWAY:
 			for (int i = 0; i < 7; i++) {

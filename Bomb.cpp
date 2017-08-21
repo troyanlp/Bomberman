@@ -5,11 +5,14 @@
 #include "ModuleCollision.h"
 #include "ModuleBomb.h"
 #include "ModuleSceneLevel.h"
+#include "Explotion.h"
 
 
 Bomb::Bomb(int x, int y, int id, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
 {
 	LOG("Loading Bomb");
+
+	flameLevel = 1;
 
 	destroyed = false;
 
@@ -51,10 +54,10 @@ void Bomb::Draw()
 void Bomb::Explode()
 {
 	LOG("BOOM");
-	App->scene_level->RemoveBombToMapLevel();
+	list<ExplotionInstance> ex = App->scene_level->AddExplotionToMapLevel(position.x,position.y,flameLevel);
 	exploded = true;
 	collider->to_delete = true;
-	App->bombs->AddExplotion(position.x, position.y);
+	//App->bombs->AddExplotion(position.x, position.y);
 }
 
 bool Bomb::CleanUp()

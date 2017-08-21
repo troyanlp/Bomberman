@@ -91,7 +91,9 @@
     <ClInclude Include="Timer.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Explotion.h" />
+    <ClInclude Include="Explotion.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -155,7 +157,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Explotion.cpp">
-      <Filter>Main</Filter>
+      <Filter>Game Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -102,8 +102,8 @@ int ModuleBomb::GetNumBombsFromPlayer(int id)
 	return count;
 }
 
-void ModuleBomb::AddExplotion(int x, int y)
+void ModuleBomb::AddExplotion(SDL_Rect position, ExplotionType type)
 {
-	Explotion* aux = new Explotion(iPoint(x,y), explotionGraphics, ExplotionType::ENDING);
+	Explotion* aux = new Explotion(position, explotionGraphics, type);
 	explotions.push_back(aux);
 }
