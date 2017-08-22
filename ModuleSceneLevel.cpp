@@ -249,41 +249,53 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	bool down = false;
 	bool right = false;
 	bool left = false;
-	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1')) {
+	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1' || levelMap[row - 1][column].type == 'e')) {
 		up = true;
-		ExplotionInstance aux;
-		aux.type = ENDING;
-		aux.position = levelMap[row - 1][column].squareRect;
-		aux.rotation = -90;
-		aux.flipType = SDL_FLIP_NONE;
-		ex.push_back(aux);
+		if (levelMap[row - 1][column].type != 'e') {
+			ExplotionInstance aux;
+			aux.type = ENDING;
+			aux.position = levelMap[row - 1][column].squareRect;
+			aux.rotation = -90;
+			aux.flipType = SDL_FLIP_NONE;
+			ex.push_back(aux);
+		}
+		
 	}
-	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row - 1][column].type == '1')) {
+	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row + 1][column].type == '1' || levelMap[row + 1][column].type == 'e')) {
 		down = true;
-		ExplotionInstance aux;
-		aux.type = ENDING;
-		aux.position = levelMap[row + 1][column].squareRect;
-		aux.rotation = 90;
-		aux.flipType = SDL_FLIP_NONE;
-		ex.push_back(aux);
+		if (levelMap[row + 1][column].type != 'e') {
+			ExplotionInstance aux;
+			aux.type = ENDING;
+			aux.position = levelMap[row + 1][column].squareRect;
+			aux.rotation = 90;
+			aux.flipType = SDL_FLIP_NONE;
+			ex.push_back(aux);
+		}
+		
 	}
-	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1')) {
+	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1' || levelMap[row][column + 1].type == 'e')) {
 		right = true;
-		ExplotionInstance aux;
-		aux.type = ENDING;
-		aux.position = levelMap[row][column + 1].squareRect;
-		aux.rotation = 0;
-		aux.flipType = SDL_FLIP_NONE;
-		ex.push_back(aux);
+		if (levelMap[row][column + 1].type != 'e') {
+			ExplotionInstance aux;
+			aux.type = ENDING;
+			aux.position = levelMap[row][column + 1].squareRect;
+			aux.rotation = 0;
+			aux.flipType = SDL_FLIP_NONE;
+			ex.push_back(aux);
+		}
+		
 	}
-	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1')) {
+	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1' || levelMap[row][column - 1].type == 'e')) {
 		left = true;
-		ExplotionInstance aux;
-		aux.type = ENDING;
-		aux.position = levelMap[row][column - 1].squareRect;
-		aux.rotation = 0;
-		aux.flipType = SDL_FLIP_HORIZONTAL;
-		ex.push_back(aux);
+		if (levelMap[row][column - 1].type != 'e') {
+			ExplotionInstance aux;
+			aux.type = ENDING;
+			aux.position = levelMap[row][column - 1].squareRect;
+			aux.rotation = 0;
+			aux.flipType = SDL_FLIP_HORIZONTAL;
+			ex.push_back(aux);
+		}
+		
 	}
 	ExplotionInstance central;
 	central.position = center;
