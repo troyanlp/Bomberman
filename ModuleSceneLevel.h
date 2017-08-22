@@ -40,6 +40,7 @@ public:
 	void PrintLevelMap();
 	void AddBombToMapLevel(int x, int y);
 	std::list<ExplotionInstance> AddExplotionToMapLevel(int x, int y, int flameLevel);
+	void EraseBrickFromMapLevel(int x, int y);
 
 	bool CleanUp();
 
@@ -49,6 +50,8 @@ private:
 	void CreateBricks();
 
 	void InitializeSquareMatrix();
+
+	void BreakBrick(SDL_Rect position);
 	
 public:
 	SDL_Texture* graphics = nullptr;

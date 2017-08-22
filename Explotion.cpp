@@ -47,7 +47,7 @@ Explotion::~Explotion()
 
 void Explotion::Draw()
 {
-	LOG("DRAW de la explosion");
+	//LOG("DRAW de la explosion");
 	if (destroyed == false)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest, rotation, flipType);
 	if (current_animation->Finished()) destroyed = true;

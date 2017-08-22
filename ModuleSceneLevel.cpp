@@ -214,6 +214,24 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 	PrintLevelMap();
 }
 
+void ModuleSceneLevel::BreakBrick(SDL_Rect position)
+{
+	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
+		if ((*it)->type == Entity::EntityType::BRICK) {
+			Brick* aux = (Brick*)(*it);
+			if (SDL_RectEquals(&aux->spriteDest, &position) == SDL_TRUE) {
+				LOG("Romper el ladrillo (%d, %d, %d, %d)", aux->spriteDest.x, aux->spriteDest.y, aux->spriteDest.w, aux->spriteDest.h);
+				aux->CleanUp();
+				EraseBrickFromMapLevel(position.x, position.y);
+				RELEASE(aux);
+				it = Entities.erase(it);
+				break;
+				//if (it == Entities.end()) break;
+			}
+		}
+	}
+}
+
 void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
 {
 	//Add bomb from map
@@ -249,9 +267,11 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	bool down = false;
 	bool right = false;
 	bool left = false;
-	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1' || levelMap[row - 1][column].type == 'e')) {
+	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1' || levelMap[row - 1][column].type == 'e'
+		|| levelMap[row - 1][column].type == 'b')) {
 		up = true;
-		if (levelMap[row - 1][column].type != 'e') {
+		if (levelMap[row - 1][column].type != 'e' || levelMap[row - 1][column].type == 'b') {
+			if (levelMap[row - 1][column].type == 'b') BreakBrick(levelMap[row - 1][column].squareRect);
 			ExplotionInstance aux;
 			aux.type = ENDING;
 			aux.position = levelMap[row - 1][column].squareRect;
@@ -261,9 +281,11 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		}
 		
 	}
-	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row + 1][column].type == '1' || levelMap[row + 1][column].type == 'e')) {
+	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row + 1][column].type == '1' || levelMap[row + 1][column].type == 'e'
+		|| levelMap[row + 1][column].type == 'b')) {
 		down = true;
-		if (levelMap[row + 1][column].type != 'e') {
+		if (levelMap[row + 1][column].type != 'e' || levelMap[row + 1][column].type == 'b') {
+			if (levelMap[row + 1][column].type == 'b') BreakBrick(levelMap[row + 1][column].squareRect);
 			ExplotionInstance aux;
 			aux.type = ENDING;
 			aux.position = levelMap[row + 1][column].squareRect;
@@ -273,9 +295,11 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		}
 		
 	}
-	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1' || levelMap[row][column + 1].type == 'e')) {
+	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1' || levelMap[row][column + 1].type == 'e'
+		|| levelMap[row][column + 1].type == 'b')) {
 		right = true;
-		if (levelMap[row][column + 1].type != 'e') {
+		if (levelMap[row][column + 1].type != 'e' || levelMap[row][column + 1].type == 'b') {
+			if (levelMap[row][column + 1].type == 'b') BreakBrick(levelMap[row][column + 1].squareRect);
 			ExplotionInstance aux;
 			aux.type = ENDING;
 			aux.position = levelMap[row][column + 1].squareRect;
@@ -285,9 +309,11 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		}
 		
 	}
-	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1' || levelMap[row][column - 1].type == 'e')) {
+	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1' || levelMap[row][column - 1].type == 'e'
+		|| levelMap[row][column - 1].type == 'b')) {
 		left = true;
-		if (levelMap[row][column - 1].type != 'e') {
+		if (levelMap[row][column - 1].type != 'e' || levelMap[row][column - 1].type == 'b') {
+			if (levelMap[row][column - 1].type == 'b') BreakBrick(levelMap[row][column - 1].squareRect);
 			ExplotionInstance aux;
 			aux.type = ENDING;
 			aux.position = levelMap[row][column - 1].squareRect;
@@ -319,4 +345,16 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	PrintLevelMap();
 
 	return ex;
+}
+
+void ModuleSceneLevel::EraseBrickFromMapLevel(int x, int y)
+{
+	for (int i = 0; i < 11; i++) {
+		for (int j = 0; j < 15; j++) {
+			if (levelMap[i][j].position.x == x && levelMap[i][j].position.y == y && levelMap[i][j].type == 'b') {
+				levelMap[i][j].type = '0';
+			}
+		}
+	}
+	PrintLevelMap();
 }

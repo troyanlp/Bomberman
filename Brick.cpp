@@ -26,5 +26,6 @@ void Brick::Draw()
 
 bool Brick::CleanUp()
 {
+	collider->to_delete = true;
 	return true;
 }
