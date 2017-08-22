@@ -40,7 +40,7 @@ Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance)
 	animation.speed = 0.1f;
 	animation.loop = false;
 	current_animation = &animation;
-	LOG("EXPLOTION!");
+	//LOG("EXPLOTION!");
 	spriteDest = { position.x, position.y, 50, 50 };
 }
 

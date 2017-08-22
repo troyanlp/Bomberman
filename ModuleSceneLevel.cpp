@@ -211,7 +211,7 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 	}
 
 	//Print matrix
-	PrintLevelMap();
+	//PrintLevelMap();
 }
 
 void ModuleSceneLevel::BreakBrick(SDL_Rect position)
@@ -241,7 +241,7 @@ void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
 		}
 	}
 	//Print matrix
-	PrintLevelMap();
+	//PrintLevelMap();
 }
 
 std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int y, int flameLevel)
@@ -342,7 +342,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		App->bombs->AddExplotion((it)->position, (*it));
 	}
 	//Print matrix
-	PrintLevelMap();
+	//PrintLevelMap();
 
 	return ex;
 }
@@ -356,5 +356,5 @@ void ModuleSceneLevel::EraseBrickFromMapLevel(int x, int y)
 			}
 		}
 	}
-	PrintLevelMap();
+	//PrintLevelMap();
 }

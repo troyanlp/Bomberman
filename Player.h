@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -35,6 +36,8 @@ public:
 	SDL_Texture* graphics = nullptr;
 	int id;
 	int lives;
+	Timer* hurtTimer;
+	bool invincible = false;
 	bool AI = false;
 	PlayerAnimation playerAnimation;
 	Animation* current_animation = nullptr;

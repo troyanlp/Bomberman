@@ -3,6 +3,8 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModulePlayer.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -46,7 +48,20 @@ update_status ModuleCollision::PreUpdate()
 update_status ModuleCollision::Update()
 {
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
+		
 		if ((*it)->type == CPLAYER) {
+			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
+				if ((*it2)->type == CEXPLOTION) {
+					if ((*it)->CheckCollision((*it2)->rect)) {
+						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
+						App->player->player1->Hurt();
+					}
+				}
+			}
+		}
+		
+		
+		/*if ((*it)->type == CPLAYER) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CEXTERNALBLOCK || (*it2)->type == CINTERNALBLOCK || (*it2)->type == CBRICK) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
@@ -54,7 +69,7 @@ update_status ModuleCollision::Update()
 					}
 				}
 			}
-		}
+		}*/
 		
 	}
 

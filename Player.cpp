@@ -30,6 +30,8 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 
 	numBombs = 1;
 	lives = 3;
+	hurtTimer = new Timer();
+	invincible = false;
 }
 
 
@@ -39,6 +41,14 @@ Player::~Player()
 
 void Player::Draw()
 {
+	if (invincible) {
+		if (hurtTimer->EllapsedInSeconds() >= 4) {
+			LOG("Fin de invencibilidad");
+			invincible = false;
+			hurtTimer->Stop();
+		}
+	}
+
 	if (destroyed == false)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
 }
@@ -112,6 +122,16 @@ bool Player::CanPlantBomb()
 
 void Player::Hurt()
 {
-	lives--;
-	if(lives == 0) LOG("YOU DIED!")
+	if (!invincible) {
+		lives--;
+		LOG("AUX!");
+		if (lives == 0) {
+			LOG("YOU DIED!");
+		}
+		else {
+			hurtTimer->Start();
+			invincible = true;
+			LOG("Inicio de invencibilidad");
+		}
+	}
 }
