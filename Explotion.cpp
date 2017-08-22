@@ -1,7 +1,7 @@
 #include "Explotion.h"
 #include "Application.h"
 #include "ModuleRender.h"
-
+#include "ModuleCollision.h"
 
 Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance) : graphics(gfx)
 {
@@ -11,6 +11,10 @@ Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance)
 
 	position.x = pos.x;
 	position.y = pos.y;
+
+	//collider
+	collider = App->collision->AddCollider({ position.x, position.y, 50, 50 });
+	collider->type = CEXPLOTION;
 
 	switch (explotionType) {
 		case FOURWAY:
@@ -55,5 +59,6 @@ void Explotion::Draw()
 
 bool Explotion::CleanUp()
 {
-	return false;
+	collider->to_delete = true;
+	return true;
 }

@@ -17,6 +17,9 @@ ModuleCollision::ModuleCollision()
 	collisionMatrix[make_pair(CBOMB, CEXTERNALBLOCK)] = true;
 	collisionMatrix[make_pair(CBOMB, CINTERNALBLOCK)] = true;
 	collisionMatrix[make_pair(CBOMB, CBRICK)] = true;
+
+	collisionMatrix[make_pair(CEXPLOTION, CPLAYER)] = true;
+	collisionMatrix[make_pair(CEXPLOTION, CBRICK)] = true;
 }
 
 // Destructor

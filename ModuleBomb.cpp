@@ -55,6 +55,7 @@ update_status ModuleBomb::Update()
 	//Update Explotions
 	for (list<Explotion*>::iterator it = explotions.begin(); it != explotions.end(); ++it) {
 		if ((*it)->destroyed) {
+			(*it)->CleanUp();
 			RELEASE(*it);
 			it = explotions.erase(it);
 			if (it == explotions.end()) break;
