@@ -105,8 +105,8 @@ bool ModulePlayer::CleanUp()
 
 	App->textures->Unload(graphics);
 	if (current_animation != nullptr) RELEASE(current_animation);
-	if (player1 != nullptr) RELEASE(player1); LOG("RELEASING PLAYER 1")
-	if (player2 != nullptr) RELEASE(player2);
+	if (player1 != nullptr) player1->CleanUp(); RELEASE(player1); LOG("RELEASING PLAYER 1")
+	if (player2 != nullptr) player2->CleanUp(); RELEASE(player2);
 
 	return true;
 }

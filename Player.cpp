@@ -32,6 +32,8 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	lives = 3;
 	hurtTimer = new Timer();
 	invincible = false;
+	invincibleShow = true;
+	invincibleCount = 0;
 }
 
 
@@ -42,19 +44,26 @@ Player::~Player()
 void Player::Draw()
 {
 	if (invincible) {
+		invincibleCount++;
 		if (hurtTimer->EllapsedInSeconds() >= 4) {
 			LOG("Fin de invencibilidad");
 			invincible = false;
+			invincibleShow = true;
+			invincibleCount = 0;
 			hurtTimer->Stop();
+		}
+		else {
+			if (invincibleCount % 10 == 0) invincibleShow = !invincibleShow;
 		}
 	}
 
-	if (destroyed == false)
+	if (!destroyed && invincibleShow)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
 }
 
 bool Player::CleanUp()
 {
+	RELEASE(hurtTimer);
 	return true;
 }
 
@@ -131,6 +140,8 @@ void Player::Hurt()
 		else {
 			hurtTimer->Start();
 			invincible = true;
+			invincibleShow = true;
+			invincibleCount = 0;
 			LOG("Inicio de invencibilidad");
 		}
 	}

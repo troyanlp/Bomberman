@@ -38,6 +38,8 @@ public:
 	int lives;
 	Timer* hurtTimer;
 	bool invincible = false;
+	bool invincibleShow = false;
+	int invincibleCount = 0;
 	bool AI = false;
 	PlayerAnimation playerAnimation;
 	Animation* current_animation = nullptr;
