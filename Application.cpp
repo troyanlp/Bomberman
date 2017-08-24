@@ -94,9 +94,11 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
-	for(list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it)
-		if((*it)->IsEnabled() == true) 
+	for (list<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it) {
+		if ((*it)->IsEnabled() == true) {
 			ret = (*it)->CleanUp();
+		}
+	}
 
 	RELEASE(fpsTimer);
 

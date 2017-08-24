@@ -38,7 +38,7 @@ Bomb::Bomb(int x, int y, int id, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
 
 Bomb::~Bomb()
 {
-	collider->to_delete = true;
+	//collider->to_delete = true;
 }
 
 void Bomb::Draw()
@@ -61,12 +61,10 @@ void Bomb::Explode()
 	//App->bombs->AddExplotion(position.x, position.y);
 }
 
-bool Bomb::CleanUp()
+void Bomb::CleanUp()
 {
 	LOG("Unloading Bomb");
 
 	App->textures->Unload(graphics);
 	collider->to_delete = true;
-
-	return true;
 }

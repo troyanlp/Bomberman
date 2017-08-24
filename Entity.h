@@ -14,6 +14,7 @@ public:
 		PLAYER,
 		BOMB,
 		IA,
+		ENEMY,
 		BLOCK,
 		BRICK,
 		ITEM
@@ -22,6 +23,7 @@ public:
 	Entity() {}
 	~Entity() {}
 
+	virtual void CleanUp() {}
 	virtual void Draw() {}
 
 public:

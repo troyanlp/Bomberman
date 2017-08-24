@@ -23,7 +23,7 @@ public:
 	~Player();
 
 	void Draw();
-	bool CleanUp();
+	void CleanUp();
 
 	void ChangeAnimation(PlayerAnimation anim);
 	bool CanMove(int x, int y);

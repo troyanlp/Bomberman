@@ -13,7 +13,7 @@ public:
 	~Brick();
 
 	void Draw();
-	bool CleanUp();
+	void CleanUp();
 
 public:
 	SDL_Texture* graphics = nullptr;

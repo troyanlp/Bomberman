@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 struct ExplotionInstance;
+class Enemy;
 
 /*
 n = null
@@ -48,6 +49,7 @@ private:
 	void CreateExternalBlocks();
 	void CreateBlocks();
 	void CreateBricks();
+	void CreateEnemies();
 
 	void InitializeSquareMatrix();
 
@@ -59,6 +61,7 @@ public:
 	SDL_Rect block;
 	SDL_Rect brick;
 	std::list<Entity*> Entities;
+	std::list<Enemy*> Enemies;
 	//Matrix of 11 rows and 15 columns
 	Square levelMap[11][15]; 
 

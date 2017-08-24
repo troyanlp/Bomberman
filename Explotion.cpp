@@ -57,8 +57,7 @@ void Explotion::Draw()
 	if (current_animation->Finished()) destroyed = true;
 }
 
-bool Explotion::CleanUp()
+void Explotion::CleanUp()
 {
 	collider->to_delete = true;
-	return true;
 }

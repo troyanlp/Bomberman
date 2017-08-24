@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Animation.h"
+#include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
@@ -10,20 +11,24 @@ class Enemy :
 	public Entity
 {
 public:
-	Enemy(int x, int y);
+	Enemy(iPoint pos, char direction);
 	~Enemy();
 
 	void Update();
 	void Draw();
-	bool CleanUp();
+	void CleanUp();
+
+	void Die();
 
 public:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	Animation up;
 	Animation down;
-	Animation horizontal;
-	bool right;
+	Animation side;
+	bool goingDown = false;
+	bool goingRight = false;
+	SDL_RendererFlip flipType = SDL_FLIP_NONE;
 	SDL_Rect spriteDest;
 };
 

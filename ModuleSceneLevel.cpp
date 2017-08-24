@@ -11,6 +11,7 @@
 #include "Block.h"
 #include "Brick.h"
 #include "Explotion.h"
+#include "Enemy.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -65,7 +66,8 @@ bool ModuleSceneLevel::Start()
 	CreateExternalBlocks();
 	CreateBlocks();
 	CreateBricks();
-	
+	CreateEnemies();
+
 	InitializeSquareMatrix();
 
 	return true;
@@ -74,15 +76,23 @@ bool ModuleSceneLevel::Start()
 // UnLoad assets
 bool ModuleSceneLevel::CleanUp()
 {
-	LOG("Unloading space scene");
+	LOG("Unloading scene");
 
  	App->textures->Unload(graphics);
 	App->player->Disable();
 	App->bombs->Disable();
+	
+	for (std::list<Enemy*>::iterator it = Enemies.begin(); it != Enemies.end(); ++it) {
+		(*it)->CleanUp();
+		RELEASE(*it);
+	}
+	Enemies.clear();
+	
 	int count = 0;
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
 		count++;
-		//LOG("%d",count);
+		LOG("%d",count);
+		(*it)->CleanUp();
 		RELEASE(*it);
 	}
 	Entities.clear();
@@ -106,6 +116,11 @@ update_status ModuleSceneLevel::Update()
 {
 	// Draw everything --------------------------------------
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
+		(*it)->Draw();
+	}
+
+	for (std::list<Enemy*>::iterator it = Enemies.begin(); it != Enemies.end(); ++it) {
+		(*it)->Update();
 		(*it)->Draw();
 	}
 	
@@ -163,6 +178,12 @@ void ModuleSceneLevel::CreateBricks()
 	Entities.push_back(obj);
 	obj = new Brick(iPoint(200, 100), graphics, brick);
 	Entities.push_back(obj);
+}
+
+void ModuleSceneLevel::CreateEnemies()
+{
+	Enemy* obj = new Enemy(iPoint(350+10, 100+5),'r');
+	Enemies.push_back(obj);
 }
 
 void ModuleSceneLevel::InitializeSquareMatrix()

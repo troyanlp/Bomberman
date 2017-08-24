@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleCollision.h"
 #include "ModuleRender.h"
+#include "ModuleTextures.h"
 
 
 Block::Block(iPoint spawnPosition, bool ext, SDL_Texture* gfx, SDL_Rect block) : external(ext), blockSprite(block), graphics(gfx)
@@ -17,6 +18,7 @@ Block::Block(iPoint spawnPosition, bool ext, SDL_Texture* gfx, SDL_Rect block) :
 
 Block::~Block()
 {
+	//App->textures->Unload(graphics);
 }
 
 void Block::Draw()
@@ -24,7 +26,6 @@ void Block::Draw()
 	App->renderer->Blit(graphics, NULL, NULL, &blockSprite, &spriteDest);
 }
 
-bool Block::CleanUp()
+void Block::CleanUp()
 {
-	return true;
 }

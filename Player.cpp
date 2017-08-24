@@ -61,10 +61,9 @@ void Player::Draw()
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
 }
 
-bool Player::CleanUp()
+void Player::CleanUp()
 {
 	RELEASE(hurtTimer);
-	return true;
 }
 
 void Player::ChangeAnimation(PlayerAnimation anim)

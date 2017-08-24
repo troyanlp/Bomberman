@@ -15,7 +15,7 @@ public:
 
 	void Draw();
 	void Explode();
-	bool CleanUp();
+	void CleanUp();
 	
 public:
 	bool exploded = false;

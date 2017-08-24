@@ -24,8 +24,7 @@ void Brick::Draw()
 	App->renderer->Blit(graphics, NULL, NULL, &brickSprite, &spriteDest);
 }
 
-bool Brick::CleanUp()
+void Brick::CleanUp()
 {
 	collider->to_delete = true;
-	return true;
 }

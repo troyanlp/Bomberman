@@ -94,6 +94,9 @@
     <ClInclude Include="Explotion.h">
       <Filter>Game Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -157,6 +160,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Explotion.cpp">
+      <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>Game Classes</Filter>
     </ClCompile>
   </ItemGroup>
