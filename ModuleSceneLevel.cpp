@@ -182,7 +182,7 @@ void ModuleSceneLevel::CreateBricks()
 
 void ModuleSceneLevel::CreateEnemies()
 {
-	Enemy* obj = new Enemy(iPoint(350+10, 100+5),'r');
+	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
 	Enemies.push_back(obj);
 }
 

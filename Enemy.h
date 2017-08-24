@@ -7,17 +7,26 @@
 
 struct SDL_Texture;
 
+enum EnemyDirection {
+	VERTICALUP,
+	VERTICALDOWN,
+	HORIZONTALLEFT,
+	HORIZONTALRIGHT
+};
+
 class Enemy :
 	public Entity
 {
 public:
-	Enemy(iPoint pos, char direction);
+	Enemy(iPoint pos, EnemyDirection dir);
 	~Enemy();
 
 	void Update();
 	void Draw();
 	void CleanUp();
 
+	void ChangeDirection(EnemyDirection dir);
+	bool CanMove(int x, int y);
 	void Die();
 
 public:
@@ -26,8 +35,8 @@ public:
 	Animation up;
 	Animation down;
 	Animation side;
-	bool goingDown = false;
-	bool goingRight = false;
+	EnemyDirection direction;
+	int enemySpeed = 1;
 	SDL_RendererFlip flipType = SDL_FLIP_NONE;
 	SDL_Rect spriteDest;
 };

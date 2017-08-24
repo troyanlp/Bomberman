@@ -43,6 +43,10 @@ Player::~Player()
 
 void Player::Draw()
 {
+	if (collider->collided) {
+		Hurt();
+	}
+	
 	if (invincible) {
 		invincibleCount++;
 		if (hurtTimer->EllapsedInSeconds() >= 4) {

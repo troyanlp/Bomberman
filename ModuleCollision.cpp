@@ -49,27 +49,29 @@ update_status ModuleCollision::Update()
 {
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
 		
-		if ((*it)->type == CPLAYER) {
+		if ((*it)->type == CPLAYER || (*it)->type == CENEMY) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CEXPLOTION) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
 						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
-						App->player->player1->Hurt();
+						//App->player->player1->Hurt();
+						(*it)->collided = true;
 					}
 				}
 			}
 		}
-		
-		
-		/*if ((*it)->type == CPLAYER) {
+
+		if ((*it)->type == CPLAYER) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
-				if ((*it2)->type == CEXTERNALBLOCK || (*it2)->type == CINTERNALBLOCK || (*it2)->type == CBRICK) {
+				if ((*it2)->type == CENEMY) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
 						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
+						//App->player->player1->Hurt();
+						(*it)->collided = true;
 					}
 				}
 			}
-		}*/
+		}
 		
 	}
 
@@ -89,14 +91,15 @@ void ModuleCollision::DebugDraw()
 		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 }
 
-bool ModuleCollision::FindCollision(const SDL_Rect rect)
+bool ModuleCollision::FindCollision(const SDL_Rect rect, ColliderType extra1, ColliderType extra2)
 {
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
-		if ((*it)->type == CEXTERNALBLOCK || (*it)->type == CINTERNALBLOCK || (*it)->type == CBRICK) {
+		if ((*it)->type == CEXTERNALBLOCK || (*it)->type == CINTERNALBLOCK || (*it)->type == CBRICK
+			|| (*it)->type == extra1 || (*it)->type == extra2) {
 			double d = sqrt(pow((*it)->rect.x - rect.x, 2) + pow((*it)->rect.y - rect.y, 2));
 			if (d < 100) {
 				if ((*it)->CheckCollision(rect)) {
-					//LOG("El tipo de la colision es: %d", (*it)->type);
+					LOG("El tipo de la colision es: %d", (*it)->type);
 					return true;
 				}
 			}

@@ -61,7 +61,7 @@ public:
 	void RemoveAllColliders();
 	void DebugDraw();
 
-	bool FindCollision(const SDL_Rect rect);
+	bool FindCollision(const SDL_Rect rect, ColliderType extra1 = CNULL, ColliderType extra2 = CNULL);
 	bool CheckColliderTypes(ColliderType type, ColliderType otherType);
 
 
