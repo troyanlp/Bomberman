@@ -2,6 +2,7 @@
 #define __BRICK_H__
 
 #include "Entity.h"
+#include "Item.h"
 
 struct SDL_Texture;
 
@@ -15,10 +16,16 @@ public:
 	void Draw();
 	void CleanUp();
 
+	Item* Loot();
+	void AddLoot(ItemType itemType);
+
 public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect brickSprite;
 	SDL_Rect spriteDest;
+	bool hasLoot = false;
+	Item* loot;
+	bool looted = false;
 };
 
 #endif

@@ -178,6 +178,7 @@ void ModuleSceneLevel::CreateBricks()
 {
 	//SDL_Rect dest;
 	Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
+	obj->AddLoot(ISPEED);
 	Entities.push_back(obj);
 	obj = new Brick(iPoint(200, 100), graphics, brick);
 	Entities.push_back(obj);
@@ -247,6 +248,10 @@ void ModuleSceneLevel::BreakBrick(SDL_Rect position)
 			Brick* aux = (Brick*)(*it);
 			if (SDL_RectEquals(&aux->spriteDest, &position) == SDL_TRUE) {
 				LOG("Romper el ladrillo (%d, %d, %d, %d)", aux->spriteDest.x, aux->spriteDest.y, aux->spriteDest.w, aux->spriteDest.h);
+				Item* item = aux->Loot();
+				if (item != nullptr) {
+					Entities.push_back(item);
+				}
 				aux->CleanUp();
 				EraseBrickFromMapLevel(position.x, position.y);
 				RELEASE(aux);

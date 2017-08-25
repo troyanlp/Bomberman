@@ -24,7 +24,25 @@ void Brick::Draw()
 	App->renderer->Blit(graphics, NULL, NULL, &brickSprite, &spriteDest);
 }
 
+Item* Brick::Loot()
+{
+	if (hasLoot) {
+		looted = true;
+		return loot;
+	}
+	else {
+		return nullptr;
+	}
+}
+
+void Brick::AddLoot(ItemType itemType)
+{
+	hasLoot = true;
+	loot = new Item(position, itemType);
+}
+
 void Brick::CleanUp()
 {
 	collider->to_delete = true;
+	if (hasLoot && !looted) RELEASE(loot);
 }
