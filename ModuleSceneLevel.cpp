@@ -188,7 +188,7 @@ void ModuleSceneLevel::CreateEnemies()
 {
 	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
 	Enemies.push_back(obj);
-	Item* item = new Item(iPoint(350, 200), IKILL);
+	Item* item = new Item(iPoint(350, 200), IBOMB);
 	Entities.push_back(item);
 }
 
@@ -294,7 +294,103 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		}
 	}
 	//Calculate explotion
-	bool up = false;
+	bool* up = new bool[flameLevel];
+	bool* down = new bool[flameLevel];
+	bool* right = new bool[flameLevel];
+	bool* left = new bool[flameLevel];
+
+	for (int i = 0; i < flameLevel; i++) {
+		//Inicialization
+		up[i] = false;
+		down[i] = false;
+		right[i] = false;
+		left[i] = false;
+		
+		//Up
+		if ((row - i) != 0 && (levelMap[row - (i+1)][column].type == '0' || levelMap[row - (i+1)][column].type == '1' || levelMap[row - (i + 1)][column].type == 'e'
+			|| levelMap[row - (i + 1)][column].type == 'b')) {
+			up[i] = true;
+			if (levelMap[row - (i + 1)][column].type != 'e' || levelMap[row - (i + 1)][column].type == 'b') {
+				if (levelMap[row - (i + 1)][column].type == 'b') BreakBrick(levelMap[row - (i + 1)][column].squareRect);
+				ExplotionInstance aux;
+				aux.type = ENDING;
+				aux.position = levelMap[row - (i + 1)][column].squareRect;
+				aux.rotation = -90;
+				aux.flipType = SDL_FLIP_NONE;
+				ex.push_back(aux);
+			}
+		}
+
+		//Down
+		if ((row + i) != 10 && (levelMap[row + (i + 1)][column].type == '0' || levelMap[row + (i + 1)][column].type == '1' || levelMap[row + (i + 1)][column].type == 'e'
+			|| levelMap[row + (i + 1)][column].type == 'b')) {
+			down[i] = true;
+			if (levelMap[row + (i + 1)][column].type != 'e' || levelMap[row + (i + 1)][column].type == 'b') {
+				if (levelMap[row + (i + 1)][column].type == 'b') BreakBrick(levelMap[row + (i + 1)][column].squareRect);
+				ExplotionInstance aux;
+				aux.type = ENDING;
+				aux.position = levelMap[row + (i + 1)][column].squareRect;
+				aux.rotation = 90;
+				aux.flipType = SDL_FLIP_NONE;
+				ex.push_back(aux);
+			}
+		}
+
+		//Right
+		if ((column + i) != 14 && (levelMap[row][column + (i + 1)].type == '0' || levelMap[row][column + (i + 1)].type == '1' || levelMap[row][column + (i + 1)].type == 'e'
+			|| levelMap[row][column + (i + 1)].type == 'b')) {
+			right[i] = true;
+			if (levelMap[row][column + (i + 1)].type != 'e' || levelMap[row][column + (i + 1)].type == 'b') {
+				if (levelMap[row][column + (i + 1)].type == 'b') BreakBrick(levelMap[row][column + (i + 1)].squareRect);
+				ExplotionInstance aux;
+				aux.type = ENDING;
+				aux.position = levelMap[row][column + (i + 1)].squareRect;
+				aux.rotation = 0;
+				aux.flipType = SDL_FLIP_NONE;
+				ex.push_back(aux);
+			}
+		}
+
+		//Left
+		if ((column - i) != 0 && (levelMap[row][column - (i + 1)].type == '0' || levelMap[row][column - (i + 1)].type == '1' || levelMap[row][column - (i + 1)].type == 'e'
+			|| levelMap[row][column - (i + 1)].type == 'b')) {
+			left[i] = true;
+			if (levelMap[row][column - (i + 1)].type != 'e' || levelMap[row][column - (i + 1)].type == 'b') {
+				if (levelMap[row][column - (i + 1)].type == 'b') BreakBrick(levelMap[row][column - (i + 1)].squareRect);
+				ExplotionInstance aux;
+				aux.type = ENDING;
+				aux.position = levelMap[row][column - (i + 1)].squareRect;
+				aux.rotation = 0;
+				aux.flipType = SDL_FLIP_HORIZONTAL;
+				ex.push_back(aux);
+			}
+		}
+	
+	}
+
+	ExplotionInstance central;
+	central.position = center;
+	if (up[0] && down[0] && right[0] && left[0]) {
+		central.type = FOURWAY;
+		central.rotation = 0;
+		central.flipType = SDL_FLIP_NONE;
+	}
+	else if ((up[0] && down[0]) || (right[0] && left[0])) {
+		central.type = TWOWAY;
+		if (up[0] && down[0]) central.rotation = 90;
+		else central.rotation = 0;
+		central.flipType = SDL_FLIP_NONE;
+	}
+	else central.type = ENDING;
+	ex.push_back(central);
+
+	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
+		App->bombs->AddExplotion((it)->position, (*it));
+	}
+	
+
+
+	/*bool up = false;
 	bool down = false;
 	bool right = false;
 	bool left = false;
@@ -371,7 +467,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	
 	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
 		App->bombs->AddExplotion((it)->position, (*it));
-	}
+	}*/
 	//Print matrix
 	//PrintLevelMap();
 
