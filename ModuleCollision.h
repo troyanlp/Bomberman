@@ -18,12 +18,21 @@ enum ColliderType {
 	CNULL
 };
 
+enum ColliderMessage {
+	HURT,
+	ITEMSPEED,
+	ITEMBOMB,
+	ITEMFIRE,
+	NOTHING
+};
+
 struct Collider
 {
 	SDL_Rect rect = { 0,0,0,0 };
 	bool to_delete = false;
 
 	bool collided = false;
+	ColliderMessage message;
 
 	ColliderType type = CNULL;
 

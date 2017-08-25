@@ -12,3 +12,11 @@ Item::Item()
 Item::~Item()
 {
 }
+
+void Item::Draw()
+{
+}
+
+void Item::CleanUp()
+{
+}

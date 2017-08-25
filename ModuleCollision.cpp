@@ -48,7 +48,7 @@ update_status ModuleCollision::PreUpdate()
 update_status ModuleCollision::Update()
 {
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
-		
+		//Check if player or enemy collide with and explotion
 		if ((*it)->type == CPLAYER || (*it)->type == CENEMY) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CEXPLOTION) {
@@ -56,18 +56,19 @@ update_status ModuleCollision::Update()
 						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
 						//App->player->player1->Hurt();
 						(*it)->collided = true;
+						(*it)->message = HURT;
 					}
 				}
 			}
 		}
 
+		//Check if player is hurt colliding with and enemy
 		if ((*it)->type == CPLAYER) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CENEMY) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
-						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
-						//App->player->player1->Hurt();
 						(*it)->collided = true;
+						(*it)->message = HURT;
 					}
 				}
 			}

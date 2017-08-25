@@ -44,7 +44,19 @@ Player::~Player()
 void Player::Draw()
 {
 	if (collider->collided) {
-		Hurt();
+		switch (collider->message) {
+		case HURT:
+			Hurt();
+			break;
+		case ITEMSPEED:
+			break;
+		case ITEMBOMB:
+			break;
+		case ITEMFIRE:
+			break;
+		}
+		collider->message = NOTHING;
+		collider->collided = false;
 	}
 	
 	if (invincible) {

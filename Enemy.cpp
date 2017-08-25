@@ -69,7 +69,13 @@ Enemy::~Enemy()
 void Enemy::Update()
 {
 	if (collider->collided) {
-		Die();
+		switch (collider->message) {
+		case HURT:
+			Die();
+			break;
+		}
+		collider->message = NOTHING;
+		collider->collided = false;
 	}
 
 	switch (direction) {
@@ -160,6 +166,7 @@ bool Enemy::CanMove(int x, int y)
 
 void Enemy::Die()
 {
+	destroyed = true;
 	collider->to_delete = true;
 	App->textures->Unload(graphics);
 	if (current_animation != nullptr) {
