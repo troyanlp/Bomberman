@@ -12,6 +12,7 @@
 #include "Brick.h"
 #include "Explotion.h"
 #include "Enemy.h"
+#include "Item.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -92,6 +93,8 @@ bool ModuleSceneLevel::CleanUp()
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
 		count++;
 		LOG("%d",count);
+		if ((*it)->type == Entity::ITEM) 
+			LOG("Item");
 		(*it)->CleanUp();
 		RELEASE(*it);
 	}
@@ -184,6 +187,8 @@ void ModuleSceneLevel::CreateEnemies()
 {
 	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
 	Enemies.push_back(obj);
+	Item* item = new Item(iPoint(350, 200), ILIFE);
+	Entities.push_back(item);
 }
 
 void ModuleSceneLevel::InitializeSquareMatrix()

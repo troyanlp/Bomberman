@@ -23,6 +23,8 @@ enum ColliderMessage {
 	ITEMSPEED,
 	ITEMBOMB,
 	ITEMFIRE,
+	ITEMLIFE,
+	ITEMDEATH,
 	NOTHING
 };
 

@@ -6,11 +6,19 @@
 
 struct SDL_Texture;
 
+enum ItemType {
+	IBOMB,
+	ILIFE,
+	ISPEED,
+	IFLAME,
+	IKILL
+};
+
 class Item :
 	public Entity
 {
 public:
-	Item();
+	Item(iPoint pos, ItemType item);
 	~Item();
 
 	void Draw();
@@ -18,8 +26,9 @@ public:
 private:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-	Animation bomb;
+	Animation animation;
 	SDL_Rect spriteDest;
+	ItemType itemType;
 };
 
 #endif

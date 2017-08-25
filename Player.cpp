@@ -49,10 +49,19 @@ void Player::Draw()
 			Hurt();
 			break;
 		case ITEMSPEED:
+			LOG("SPEED");
 			break;
 		case ITEMBOMB:
+			LOG("BOMBS");
 			break;
 		case ITEMFIRE:
+			LOG("FIRE");
+			break;
+		case ITEMLIFE:
+			LOG("LIFE");
+			break;
+		case ITEMDEATH:
+			LOG("DEATH");
 			break;
 		}
 		collider->message = NOTHING;
