@@ -80,7 +80,9 @@ update_status ModuleCollision::Update()
 				if ((*it2)->type == CITEM) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
 						(*it)->collided = true;
+						(*it2)->collided = true;
 						(*it)->message = (*it2)->message;
+						(*it2)->message = NOTHING;
 					}
 				}
 			}

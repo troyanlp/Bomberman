@@ -22,7 +22,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void AddBomb(int x, int y, int idPlayer);
+	void AddBomb(int x, int y, int idPlayer, int flamePower);
 	int GetNumBombsFromPlayer(int id);
 
 	void AddExplotion(SDL_Rect position, ExplotionInstance instance);

@@ -62,6 +62,10 @@ Item::~Item()
 
 void Item::Draw()
 {
+	if (collider->collided = true && collider->message == ColliderMessage::NOTHING) {
+		CleanUp();
+	}
+
 	if (!destroyed)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
 }
@@ -69,6 +73,7 @@ void Item::Draw()
 void Item::CleanUp()
 {
 	destroyed = true;
+	collider->message = NOTHING;
 	collider->to_delete = true;
 	App->textures->Unload(graphics);
 }

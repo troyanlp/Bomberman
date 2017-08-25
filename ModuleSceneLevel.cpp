@@ -187,7 +187,7 @@ void ModuleSceneLevel::CreateEnemies()
 {
 	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
 	Enemies.push_back(obj);
-	Item* item = new Item(iPoint(350, 200), ILIFE);
+	Item* item = new Item(iPoint(350, 200), IKILL);
 	Entities.push_back(item);
 }
 

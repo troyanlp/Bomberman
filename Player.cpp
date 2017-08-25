@@ -29,7 +29,9 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	else collider->type = CIA;
 
 	numBombs = 1;
+	flamePower = 1;
 	lives = 3;
+	playerSpeed = 1;
 	hurtTimer = new Timer();
 	invincible = false;
 	invincibleShow = true;
@@ -49,19 +51,23 @@ void Player::Draw()
 			Hurt();
 			break;
 		case ITEMSPEED:
-			LOG("SPEED");
+			playerSpeed++;
+			LOG("Speed: %d", playerSpeed);
 			break;
 		case ITEMBOMB:
-			LOG("BOMBS");
+			numBombs++;
+			LOG("NumBombs: %d",numBombs);
 			break;
 		case ITEMFIRE:
-			LOG("FIRE");
+			flamePower++;
+			LOG("NumBombs: %d", flamePower);
 			break;
 		case ITEMLIFE:
-			LOG("LIFE");
+			lives++;
+			LOG("Num Lives: %d", lives);
 			break;
 		case ITEMDEATH:
-			LOG("DEATH");
+			Die();
 			break;
 		}
 		collider->message = NOTHING;
@@ -159,7 +165,7 @@ void Player::Hurt()
 		lives--;
 		LOG("AUX!");
 		if (lives == 0) {
-			LOG("YOU DIED!");
+			Die();
 		}
 		else {
 			hurtTimer->Start();
@@ -169,4 +175,9 @@ void Player::Hurt()
 			LOG("Inicio de invencibilidad");
 		}
 	}
+}
+
+void Player::Die()
+{
+	LOG("YOU DIED!");
 }

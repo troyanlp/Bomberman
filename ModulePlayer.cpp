@@ -143,33 +143,33 @@ update_status ModulePlayer::Update()
 void ModulePlayer::ControlPlayer1()
 {
 	// Player movement
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player1->CanMove(-playerSpeed,0))
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player1->CanMove(-player1->playerSpeed,0))
 	{
-		player1->position.x -= playerSpeed;
+		player1->position.x -= player1->playerSpeed;
 		player1->current_animation = &walkLeft;
 		player1->ChangeAnimation(PLAYER_LEFT);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player1->CanMove(playerSpeed,0))
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player1->CanMove(player1->playerSpeed,0))
 	{
-		player1->position.x += playerSpeed;
+		player1->position.x += player1->playerSpeed;
 		player1->current_animation = &walkRight;
 		player1->ChangeAnimation(PLAYER_RIGHT);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && player1->CanMove(0,playerSpeed))
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && player1->CanMove(0, player1->playerSpeed))
 	{
-		player1->position.y += playerSpeed;
+		player1->position.y += player1->playerSpeed;
 		player1->current_animation = &walkDown;
 		player1->ChangeAnimation(PLAYER_DOWN);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player1->CanMove(0,-playerSpeed))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && player1->CanMove(0,-player1->playerSpeed))
 	{
-		player1->position.y -= playerSpeed;
+		player1->position.y -= player1->playerSpeed;
 		player1->current_animation = &walkUp;
 		player1->ChangeAnimation(PLAYER_UP);
 		player1->collider->rect = { player1->position.x + player1->offsetColliderIdle.x, player1->position.y + player1->offsetColliderIdle.y, player1->collider->rect.w, player1->collider->rect.h };
@@ -179,7 +179,7 @@ void ModulePlayer::ControlPlayer1()
 	{
 		if (player1->CanPlantBomb()) {
 			iPoint aux = CalculateBombPosition(1);
-			App->bombs->AddBomb(aux.x, aux.y,1);
+			App->bombs->AddBomb(aux.x, aux.y,1,player1->flamePower);
 		}
 		
 	}

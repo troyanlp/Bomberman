@@ -31,11 +31,13 @@ public:
 	bool CanPlantBomb();
 
 	void Hurt();
+	void Die();
 
 public:
 	SDL_Texture* graphics = nullptr;
 	int id;
 	int lives;
+	int playerSpeed;
 	Timer* hurtTimer;
 	bool invincible = false;
 	bool invincibleShow = false;
@@ -54,6 +56,7 @@ public:
 	SDL_Rect spriteIdle;
 	SDL_Rect spriteDest;
 	int numBombs;
+	int flamePower;
 };
 
 #endif

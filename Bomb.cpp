@@ -8,11 +8,11 @@
 #include "Explotion.h"
 
 
-Bomb::Bomb(int x, int y, int id, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
+Bomb::Bomb(int x, int y, int id, int flame, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
 {
 	LOG("Loading Bomb");
 
-	flameLevel = 1;
+	flameLevel = flame;
 
 	destroyed = false;
 

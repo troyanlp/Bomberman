@@ -86,10 +86,10 @@ bool ModuleBomb::CleanUp()
 	return true;
 }
 
-void ModuleBomb::AddBomb(int x, int y, int idPlayer)
+void ModuleBomb::AddBomb(int x, int y, int idPlayer, int flamePower)
 {
 	LOG("Adding bomb!");
-	Bomb* aux = new Bomb(x,y,idPlayer,bombGraphics);
+	Bomb* aux = new Bomb(x,y,idPlayer,flamePower,bombGraphics);
 	bombs.push_back(aux);
 	App->scene_level->AddBombToMapLevel(x,y);
 }

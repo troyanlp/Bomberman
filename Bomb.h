@@ -10,7 +10,7 @@ class Bomb :
 	public Entity
 {
 public:
-	Bomb(int x, int y, int id, SDL_Texture* gfx);
+	Bomb(int x, int y, int id, int flame, SDL_Texture* gfx);
 	~Bomb();
 
 	void Draw();
