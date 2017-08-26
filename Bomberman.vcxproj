@@ -50,6 +50,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>SDL/libx86/SDL2.lib;SDL/libx86/SDL2main.lib;SDL/libx86/SDL2_ttf.lib;SDL_image\libx86/SDL2_image.lib;SDL_mixer\libx86/SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

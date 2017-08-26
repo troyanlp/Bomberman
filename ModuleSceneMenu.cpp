@@ -7,6 +7,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneMenu.h"
 #include "SDL\include\SDL.h"
+#include "SDL/include/SDL_ttf.h"
 
 ModuleSceneMenu::ModuleSceneMenu(bool active) : Module(active)
 {}
@@ -19,7 +20,15 @@ bool ModuleSceneMenu::Start()
 {
 	LOG("Loading Menu");
 	
-	graphics = App->textures->Load("bomberman_logo.jpg");
+	graphics = App->textures->Load("bomberman_logo.png");
+
+	logo = { 0, 0, 720, 400 };
+	
+	position = iPoint(25, 25);
+	
+	logoDest = { position.x, position.y, 675, 325 };
+
+	LOG("%d",TTF_Init());
 
 	/*App->audio->PlayMusic("intro.ogg", 1.0f);
 	if(fx == 0)
@@ -50,7 +59,7 @@ bool ModuleSceneMenu::CleanUp()
 update_status ModuleSceneMenu::PreUpdate()
 {
 	//Draw background color
-	App->renderer->DrawQuad(background, 136, 136, 136, 255, true);
+	App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
 	return UPDATE_CONTINUE;
 }
 
@@ -59,13 +68,14 @@ update_status ModuleSceneMenu::PreUpdate()
 update_status ModuleSceneMenu::Update()
 {
 	//Draw Bomberman logo
-	SDL_Rect texr; 
+	/*SDL_Rect texr; 
 	texr.x = 0;
 	texr.y = 0;
 	texr.w = SCREEN_WIDTH; 
 	texr.h = SCREEN_HEIGHT;
 	SDL_Rect dest = { 0, 0, 800, 400 };
-	App->renderer->Blit(graphics, 0, 0, &texr, &dest);
+	App->renderer->Blit(graphics, 0, 0, &texr, &dest);*/
+	App->renderer->Blit(graphics, position.x, position.y, &(logo), &logoDest);
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->fade->isFading() == false)
 	{

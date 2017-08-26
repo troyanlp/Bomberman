@@ -13,10 +13,15 @@
 #include "ModulePlayer.h"
 #include "ModuleBomb.h"
 
+#include "SDL/include/SDL_ttf.h"
+
 using namespace std;
 
 Application::Application()
 {
+	//Initialize SDL_ttf
+	TTF_Init();
+
 	//FPS
 	fpsTimer = new Timer();
 
@@ -59,7 +64,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_level, nullptr, 3.0f);
+	fade->FadeToBlack(scene_menu, nullptr, 3.0f);
 
 	return ret;
 }
@@ -101,6 +106,8 @@ bool Application::CleanUp()
 	}
 
 	RELEASE(fpsTimer);
+
+	TTF_Quit();
 
 	return ret;
 }

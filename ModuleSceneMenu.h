@@ -18,6 +18,9 @@ public:
 
 public:
 	SDL_Texture* graphics = nullptr;
+	SDL_Rect logo;
+	SDL_Rect logoDest;
+	iPoint position;
 	uint fx = 0;
 private:
 	SDL_Rect background;
