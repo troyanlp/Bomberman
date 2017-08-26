@@ -119,12 +119,29 @@ update_status ModuleSceneLevel::Update()
 {
 	// Draw everything --------------------------------------
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
-		(*it)->Draw();
+		if (!(*it)->destroyed) {
+			(*it)->Draw();
+		}
+		else {
+			(*it)->CleanUp();
+			RELEASE(*it);
+			it = Entities.erase(it);
+			if (it == Entities.end()) break;
+		}
+		
 	}
 
 	for (std::list<Enemy*>::iterator it = Enemies.begin(); it != Enemies.end(); ++it) {
-		(*it)->Update();
-		(*it)->Draw();
+		if (!(*it)->destroyed) {
+			(*it)->Update();
+			(*it)->Draw();
+		}
+		else {
+			(*it)->CleanUp();
+			RELEASE(*it);
+			it = Enemies.erase(it);
+			if (it == Enemies.end()) break;
+		}
 	}
 	
 	return UPDATE_CONTINUE;
@@ -298,6 +315,14 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	bool* down = new bool[flameLevel];
 	bool* right = new bool[flameLevel];
 	bool* left = new bool[flameLevel];
+	bool upShort = false;
+	bool downShort = false;
+	bool rightShort = false;
+	bool leftShort = false;
+	std::list<ExplotionInstance> exUp;
+	std::list<ExplotionInstance> exDown;
+	std::list<ExplotionInstance> exRight;
+	std::list<ExplotionInstance> exLeft;
 
 	for (int i = 0; i < flameLevel; i++) {
 		//Inicialization
@@ -308,69 +333,121 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		
 		//Up
 		if ((row - i) != 0 && (levelMap[row - (i+1)][column].type == '0' || levelMap[row - (i+1)][column].type == '1' || levelMap[row - (i + 1)][column].type == 'e'
-			|| levelMap[row - (i + 1)][column].type == 'b')) {
+			|| levelMap[row - (i + 1)][column].type == 'b') && !upShort) {
 			up[i] = true;
 			if (levelMap[row - (i + 1)][column].type != 'e' || levelMap[row - (i + 1)][column].type == 'b') {
-				if (levelMap[row - (i + 1)][column].type == 'b') BreakBrick(levelMap[row - (i + 1)][column].squareRect);
+				if (levelMap[row - (i + 1)][column].type == 'b') {
+					BreakBrick(levelMap[row - (i + 1)][column].squareRect);
+					upShort = true;
+				}
 				ExplotionInstance aux;
-				aux.type = ENDING;
+				aux.type = TWOWAY;
 				aux.position = levelMap[row - (i + 1)][column].squareRect;
 				aux.rotation = -90;
 				aux.flipType = SDL_FLIP_NONE;
-				ex.push_back(aux);
+				exUp.push_back(aux);
 			}
+		}
+		else {
+			upShort = true;
 		}
 
 		//Down
 		if ((row + i) != 10 && (levelMap[row + (i + 1)][column].type == '0' || levelMap[row + (i + 1)][column].type == '1' || levelMap[row + (i + 1)][column].type == 'e'
-			|| levelMap[row + (i + 1)][column].type == 'b')) {
+			|| levelMap[row + (i + 1)][column].type == 'b') && !downShort) {
 			down[i] = true;
 			if (levelMap[row + (i + 1)][column].type != 'e' || levelMap[row + (i + 1)][column].type == 'b') {
-				if (levelMap[row + (i + 1)][column].type == 'b') BreakBrick(levelMap[row + (i + 1)][column].squareRect);
+				if (levelMap[row + (i + 1)][column].type == 'b') {
+					BreakBrick(levelMap[row + (i + 1)][column].squareRect);
+					downShort = true;
+				}
 				ExplotionInstance aux;
-				aux.type = ENDING;
+				aux.type = TWOWAY;
 				aux.position = levelMap[row + (i + 1)][column].squareRect;
 				aux.rotation = 90;
 				aux.flipType = SDL_FLIP_NONE;
-				ex.push_back(aux);
+				exDown.push_back(aux);
 			}
+		}
+		else {
+			downShort = true;
 		}
 
 		//Right
 		if ((column + i) != 14 && (levelMap[row][column + (i + 1)].type == '0' || levelMap[row][column + (i + 1)].type == '1' || levelMap[row][column + (i + 1)].type == 'e'
-			|| levelMap[row][column + (i + 1)].type == 'b')) {
+			|| levelMap[row][column + (i + 1)].type == 'b') && !rightShort) {
 			right[i] = true;
 			if (levelMap[row][column + (i + 1)].type != 'e' || levelMap[row][column + (i + 1)].type == 'b') {
-				if (levelMap[row][column + (i + 1)].type == 'b') BreakBrick(levelMap[row][column + (i + 1)].squareRect);
+				if (levelMap[row][column + (i + 1)].type == 'b') {
+					BreakBrick(levelMap[row][column + (i + 1)].squareRect);
+					rightShort = true;
+				}
 				ExplotionInstance aux;
-				aux.type = ENDING;
+				aux.type = TWOWAY;
 				aux.position = levelMap[row][column + (i + 1)].squareRect;
 				aux.rotation = 0;
 				aux.flipType = SDL_FLIP_NONE;
-				ex.push_back(aux);
+				exRight.push_back(aux);
 			}
+		}
+		else {
+			rightShort = true;
 		}
 
 		//Left
 		if ((column - i) != 0 && (levelMap[row][column - (i + 1)].type == '0' || levelMap[row][column - (i + 1)].type == '1' || levelMap[row][column - (i + 1)].type == 'e'
-			|| levelMap[row][column - (i + 1)].type == 'b')) {
+			|| levelMap[row][column - (i + 1)].type == 'b') && !leftShort) {
 			left[i] = true;
 			if (levelMap[row][column - (i + 1)].type != 'e' || levelMap[row][column - (i + 1)].type == 'b') {
-				if (levelMap[row][column - (i + 1)].type == 'b') BreakBrick(levelMap[row][column - (i + 1)].squareRect);
+				if (levelMap[row][column - (i + 1)].type == 'b') {
+					BreakBrick(levelMap[row][column - (i + 1)].squareRect);
+					leftShort = true;
+				}
 				ExplotionInstance aux;
-				aux.type = ENDING;
+				aux.type = TWOWAY;
 				aux.position = levelMap[row][column - (i + 1)].squareRect;
 				aux.rotation = 0;
 				aux.flipType = SDL_FLIP_HORIZONTAL;
-				ex.push_back(aux);
+				exLeft.push_back(aux);
 			}
+		}
+		else {
+			leftShort = true;
 		}
 	
 	}
 
 	ExplotionInstance central;
 	central.position = center;
-	if (up[0] && down[0] && right[0] && left[0]) {
+	central.type = FOURWAY;
+	central.rotation = 0;
+	central.flipType = SDL_FLIP_NONE;
+	
+
+	if ((exUp.size() == 0 && exDown.size() == 0) || (exRight.size() == 0 && exLeft.size() == 0)) {
+		central.type = TWOWAY;
+		if (exUp.size() == 0 && exDown.size() == 0) {
+			central.rotation = 0;
+		}
+		else {
+			central.rotation = 90;
+		}
+		central.flipType = SDL_FLIP_NONE;
+	}
+	ex.push_back(central);
+
+	if (!exUp.empty())exUp.rbegin()->type = ENDING;
+	if (!exDown.empty())exDown.rbegin()->type = ENDING;
+	if (!exRight.empty()) exRight.rbegin()->type = ENDING;
+	if (!exLeft.empty())exLeft.rbegin()->type = ENDING;
+	if ((exUp.size() + exDown.size()) >= (exRight.size() + exLeft.size())) {
+		//for (std::list<ExplotionInstance>::iterator it = exUp.begin(); it != exUp.end(); ++it) {
+		//}
+	}
+	else {
+	}
+
+	/*if (up[0] && down[0] && right[0] && left[0]) {
 		central.type = FOURWAY;
 		central.rotation = 0;
 		central.flipType = SDL_FLIP_NONE;
@@ -382,13 +459,31 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 		central.flipType = SDL_FLIP_NONE;
 	}
 	else central.type = ENDING;
-	ex.push_back(central);
+	ex.push_back(central);*/
 
+	//Add all explotions
+	for (std::list<ExplotionInstance>::iterator it = exUp.begin(); it != exUp.end(); ++it) {
+		ex.push_back(*it);
+	}
+	for (std::list<ExplotionInstance>::iterator it = exDown.begin(); it != exDown.end(); ++it) {
+		ex.push_back(*it);
+	}
+	for (std::list<ExplotionInstance>::iterator it = exRight.begin(); it != exRight.end(); ++it) {
+		ex.push_back(*it);
+	}
+	for (std::list<ExplotionInstance>::iterator it = exLeft.begin(); it != exLeft.end(); ++it) {
+		ex.push_back(*it);
+	}
+
+	//Create explotions
 	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
 		App->bombs->AddExplotion((it)->position, (*it));
 	}
 	
-
+	RELEASE(up);
+	RELEASE(down);
+	RELEASE(right);
+	RELEASE(left);
 
 	/*bool up = false;
 	bool down = false;
