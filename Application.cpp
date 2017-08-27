@@ -12,6 +12,7 @@
 #include "ModuleSceneLevel.h"
 #include "ModulePlayer.h"
 #include "ModuleBomb.h"
+#include "ModuleGUI.h"
 
 #include "SDL/include/SDL_ttf.h"
 
@@ -35,9 +36,11 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_menu = new ModuleSceneMenu(false));
+	modules.push_back(gui = new ModuleGUI(false));
 	modules.push_back(scene_level = new ModuleSceneLevel(false));
 	modules.push_back(player = new ModulePlayer(false));
 	modules.push_back(bombs = new ModuleBomb(false));
+	
 
 	// Modules to draw on top of game logic
 	modules.push_back(collision = new ModuleCollision());

@@ -13,6 +13,7 @@
 #include "Explotion.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "ModuleGUI.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -24,6 +25,8 @@ ModuleSceneLevel::~ModuleSceneLevel()
 bool ModuleSceneLevel::Start()
 {
 	LOG("Loading space scene");
+
+	App->gui->Enable();
 	
 	graphics = App->textures->Load("Super Bomberman 5 JPN - Stage 01.png");
 
@@ -32,11 +35,6 @@ bool ModuleSceneLevel::Start()
 	background.w = SCREEN_WIDTH;
 	background.x = 0;
 	background.y = 50;
-	//Set up hud rect
-	hud.h = 50;
-	hud.w = SCREEN_WIDTH;
-	hud.x = 0;
-	hud.y = 0;
 
 	//Set up external block
 	externalBlock.x = 9;
@@ -82,7 +80,8 @@ bool ModuleSceneLevel::CleanUp()
  	App->textures->Unload(graphics);
 	App->player->Disable();
 	App->bombs->Disable();
-	
+	App->gui->Disable();
+
 	for (std::list<Enemy*>::iterator it = Enemies.begin(); it != Enemies.end(); ++it) {
 		(*it)->CleanUp();
 		RELEASE(*it);
@@ -108,8 +107,6 @@ bool ModuleSceneLevel::CleanUp()
 // Update: draw background
 update_status ModuleSceneLevel::PreUpdate()
 {
-	//Draw hud background color
-	App->renderer->DrawQuad(hud, 136, 136, 136, 255, true);
 	//Draw background floor color
 	App->renderer->DrawQuad(background, 64, 120, 16, 255, true);
 	return UPDATE_CONTINUE;
@@ -440,26 +437,6 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	if (!exDown.empty())exDown.rbegin()->type = ENDING;
 	if (!exRight.empty()) exRight.rbegin()->type = ENDING;
 	if (!exLeft.empty())exLeft.rbegin()->type = ENDING;
-	if ((exUp.size() + exDown.size()) >= (exRight.size() + exLeft.size())) {
-		//for (std::list<ExplotionInstance>::iterator it = exUp.begin(); it != exUp.end(); ++it) {
-		//}
-	}
-	else {
-	}
-
-	/*if (up[0] && down[0] && right[0] && left[0]) {
-		central.type = FOURWAY;
-		central.rotation = 0;
-		central.flipType = SDL_FLIP_NONE;
-	}
-	else if ((up[0] && down[0]) || (right[0] && left[0])) {
-		central.type = TWOWAY;
-		if (up[0] && down[0]) central.rotation = 90;
-		else central.rotation = 0;
-		central.flipType = SDL_FLIP_NONE;
-	}
-	else central.type = ENDING;
-	ex.push_back(central);*/
 
 	//Add all explotions
 	for (std::list<ExplotionInstance>::iterator it = exUp.begin(); it != exUp.end(); ++it) {
@@ -485,84 +462,6 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 	RELEASE(right);
 	RELEASE(left);
 
-	/*bool up = false;
-	bool down = false;
-	bool right = false;
-	bool left = false;
-	if ( row != 0 && (levelMap[row-1][column].type == '0' || levelMap[row - 1][column].type == '1' || levelMap[row - 1][column].type == 'e'
-		|| levelMap[row - 1][column].type == 'b')) {
-		up = true;
-		if (levelMap[row - 1][column].type != 'e' || levelMap[row - 1][column].type == 'b') {
-			if (levelMap[row - 1][column].type == 'b') BreakBrick(levelMap[row - 1][column].squareRect);
-			ExplotionInstance aux;
-			aux.type = ENDING;
-			aux.position = levelMap[row - 1][column].squareRect;
-			aux.rotation = -90;
-			aux.flipType = SDL_FLIP_NONE;
-			ex.push_back(aux);
-		}
-		
-	}
-	if (row != 10 && (levelMap[row + 1][column].type == '0' || levelMap[row + 1][column].type == '1' || levelMap[row + 1][column].type == 'e'
-		|| levelMap[row + 1][column].type == 'b')) {
-		down = true;
-		if (levelMap[row + 1][column].type != 'e' || levelMap[row + 1][column].type == 'b') {
-			if (levelMap[row + 1][column].type == 'b') BreakBrick(levelMap[row + 1][column].squareRect);
-			ExplotionInstance aux;
-			aux.type = ENDING;
-			aux.position = levelMap[row + 1][column].squareRect;
-			aux.rotation = 90;
-			aux.flipType = SDL_FLIP_NONE;
-			ex.push_back(aux);
-		}
-		
-	}
-	if (column != 14 && (levelMap[row][column + 1].type == '0' || levelMap[row][column + 1].type == '1' || levelMap[row][column + 1].type == 'e'
-		|| levelMap[row][column + 1].type == 'b')) {
-		right = true;
-		if (levelMap[row][column + 1].type != 'e' || levelMap[row][column + 1].type == 'b') {
-			if (levelMap[row][column + 1].type == 'b') BreakBrick(levelMap[row][column + 1].squareRect);
-			ExplotionInstance aux;
-			aux.type = ENDING;
-			aux.position = levelMap[row][column + 1].squareRect;
-			aux.rotation = 0;
-			aux.flipType = SDL_FLIP_NONE;
-			ex.push_back(aux);
-		}
-		
-	}
-	if (column != 0 && (levelMap[row][column - 1].type == '0' || levelMap[row][column - 1].type == '1' || levelMap[row][column - 1].type == 'e'
-		|| levelMap[row][column - 1].type == 'b')) {
-		left = true;
-		if (levelMap[row][column - 1].type != 'e' || levelMap[row][column - 1].type == 'b') {
-			if (levelMap[row][column - 1].type == 'b') BreakBrick(levelMap[row][column - 1].squareRect);
-			ExplotionInstance aux;
-			aux.type = ENDING;
-			aux.position = levelMap[row][column - 1].squareRect;
-			aux.rotation = 0;
-			aux.flipType = SDL_FLIP_HORIZONTAL;
-			ex.push_back(aux);
-		}
-		
-	}
-	ExplotionInstance central;
-	central.position = center;
-	if (up && down && right && left) {
-		central.type = FOURWAY;
-		central.rotation = 0;
-		central.flipType = SDL_FLIP_NONE;
-	}
-	else if ((up && down) || (right && left)) {
-		central.type = TWOWAY;
-		if (up && down) central.rotation = 90;
-		else central.rotation = 0;
-		central.flipType = SDL_FLIP_NONE;
-	}else central.type = ENDING;
-	ex.push_back(central);
-	
-	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
-		App->bombs->AddExplotion((it)->position, (*it));
-	}*/
 	//Print matrix
 	//PrintLevelMap();
 

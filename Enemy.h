@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Animation.h"
 #include "SDL/include/SDL.h"
+#include "Globals.h"
 
 struct SDL_Texture;
 

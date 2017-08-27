@@ -59,6 +59,7 @@ Enemy::Enemy(iPoint pos, EnemyDirection dir) : direction(dir)
 	collider->type = CENEMY;
 
 	spriteDest = { position.x, position.y, 30, 40 };
+
 }
 
 
@@ -126,9 +127,6 @@ void Enemy::CleanUp()
 {
 	collider->to_delete = true;
 	App->textures->Unload(graphics);
-	if (current_animation != nullptr) {
-		//RELEASE(current_animation);
-	}
 }
 
 void Enemy::ChangeDirection(EnemyDirection dir)
@@ -169,7 +167,4 @@ void Enemy::Die()
 	destroyed = true;
 	collider->to_delete = true;
 	App->textures->Unload(graphics);
-	if (current_animation != nullptr) {
-		//RELEASE(current_animation);
-	}
 }

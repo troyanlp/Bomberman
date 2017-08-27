@@ -38,7 +38,6 @@ Bomb::Bomb(int x, int y, int id, int flame, SDL_Texture* gfx) : graphics(gfx), i
 
 Bomb::~Bomb()
 {
-	//collider->to_delete = true;
 }
 
 void Bomb::Draw()
@@ -58,7 +57,6 @@ void Bomb::Explode()
 	list<ExplotionInstance> ex = App->scene_level->AddExplotionToMapLevel(position.x,position.y,flameLevel);
 	exploded = true;
 	collider->to_delete = true;
-	//App->bombs->AddExplotion(position.x, position.y);
 }
 
 void Bomb::CleanUp()

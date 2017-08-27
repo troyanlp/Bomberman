@@ -18,7 +18,6 @@ Block::Block(iPoint spawnPosition, bool ext, SDL_Texture* gfx, SDL_Rect block) :
 
 Block::~Block()
 {
-	//App->textures->Unload(graphics);
 }
 
 void Block::Draw()

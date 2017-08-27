@@ -86,7 +86,7 @@ bool ModuleSceneMenu::CleanUp()
 update_status ModuleSceneMenu::PreUpdate()
 {
 	//Draw background color
-	App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
+	//App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
 	return UPDATE_CONTINUE;
 }
 
@@ -95,18 +95,11 @@ update_status ModuleSceneMenu::PreUpdate()
 update_status ModuleSceneMenu::Update()
 {
 	//Draw Bomberman logo
-	/*SDL_Rect texr; 
-	texr.x = 0;
-	texr.y = 0;
-	texr.w = SCREEN_WIDTH; 
-	texr.h = SCREEN_HEIGHT;
-	SDL_Rect dest = { 0, 0, 800, 400 };
-	App->renderer->Blit(graphics, 0, 0, &texr, &dest);*/
 	App->renderer->Blit(graphics, position.x, position.y, &(logo), &logoDest);
-
+	//Draw text options
 	App->renderer->Blit(play, position.x, position.y, &(logo), &playDest);
 	App->renderer->Blit(exit, position.x, position.y, &(logo), &exitDest);
-
+	//Logic of focus
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
 		if (focus < 2) {
 			focus++;
@@ -132,14 +125,10 @@ update_status ModuleSceneMenu::Update()
 			return UPDATE_STOP;
 		}
 		
-		
 	}
 	
-	
+	//Draw bomb to indicate focus
 	App->renderer->Blit(bombGraphics, position.x, position.y, &(bomb_animation->GetCurrentFrame()), &bombDest);
-
-
-	
 
 	return UPDATE_CONTINUE;
 }

@@ -29,7 +29,7 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	else collider->type = CIA;
 
 	numBombs = 1;
-	flamePower = 1;
+	flamePower = 2;
 	lives = 3;
 	playerSpeed = 1;
 	hurtTimer = new Timer();
@@ -123,29 +123,8 @@ bool Player::CanMove(int x, int y)
 	SDL_Rect newPos = {position.x + offsetColliderIdle.x + x, position.y + offsetColliderIdle.y + y, 0, 0};
 	newPos.w = colliderIdle.w;
 	newPos.h = colliderIdle.h;
-	/*switch (playerAnimation)
-	{
-	case PLAYER_IDLE:
-		newPos.w = colliderIdle.w;
-		newPos.h = colliderIdle.h;
-		break;
-	case PLAYER_DOWN:
-	case PLAYER_RIGHT:
-		newPos.w = colliderAS.w;
-		newPos.h = colliderAS.h;
-		break;
-	case PLAYER_LEFT:
-	case PLAYER_UP:
-		newPos.w = colliderWD.w;
-		newPos.h = colliderWD.h;
-		break;
-	}*/
-	//App->collision->FindCollision(newPos);
-	//return true;
 	//LOG("El new pos es: %d, %d, %d, %d", newPos.x, newPos.y, newPos.w, newPos.h);
 	if (App->collision->FindCollision(newPos)) {
-		//if (x != 0) position.x -= 1;
-		//if (y != 0) position.y -= 1;
 		return false;
 	}
 	else {

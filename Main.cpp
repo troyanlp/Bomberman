@@ -6,6 +6,8 @@
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
+
+
 enum main_states
 {
 	MAIN_CREATION,
@@ -19,6 +21,10 @@ Application* App = nullptr;
 
 int main(int argc, char ** argv)
 {
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(61);
+	//_CrtSetBreakAlloc(609);
+
 	ReportMemoryLeaks();
 
 	int main_return = EXIT_FAILURE;

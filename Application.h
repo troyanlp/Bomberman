@@ -19,6 +19,7 @@ class ModulePlayer;
 class ModuleSceneMenu;
 class ModuleSceneLevel;
 class ModuleBomb;
+class ModuleGUI;
 
 class Application
 {
@@ -45,6 +46,7 @@ public:
 	ModuleSceneMenu* scene_menu;
 	ModuleSceneLevel* scene_level;
 	ModuleBomb* bombs;
+	ModuleGUI* gui;
 
 	//FPS
 	Timer* fpsTimer;

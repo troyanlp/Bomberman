@@ -67,7 +67,6 @@ public:
 
 private:
 	SDL_Rect background;
-	SDL_Rect hud;
 };
 
 #endif // __MODULESCENELEVEL_H__
