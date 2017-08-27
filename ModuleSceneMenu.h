@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "SDL/include/SDL_ttf.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -32,6 +33,11 @@ private:
 	SDL_Texture* exit;
 	SDL_Rect exitDest;
 	SDL_Rect background;
+	SDL_Texture* bombGraphics = nullptr;
+	Animation* bomb_animation = nullptr;
+	Animation bomb;
+	SDL_Rect bombDest;
+	int focus = 1;
 };
 
 #endif // __MODULESCENEMENU_H__

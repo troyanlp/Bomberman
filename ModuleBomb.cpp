@@ -7,21 +7,6 @@
 
 ModuleBomb::ModuleBomb(bool start_enabled) : Module(start_enabled)
 {
-	//Explotion animations
-	/*for (int i = 0; i < 7; i++) {
-		fourWay.frames.push_back({ 0 + (48*i), 0, 48, 48});
-	}
-	fourWay.speed = 0.075f;
-	fourWay.loop = true;
-	for (int i = 0; i < 7; i++) {
-		twoWay.frames.push_back({ 0 + (48 * i), 48, 48, 43 });
-	}
-	twoWay.speed = 0.075f;
-	for (int i = 0; i < 7; i++) {
-		ending.frames.push_back({ 0 + (48 * i), 91, 48, 43 });
-	}
-	ending.speed = 0.075f;
-	*/
 }
 
 

@@ -34,11 +34,25 @@ bool ModuleSceneMenu::Start()
 	textSurface = TTF_RenderText_Solid(font, "Play", color);
 	play = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	playDest = { 600, 350, textSurface->clip_rect.w, textSurface->clip_rect.h };
-
 	SDL_FreeSurface(textSurface);
+	
 	textSurface = TTF_RenderText_Solid(font, "Exit!", color);
 	exit = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	exitDest = { 600, 400, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	//Bomb select
+	bombGraphics = App->textures->Load("Bomberman.png");
+
+	bomb.frames.push_back({ 177, 11, 18, 18 });
+	bomb.frames.push_back({ 195, 11, 18, 18 });
+	bomb.frames.push_back({ 211, 11, 18, 18 });
+	bomb.speed = 0.075f;
+
+	bomb_animation = &bomb;
+	bombDest = { 560, 345, 30, 30 };
+
+	focus = 1;
 
 	/*App->audio->PlayMusic("intro.ogg", 1.0f);
 	if(fx == 0)
@@ -61,6 +75,7 @@ bool ModuleSceneMenu::CleanUp()
 	LOG("Unloading menu scene");
 
 	App->textures->Unload(graphics);
+	App->textures->Unload(bombGraphics);
 
 	TTF_CloseFont(font);
 	
@@ -92,12 +107,39 @@ update_status ModuleSceneMenu::Update()
 	App->renderer->Blit(play, position.x, position.y, &(logo), &playDest);
 	App->renderer->Blit(exit, position.x, position.y, &(logo), &exitDest);
 
-
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->fade->isFading() == false)
-	{
-		App->fade->FadeToBlack((Module*)App->scene_level, this);
-		App->audio->PlayFx(fx);
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+		if (focus < 2) {
+			focus++;
+			bombDest.y += 50;
+		}
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		if (focus > 1) {
+			focus--;
+			bombDest.y -= 50;
+		}
+	}
+	
+	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
+		&& App->fade->isFading() == false)
+	{
+		if (focus == 1) {
+			App->fade->FadeToBlack((Module*)App->scene_level, this);
+			App->audio->PlayFx(fx);
+		}
+		else {
+			return UPDATE_STOP;
+		}
+		
+		
+	}
+	
+	
+	App->renderer->Blit(bombGraphics, position.x, position.y, &(bomb_animation->GetCurrentFrame()), &bombDest);
+
+
+	
 
 	return UPDATE_CONTINUE;
 }
