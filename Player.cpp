@@ -3,6 +3,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleBomb.h"
+#include "ModuleGUI.h"
 
 Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id), AI(AI), graphics(gfx)
 {
@@ -64,6 +65,7 @@ void Player::Draw()
 			break;
 		case ITEMLIFE:
 			lives++;
+			App->gui->ChangePlayerLife(1, id);
 			LOG("Num Lives: %d", lives);
 			break;
 		case ITEMDEATH:
@@ -142,6 +144,7 @@ void Player::Hurt()
 {
 	if (!invincible) {
 		lives--;
+		App->gui->ChangePlayerLife(-1, id);
 		LOG("AUX!");
 		if (lives == 0) {
 			Die();

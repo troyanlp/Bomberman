@@ -19,6 +19,11 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void ChangePlayerLife(int increment, int player);
+	void ChangePlayerPoints(int increment, int player);
+
+	char* GetCharPointer(char* text, int num);
+
 private:
 	SDL_Rect background;
 	TTF_Font* font;
@@ -28,6 +33,11 @@ private:
 	SDL_Rect lifeDest;
 	SDL_Texture* points;
 	SDL_Rect pointsDest;
+	//Data
+	int player1Life = 3;
+	int player2Life = 3;
+	int player1Points = 0;
+	int player2Points = 0;
 };
 
 #endif
