@@ -89,8 +89,8 @@ int ModuleBomb::GetNumBombsFromPlayer(int id)
 	return count;
 }
 
-void ModuleBomb::AddExplotion(SDL_Rect position, ExplotionInstance instance)
+void ModuleBomb::AddExplotion(SDL_Rect position, ExplotionInstance instance, int idPlayer)
 {
-	Explotion* aux = new Explotion(position, explotionGraphics, instance);
+	Explotion* aux = new Explotion(position, explotionGraphics, instance, idPlayer);
 	explotions.push_back(aux);
 }

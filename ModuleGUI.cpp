@@ -72,11 +72,13 @@ void ModuleGUI::ChangePlayerLife(int increment, int player)
 		player1Life += increment;
 		textSurface = TTF_RenderText_Solid(font, GetCharPointer("Lives: ", player1Life), color);
 		life = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		SDL_FreeSurface(textSurface);
 	}
 	else {
 		player2Life += increment;
 		//textSurface = TTF_RenderText_Solid(font, GetCharPointer("Lives: ", player2Life), color);
 		//life = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		//SDL_FreeSurface(textSurface);
 	}
 }
 
@@ -84,13 +86,15 @@ void ModuleGUI::ChangePlayerPoints(int increment, int player)
 {
 	if (player == 1) {
 		player1Points += increment;
-		textSurface = TTF_RenderText_Solid(font, GetCharPointer("Lives: ", player1Life), color);
-		life = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		textSurface = TTF_RenderText_Solid(font, GetCharPointer("Points: ", player1Points), color);
+		points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		SDL_FreeSurface(textSurface);
 	}
 	else {
 		player2Life += increment;
-		//textSurface = TTF_RenderText_Solid(font, GetCharPointer("Lives: ", player2Life), color);
-		//life = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		//textSurface = TTF_RenderText_Solid(font, GetCharPointer("Points: ", player2Points), color);
+		//points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		//SDL_FreeSurface(textSurface);
 	}
 }
 

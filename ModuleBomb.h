@@ -25,7 +25,7 @@ public:
 	void AddBomb(int x, int y, int idPlayer, int flamePower);
 	int GetNumBombsFromPlayer(int id);
 
-	void AddExplotion(SDL_Rect position, ExplotionInstance instance);
+	void AddExplotion(SDL_Rect position, ExplotionInstance instance, int idPlayer);
 
 
 public:

@@ -289,7 +289,7 @@ void ModuleSceneLevel::AddBombToMapLevel(int x, int y)
 	//PrintLevelMap();
 }
 
-std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int y, int flameLevel)
+std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int y, int flameLevel, int idPlayer)
 {
 	std::list<ExplotionInstance> ex;
 	
@@ -335,6 +335,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 			if (levelMap[row - (i + 1)][column].type != 'e' || levelMap[row - (i + 1)][column].type == 'b') {
 				if (levelMap[row - (i + 1)][column].type == 'b') {
 					BreakBrick(levelMap[row - (i + 1)][column].squareRect);
+					App->gui->ChangePlayerPoints(100, idPlayer);
 					upShort = true;
 				}
 				ExplotionInstance aux;
@@ -356,6 +357,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 			if (levelMap[row + (i + 1)][column].type != 'e' || levelMap[row + (i + 1)][column].type == 'b') {
 				if (levelMap[row + (i + 1)][column].type == 'b') {
 					BreakBrick(levelMap[row + (i + 1)][column].squareRect);
+					App->gui->ChangePlayerPoints(100, idPlayer);
 					downShort = true;
 				}
 				ExplotionInstance aux;
@@ -377,6 +379,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 			if (levelMap[row][column + (i + 1)].type != 'e' || levelMap[row][column + (i + 1)].type == 'b') {
 				if (levelMap[row][column + (i + 1)].type == 'b') {
 					BreakBrick(levelMap[row][column + (i + 1)].squareRect);
+					App->gui->ChangePlayerPoints(100, idPlayer);
 					rightShort = true;
 				}
 				ExplotionInstance aux;
@@ -398,6 +401,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 			if (levelMap[row][column - (i + 1)].type != 'e' || levelMap[row][column - (i + 1)].type == 'b') {
 				if (levelMap[row][column - (i + 1)].type == 'b') {
 					BreakBrick(levelMap[row][column - (i + 1)].squareRect);
+					App->gui->ChangePlayerPoints(100, idPlayer);
 					leftShort = true;
 				}
 				ExplotionInstance aux;
@@ -454,7 +458,7 @@ std::list<ExplotionInstance> ModuleSceneLevel::AddExplotionToMapLevel(int x, int
 
 	//Create explotions
 	for (list<ExplotionInstance>::iterator it = ex.begin(); it != ex.end(); ++it) {
-		App->bombs->AddExplotion((it)->position, (*it));
+		App->bombs->AddExplotion((it)->position, (*it), idPlayer);
 	}
 	
 	RELEASE(up);

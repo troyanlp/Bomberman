@@ -54,7 +54,7 @@ void Bomb::Draw()
 void Bomb::Explode()
 {
 	LOG("BOOM");
-	list<ExplotionInstance> ex = App->scene_level->AddExplotionToMapLevel(position.x,position.y,flameLevel);
+	list<ExplotionInstance> ex = App->scene_level->AddExplotionToMapLevel(position.x,position.y,flameLevel, idPlayer);
 	exploded = true;
 	collider->to_delete = true;
 }

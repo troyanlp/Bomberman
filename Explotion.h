@@ -24,7 +24,7 @@ class Explotion :
 	public Entity
 {
 public:
-	Explotion(SDL_Rect position, SDL_Texture* gfx, ExplotionInstance instance);
+	Explotion(SDL_Rect position, SDL_Texture* gfx, ExplotionInstance instance, int idPlayer);
 	~Explotion();
 
 	void Draw();

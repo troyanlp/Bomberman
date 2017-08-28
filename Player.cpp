@@ -30,7 +30,7 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	else collider->type = CIA;
 
 	numBombs = 1;
-	flamePower = 2;
+	flamePower = 1;
 	lives = 3;
 	playerSpeed = 1;
 	hurtTimer = new Timer();
@@ -54,19 +54,23 @@ void Player::Draw()
 		case ITEMSPEED:
 			playerSpeed++;
 			LOG("Speed: %d", playerSpeed);
+			App->gui->ChangePlayerPoints(500, id);
 			break;
 		case ITEMBOMB:
 			numBombs++;
 			LOG("NumBombs: %d",numBombs);
+			App->gui->ChangePlayerPoints(500, id);
 			break;
 		case ITEMFIRE:
 			flamePower++;
 			LOG("NumBombs: %d", flamePower);
+			App->gui->ChangePlayerPoints(500, id);
 			break;
 		case ITEMLIFE:
 			lives++;
 			App->gui->ChangePlayerLife(1, id);
 			LOG("Num Lives: %d", lives);
+			App->gui->ChangePlayerPoints(500, id);
 			break;
 		case ITEMDEATH:
 			Die();

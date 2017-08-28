@@ -76,7 +76,7 @@ void Enemy::Update()
 			break;
 		}
 		collider->message = NOTHING;
-		collider->collided = false;
+		//collider->collided = false;
 	}
 
 	switch (direction) {

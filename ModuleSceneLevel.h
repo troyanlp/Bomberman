@@ -40,7 +40,7 @@ public:
 	
 	void PrintLevelMap();
 	void AddBombToMapLevel(int x, int y);
-	std::list<ExplotionInstance> AddExplotionToMapLevel(int x, int y, int flameLevel);
+	std::list<ExplotionInstance> AddExplotionToMapLevel(int x, int y, int flameLevel, int idPlayer);
 	void EraseBrickFromMapLevel(int x, int y);
 
 	bool CleanUp();

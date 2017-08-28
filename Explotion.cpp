@@ -3,7 +3,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 
-Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance) : graphics(gfx)
+Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance, int idPlayer) : graphics(gfx)
 {
 	explotionType = instance.type;
 	rotation = instance.rotation;
@@ -14,7 +14,8 @@ Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance)
 
 	//collider
 	collider = App->collision->AddCollider({ position.x, position.y, 50, 50 });
-	collider->type = CEXPLOTION;
+	if(idPlayer == 1) collider->type = CEXPLOTION1;
+	else collider->type = CEXPLOTION2;
 
 	switch (explotionType) {
 		case FOURWAY:
