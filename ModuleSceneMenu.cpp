@@ -7,6 +7,10 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneMenu.h"
 #include "ModuleWindow.h"
+#include "ModuleSceneLevel.h"
+#include "ModuleCollision.h"
+#include "ModuleGUI.h"
+#include "ModulePlayer.h"
 #include "SDL\include\SDL.h"
 
 ModuleSceneMenu::ModuleSceneMenu(bool active) : Module(active)
@@ -82,11 +86,28 @@ bool ModuleSceneMenu::CleanUp()
 	return true;
 }
 
+void ModuleSceneMenu::BackToMenu()
+{
+	backToMenu = true;
+}
+
 // Update: draw background
 update_status ModuleSceneMenu::PreUpdate()
 {
 	//Draw background color
 	//App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
+	if (backToMenu) {
+		if (App->fade->isFading() == false) {
+			backToMenu = false;
+			App->scene_level->CleanUp();
+			//App->scene_level->Disable();
+			App->collision->CleanUp();
+			//App->gui->CleanUp();
+			App->gui->Disable();
+			App->player->Disable();
+		}
+	}
+
 	return UPDATE_CONTINUE;
 }
 

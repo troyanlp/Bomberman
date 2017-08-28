@@ -35,9 +35,10 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(scene_level = new ModuleSceneLevel(false));
 	modules.push_back(scene_menu = new ModuleSceneMenu(false));
 	modules.push_back(gui = new ModuleGUI(false));
-	modules.push_back(scene_level = new ModuleSceneLevel(false));
+	
 	modules.push_back(player = new ModulePlayer(false));
 	modules.push_back(bombs = new ModuleBomb(false));
 	

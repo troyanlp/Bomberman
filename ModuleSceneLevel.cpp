@@ -14,6 +14,8 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "ModuleGUI.h"
+#include "ModuleSceneMenu.h"
+#include "ModuleFadeToBlack.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -24,7 +26,9 @@ ModuleSceneLevel::~ModuleSceneLevel()
 // Load assets
 bool ModuleSceneLevel::Start()
 {
-	LOG("Loading space scene");
+	LOG("Loading level scene");
+
+	App->scene_menu->Disable();
 
 	App->gui->Enable();
 	
@@ -482,4 +486,16 @@ void ModuleSceneLevel::EraseBrickFromMapLevel(int x, int y)
 		}
 	}
 	//PrintLevelMap();
+}
+
+void ModuleSceneLevel::BackToMenu()
+{
+	App->scene_menu->Enable();
+	//CleanUp();
+	//App->collision->CleanUp();
+	//App->scene_level->Disable();
+	App->fade->FadeToBlack((Module*)App->scene_menu, this);
+	App->scene_menu->BackToMenu();
+	
+	
 }

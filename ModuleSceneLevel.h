@@ -43,6 +43,8 @@ public:
 	std::list<ExplotionInstance> AddExplotionToMapLevel(int x, int y, int flameLevel, int idPlayer);
 	void EraseBrickFromMapLevel(int x, int y);
 
+	void BackToMenu();
+
 	bool CleanUp();
 
 private:

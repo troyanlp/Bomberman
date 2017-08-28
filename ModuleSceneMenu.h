@@ -18,6 +18,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void BackToMenu();
+
 public:
 	SDL_Texture* graphics = nullptr;
 	SDL_Rect logo;
@@ -38,6 +40,7 @@ private:
 	Animation bomb;
 	SDL_Rect bombDest;
 	int focus = 1;
+	bool backToMenu = false;
 };
 
 #endif // __MODULESCENEMENU_H__

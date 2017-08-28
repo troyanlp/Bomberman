@@ -4,6 +4,7 @@
 #include "ModuleCollision.h"
 #include "ModuleBomb.h"
 #include "ModuleGUI.h"
+#include "ModuleSceneLevel.h"
 
 Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id), AI(AI), graphics(gfx)
 {
@@ -46,56 +47,62 @@ Player::~Player()
 
 void Player::Draw()
 {
-	if (collider->collided) {
-		switch (collider->message) {
-		case HURT:
-			Hurt();
-			break;
-		case ITEMSPEED:
-			playerSpeed++;
-			LOG("Speed: %d", playerSpeed);
-			App->gui->ChangePlayerPoints(500, id);
-			break;
-		case ITEMBOMB:
-			numBombs++;
-			LOG("NumBombs: %d",numBombs);
-			App->gui->ChangePlayerPoints(500, id);
-			break;
-		case ITEMFIRE:
-			flamePower++;
-			LOG("NumBombs: %d", flamePower);
-			App->gui->ChangePlayerPoints(500, id);
-			break;
-		case ITEMLIFE:
-			lives++;
-			App->gui->ChangePlayerLife(1, id);
-			LOG("Num Lives: %d", lives);
-			App->gui->ChangePlayerPoints(500, id);
-			break;
-		case ITEMDEATH:
-			Die();
-			break;
+	if (!destroyed) {
+		if (collider->collided) {
+			switch (collider->message) {
+			case HURT:
+				Hurt();
+				break;
+			case ITEMSPEED:
+				playerSpeed++;
+				LOG("Speed: %d", playerSpeed);
+				App->gui->ChangePlayerPoints(500, id);
+				break;
+			case ITEMBOMB:
+				numBombs++;
+				LOG("NumBombs: %d", numBombs);
+				App->gui->ChangePlayerPoints(500, id);
+				break;
+			case ITEMFIRE:
+				flamePower++;
+				LOG("NumBombs: %d", flamePower);
+				App->gui->ChangePlayerPoints(500, id);
+				break;
+			case ITEMLIFE:
+				lives++;
+				App->gui->ChangePlayerLife(1, id);
+				LOG("Num Lives: %d", lives);
+				App->gui->ChangePlayerPoints(500, id);
+				break;
+			case ITEMDEATH:
+				Die();
+				break;
+			}
+			if (!destroyed) {
+				collider->message = NOTHING;
+				collider->collided = false;
+			}
 		}
-		collider->message = NOTHING;
-		collider->collided = false;
+
+		if (invincible && !destroyed) {
+			invincibleCount++;
+			if (hurtTimer->EllapsedInSeconds() >= 4) {
+				LOG("Fin de invencibilidad");
+				invincible = false;
+				invincibleShow = true;
+				invincibleCount = 0;
+				hurtTimer->Stop();
+			}
+			else {
+				if (invincibleCount % 10 == 0) invincibleShow = !invincibleShow;
+			}
+		}
+
+		if (!destroyed && invincibleShow)
+			App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
 	}
 	
-	if (invincible) {
-		invincibleCount++;
-		if (hurtTimer->EllapsedInSeconds() >= 4) {
-			LOG("Fin de invencibilidad");
-			invincible = false;
-			invincibleShow = true;
-			invincibleCount = 0;
-			hurtTimer->Stop();
-		}
-		else {
-			if (invincibleCount % 10 == 0) invincibleShow = !invincibleShow;
-		}
-	}
-
-	if (!destroyed && invincibleShow)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), &spriteDest);
+	
 }
 
 void Player::CleanUp()
@@ -166,4 +173,7 @@ void Player::Hurt()
 void Player::Die()
 {
 	LOG("YOU DIED!");
+	destroyed = true;
+	//CleanUp();
+	App->scene_level->BackToMenu();
 }

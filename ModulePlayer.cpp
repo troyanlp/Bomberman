@@ -12,12 +12,25 @@
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 {
 
+	
+
+}
+
+ModulePlayer::~ModulePlayer()
+{
+}
+
+// Load assets
+bool ModulePlayer::Start()
+{
+	LOG("Loading player");
+
 	// idle animation
 	idleDown.frames.push_back({ 113, 2, 17, 30 });
 	idleDown.frames.push_back({ 133, 2, 17, 30 });
 	idleDown.frames.push_back({ 153, 2, 17, 30 });
 	idleDown.speed = 0.075f;
-	
+
 	// walk right animation
 	walkRight.frames.push_back({ 5, 36, 17, 29 });
 	walkRight.frames.push_back({ 27, 36, 17, 29 });
@@ -26,7 +39,7 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	walkRight.frames.push_back({ 87, 36, 17, 29 });
 	walkRight.frames.push_back({ 47, 36, 17, 29 });
 	walkRight.speed = 0.1f;
-	
+
 	// walk left animation
 	walkLeft.frames.push_back({ 5, 99, 15, 28 });
 	walkLeft.frames.push_back({ 25, 99, 15, 28 });
@@ -74,17 +87,6 @@ ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
 	die.speed = 0.1f;
 	die.loop = false;
 
-}
-
-ModulePlayer::~ModulePlayer()
-{
-}
-
-// Load assets
-bool ModulePlayer::Start()
-{
-	LOG("Loading player");
-
 	graphics = App->textures->Load("Bomberman.png");
 
 	destroyed = false;
@@ -92,6 +94,8 @@ bool ModulePlayer::Start()
 	// initial position of the player
 	position.x = 55;
 	position.y = 150;
+
+	numPlayers = 0;
 
 	CreatePlayer1(position,false);
 
