@@ -62,7 +62,7 @@ Item::~Item()
 
 void Item::Draw()
 {
-	if (collider->collided = true && collider->message == ColliderMessage::NOTHING) {
+	if (collider->collided && collider->message == ColliderMessage::NOTHING) {
 		CleanUp();
 	}
 

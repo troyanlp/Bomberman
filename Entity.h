@@ -17,7 +17,8 @@ public:
 		ENEMY,
 		BLOCK,
 		BRICK,
-		ITEM
+		ITEM,
+		DOOR
 	};
 
 	Entity() {}

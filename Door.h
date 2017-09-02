@@ -9,8 +9,13 @@ class Door :
 	public Entity
 {
 public:
-	Door();
+	Door(iPoint pos);
 	~Door();
+
+	void Draw();
+	void CleanUp();
+
+	bool CheckFinishedLevel();
 
 public:
 	SDL_Texture* graphics = nullptr;

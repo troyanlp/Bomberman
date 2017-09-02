@@ -49,6 +49,7 @@ update_status ModuleCollision::PreUpdate()
 update_status ModuleCollision::Update()
 {
 	for (std::list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it) {
+		
 		//Check if player or enemy collide with and explotion
 		if ((*it)->type == CPLAYER || (*it)->type == CENEMY) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
@@ -88,6 +89,20 @@ update_status ModuleCollision::Update()
 						(*it2)->collided = true;
 						(*it)->message = (*it2)->message;
 						(*it2)->message = NOTHING;
+					}
+				}
+			}
+		}
+
+		//Check if player is colliding with the door
+		if ((*it)->type == CPLAYER) {
+			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
+				if ((*it2)->type == CDOOR) {
+					if ((*it)->CheckCollision((*it2)->rect)) {
+						//(*it)->collided = true;
+						(*it2)->collided = true;
+						//(*it)->message = (*it2)->message;
+						(*it2)->message = HURT;
 					}
 				}
 			}

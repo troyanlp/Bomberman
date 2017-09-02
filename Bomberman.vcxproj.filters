@@ -34,9 +34,6 @@
     <ClInclude Include="Application.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleAudio.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -99,6 +96,12 @@
     </ClInclude>
     <ClInclude Include="ModuleGUI.h">
       <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="ModuleGUI.cpp">
       <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Game Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

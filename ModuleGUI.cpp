@@ -130,7 +130,7 @@ char * ModuleGUI::GetCharPointer(char * text, int num)
 	strcpy(concatString, text);
 	strcat(concatString, numtext);
 
-	RELEASE_ARRAY(numtext);
+	//RELEASE_ARRAY(numtext);
 	
 	return concatString;
 }

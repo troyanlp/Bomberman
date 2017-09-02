@@ -16,6 +16,7 @@
 #include "ModuleGUI.h"
 #include "ModuleSceneMenu.h"
 #include "ModuleFadeToBlack.h"
+#include "Door.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -198,8 +199,11 @@ void ModuleSceneLevel::CreateBricks()
 	Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
 	obj->AddLoot(ISPEED);
 	Entities.push_back(obj);
+	Door* door = new Door(iPoint(210, 110));
+	Entities.push_back(door);
 	obj = new Brick(iPoint(200, 100), graphics, brick);
 	Entities.push_back(obj);
+	
 }
 
 void ModuleSceneLevel::CreateEnemies()
@@ -498,4 +502,9 @@ void ModuleSceneLevel::BackToMenu()
 	App->scene_menu->BackToMenu();
 	
 	
+}
+
+int ModuleSceneLevel::CheckEnemiesLeft()
+{
+	return Enemies.size();
 }

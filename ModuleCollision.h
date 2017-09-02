@@ -16,6 +16,7 @@ enum ColliderType {
 	CINTERNALBLOCK,
 	CBRICK,
 	CITEM,
+	CDOOR,
 	CNULL
 };
 

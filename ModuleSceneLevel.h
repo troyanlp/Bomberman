@@ -45,6 +45,8 @@ public:
 
 	void BackToMenu();
 
+	int CheckEnemiesLeft();
+
 	bool CleanUp();
 
 private:
