@@ -103,6 +103,9 @@
     <ClInclude Include="Globals.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneResult.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>Game Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneResult.cpp">
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 
 #include "ModuleSceneMenu.h"
 #include "ModuleSceneLevel.h"
+#include "ModuleSceneResult.h"
 #include "ModulePlayer.h"
 #include "ModuleBomb.h"
 #include "ModuleGUI.h"
@@ -35,6 +36,7 @@ Application::Application()
 	modules.push_back(audio = new ModuleAudio());
 
 	// Game Modules
+	modules.push_back(scene_result = new ModuleSceneResult(false));
 	modules.push_back(scene_level = new ModuleSceneLevel(false));
 	modules.push_back(scene_menu = new ModuleSceneMenu(false));
 	modules.push_back(gui = new ModuleGUI(false));
@@ -68,7 +70,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_menu, nullptr, 3.0f);
+	fade->FadeToBlack(scene_result, nullptr, 3.0f);
 
 	return ret;
 }
