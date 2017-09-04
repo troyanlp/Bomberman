@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleSceneLevel.h"
+#include "ModuleGUI.h"
 
 Door::Door(iPoint pos)
 {
@@ -28,6 +29,7 @@ void Door::Draw()
 	if (!destroyed && collider->collided && collider->message == ColliderMessage::HURT) {
 		if (CheckFinishedLevel()) {
 			CleanUp();
+			App->scene_level->GoToResult(true, App->gui->player1Points);
 		}
 		collider->collided = false;
 		collider->message = NOTHING;

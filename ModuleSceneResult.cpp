@@ -4,6 +4,9 @@
 #include "ModuleInput.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleGUI.h"
+#include "ModuleSceneLevel.h"
+#include "ModuleCollision.h"
+#include "ModulePlayer.h"
 
 ModuleSceneResult::ModuleSceneResult(bool active) : Module(active)
 {
@@ -33,21 +36,24 @@ bool ModuleSceneResult::Start()
 	background.y = 0;
 
 
-	win = true;
-	numPoints = 1000;
+	//win = true;
+	//numPoints = 1000;
 
-	if (win) textSurface = TTF_RenderText_Solid(font48, "You win!", color);
+	/*if (win) 
+		textSurface = TTF_RenderText_Solid(font48, "You win!", color);
 	else textSurface = TTF_RenderText_Solid(font48, "You lose!", color);
 	result = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	resultDest = { 400-(textSurface->clip_rect.w/2), 200, textSurface->clip_rect.w, textSurface->clip_rect.h };
 	SDL_FreeSurface(textSurface);
 
 	if (win) {
-		textSurface = TTF_RenderText_Solid(font48, App->gui->GetCharPointer("",numPoints), color);
+		char* text = App->gui->GetCharPointer("", numPoints);
+		textSurface = TTF_RenderText_Solid(font48, text, color);
 		points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 		pointsDest = { 400 - (textSurface->clip_rect.w / 2), 275, textSurface->clip_rect.w, textSurface->clip_rect.h };
 		SDL_FreeSurface(textSurface);
-	}
+		RELEASE_ARRAY(text);
+	}*/
 
 	textSurface = TTF_RenderText_Solid(font16, "Press space or enter to go back to menu", color);
 	presskey = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
@@ -59,6 +65,34 @@ bool ModuleSceneResult::Start()
 
 update_status ModuleSceneResult::PreUpdate()
 {
+	if (App->fade->isFading() == false) {
+		App->scene_level->CleanUp();
+		//App->scene_level->Disable();
+		App->collision->CleanUp();
+		//App->gui->CleanUp();
+		App->gui->Disable();
+		App->player->Disable();
+	}
+
+	if (dataSet) {
+		if (win)
+			textSurface = TTF_RenderText_Solid(font48, "You win!", color);
+		else
+			textSurface = TTF_RenderText_Solid(font48, "You lose!", color);
+		result = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+		resultDest = { 400 - (textSurface->clip_rect.w / 2), 200, textSurface->clip_rect.w, textSurface->clip_rect.h };
+		SDL_FreeSurface(textSurface);
+
+		if (win) {
+			char* text = App->gui->GetCharPointer("", numPoints);
+			textSurface = TTF_RenderText_Solid(font48, text, color);
+			points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+			pointsDest = { 400 - (textSurface->clip_rect.w / 2), 275, textSurface->clip_rect.w, textSurface->clip_rect.h };
+			SDL_FreeSurface(textSurface);
+			RELEASE_ARRAY(text);
+		}
+	}
+
 	//Draw background color
 	App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
 
@@ -69,13 +103,17 @@ update_status ModuleSceneResult::Update()
 {
 
 	//Draw text
-	App->renderer->Blit(result, NULL, NULL, &(section), &resultDest);
-	if (win) App->renderer->Blit(points, NULL, NULL, &(section), &pointsDest);
-	App->renderer->Blit(presskey, NULL, NULL, &(section), &presskeyDest);
+	if (dataSet) {
+		App->renderer->Blit(result, NULL, NULL, &(section), &resultDest);
+		if (win)
+			App->renderer->Blit(points, NULL, NULL, &(section), &pointsDest);
+		App->renderer->Blit(presskey, NULL, NULL, &(section), &presskeyDest);
+	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		&& App->fade->isFading() == false)
 	{
+		dataSet = false;
 		App->fade->FadeToBlack((Module*)App->scene_menu, this);
 
 	}
@@ -95,20 +133,8 @@ bool ModuleSceneResult::CleanUp()
 
 void ModuleSceneResult::SetData(bool result, int playerPoints)
 {
+	dataSet = true;
+	
 	win = result;
 	numPoints = playerPoints;
-
-	if(win) textSurface = TTF_RenderText_Solid(font48, "You win!", color);
-	else textSurface = TTF_RenderText_Solid(font48, "You lose!", color);
-	result = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
-	resultDest = { 600, 350, textSurface->clip_rect.w, textSurface->clip_rect.h };
-	SDL_FreeSurface(textSurface);
-
-	if (win) {
-		textSurface = TTF_RenderText_Solid(font48, "Exit!", color);
-		points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
-		pointsDest = { 600, 400, textSurface->clip_rect.w, textSurface->clip_rect.h };
-		SDL_FreeSurface(textSurface);
-	}
-
 }

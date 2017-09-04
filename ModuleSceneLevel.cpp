@@ -15,6 +15,7 @@
 #include "Item.h"
 #include "ModuleGUI.h"
 #include "ModuleSceneMenu.h"
+#include "ModuleSceneResult.h"
 #include "ModuleFadeToBlack.h"
 #include "Door.h"
 
@@ -502,6 +503,20 @@ void ModuleSceneLevel::BackToMenu()
 	App->scene_menu->BackToMenu();
 	
 	
+}
+
+void ModuleSceneLevel::GoToResult(bool result, int points)
+{
+	App->scene_result->Enable();
+	//CleanUp();
+	//App->collision->CleanUp();
+	//App->scene_level->Disable();
+	App->scene_result->SetData(result, points);
+	App->fade->FadeToBlack((Module*)App->scene_result, this);
+	
+	//App->scene_menu->BackToMenu();
+
+
 }
 
 int ModuleSceneLevel::CheckEnemiesLeft()

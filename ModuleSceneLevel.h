@@ -44,6 +44,7 @@ public:
 	void EraseBrickFromMapLevel(int x, int y);
 
 	void BackToMenu();
+	void GoToResult(bool result, int points);
 
 	int CheckEnemiesLeft();
 

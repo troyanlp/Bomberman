@@ -37,6 +37,7 @@ public:
 	SDL_Texture* graphics = nullptr;
 	int id;
 	int lives;
+	int points;
 	int playerSpeed;
 	Timer* hurtTimer;
 	bool invincible = false;

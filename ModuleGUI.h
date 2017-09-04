@@ -24,6 +24,10 @@ public:
 
 	char* GetCharPointer(char* text, int num);
 
+public:
+	int player1Points = 0;
+	int player2Points = 0;
+
 private:
 	SDL_Rect background;
 	TTF_Font* font;
@@ -36,8 +40,7 @@ private:
 	//Data
 	int player1Life = 3;
 	int player2Life = 3;
-	int player1Points = 0;
-	int player2Points = 0;
+	
 };
 
 #endif

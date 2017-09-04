@@ -21,6 +21,7 @@ public:
 	void SetData(bool result, int playerPoints);
 
 private:
+	bool dataSet = false;
 	bool win = true;
 	int numPoints = 100;
 	TTF_Font* font48;

@@ -5,6 +5,7 @@
 #include "ModuleBomb.h"
 #include "ModuleGUI.h"
 #include "ModuleSceneLevel.h"
+#include "ModulePlayer.h"
 
 Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id), AI(AI), graphics(gfx)
 {
@@ -47,6 +48,9 @@ Player::~Player()
 
 void Player::Draw()
 {
+	if(id == 1) points = App->gui->player1Points;
+	else points = App->gui->player2Points;
+
 	if (!destroyed) {
 		if (collider->collided) {
 			switch (collider->message) {
@@ -175,5 +179,6 @@ void Player::Die()
 	LOG("YOU DIED!");
 	destroyed = true;
 	//CleanUp();
-	App->scene_level->BackToMenu();
+	//App->scene_level->BackToMenu();
+	App->scene_level->GoToResult(true, points);
 }
