@@ -187,6 +187,7 @@ void ModuleSceneLevel::CreateExternalBlocks()
 		Block *obj = new Block(iPoint(0 + (50 * i), 550), true, graphics, externalBlock);
 		Entities.push_back(obj);
 	}
+
 }
 
 void ModuleSceneLevel::CreateBlocks()
@@ -196,6 +197,44 @@ void ModuleSceneLevel::CreateBlocks()
 			Block *obj = new Block(iPoint(100 + (100 * j), 150 + (100 * i)), false, graphics, block);
 			Entities.push_back(obj);
 		}
+	}
+
+	//Level Dependent
+	if (App->currentLevel == 1) {
+		Block *obj = new Block(iPoint(150, 100), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(450, 200), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(100, 250), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(550, 250), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(650, 350), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(50, 450), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(50, 500), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(200, 550), true, graphics, block);
+		Entities.push_back(obj);
+	}
+	else {
+		Block *obj = new Block(iPoint(350, 200), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(100, 250), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(300, 250), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(550, 350), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(50, 550), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(400, 550), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(450, 550), true, graphics, block);
+		Entities.push_back(obj);
+		obj = new Block(iPoint(600, 550), true, graphics, block);
+		Entities.push_back(obj);
 	}
 }
 

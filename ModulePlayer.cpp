@@ -93,7 +93,7 @@ bool ModulePlayer::Start()
 
 	// initial position of the player
 	position.x = 55;
-	position.y = 150;
+	position.y = 100;
 
 	numPlayers = 0;
 
