@@ -18,6 +18,7 @@
 #include "ModuleSceneResult.h"
 #include "ModuleFadeToBlack.h"
 #include "Door.h"
+#include "ModuleInput.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {}
@@ -120,6 +121,10 @@ update_status ModuleSceneLevel::PreUpdate()
 
 update_status ModuleSceneLevel::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		LOG("El nivel es: %d", App->currentLevel);
+	}
+	
 	// Draw everything --------------------------------------
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
 		if (!(*it)->destroyed) {

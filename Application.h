@@ -53,6 +53,9 @@ public:
 	//FPS
 	Timer* fpsTimer;
 
+	//Level
+	int currentLevel = 0;
+
 private:
 
 	std::list<Module*> modules;

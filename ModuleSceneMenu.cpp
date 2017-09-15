@@ -40,9 +40,24 @@ bool ModuleSceneMenu::Start()
 	playDest = { 600, 350, textSurface->clip_rect.w, textSurface->clip_rect.h };
 	SDL_FreeSurface(textSurface);
 	
-	textSurface = TTF_RenderText_Solid(font, "Exit!", color);
+	textSurface = TTF_RenderText_Solid(font, "Exit", color);
 	exit = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	exitDest = { 600, 400, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	textSurface = TTF_RenderText_Solid(font, "Level 1", color);
+	level1 = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	level1Dest = { 600, 350, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	textSurface = TTF_RenderText_Solid(font, "Level 2", color);
+	level2 = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	level2Dest = { 600, 400, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	textSurface = TTF_RenderText_Solid(font, "Back", color);
+	back = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	backDest = { 600, 450, textSurface->clip_rect.w, textSurface->clip_rect.h };
 	SDL_FreeSurface(textSurface);
 
 	//Bomb select
@@ -57,6 +72,8 @@ bool ModuleSceneMenu::Start()
 	bombDest = { 560, 345, 30, 30 };
 
 	focus = 1;
+	focusLevel = 1;
+	levelSelection = false;
 
 	/*App->audio->PlayMusic("intro.ogg", 1.0f);
 	if(fx == 0)
@@ -118,33 +135,84 @@ update_status ModuleSceneMenu::Update()
 	//Draw Bomberman logo
 	App->renderer->Blit(graphics, position.x, position.y, &(logo), &logoDest);
 	//Draw text options
-	App->renderer->Blit(play, position.x, position.y, &(logo), &playDest);
-	App->renderer->Blit(exit, position.x, position.y, &(logo), &exitDest);
+	if (levelSelection) {
+		App->renderer->Blit(level1, position.x, position.y, &(logo), &level1Dest);
+		App->renderer->Blit(level2, position.x, position.y, &(logo), &level2Dest);
+		App->renderer->Blit(back, position.x, position.y, &(logo), &backDest);
+	}
+	else {
+		App->renderer->Blit(play, position.x, position.y, &(logo), &playDest);
+		App->renderer->Blit(exit, position.x, position.y, &(logo), &exitDest);
+	}
 	//Logic of focus
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
-		if (focus < 2) {
-			focus++;
-			bombDest.y += 50;
+		if (levelSelection) {
+			if (focusLevel < 3) {
+				focusLevel++;
+				bombDest.y += 50;
+			}
 		}
+		else {
+			if (focus < 2) {
+				focus++;
+				bombDest.y += 50;
+			}
+		}
+		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
-		if (focus > 1) {
-			focus--;
-			bombDest.y -= 50;
+		if (levelSelection) {
+			if (focusLevel > 1) {
+				focusLevel--;
+				bombDest.y -= 50;
+			}
 		}
+		else {
+			if (focus > 1) {
+				focus--;
+				bombDest.y -= 50;
+			}
+		}
+		
 	}
 	
 	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
 		&& App->fade->isFading() == false)
 	{
-		if (focus == 1) {
-			App->fade->FadeToBlack((Module*)App->scene_level, this);
-			App->audio->PlayFx(fx);
+		if (levelSelection) {
+			switch (focusLevel)
+			{
+			case 1:
+				App->currentLevel = 1;
+				App->fade->FadeToBlack((Module*)App->scene_level, this);
+				//App->audio->PlayFx(fx);
+				break;
+			case 2:
+				App->currentLevel = 2;
+				App->fade->FadeToBlack((Module*)App->scene_level, this);
+				//App->audio->PlayFx(fx);
+				break;
+			case 3:
+				levelSelection = false;
+				focusLevel = 1;
+				focus = 1;
+				bombDest.y = 345;
+				break;
+			}
 		}
 		else {
-			return UPDATE_STOP;
+			if (focus == 1) {
+				levelSelection = true;
+				focusLevel = 1;
+				focus = 1;
+				bombDest.y = 345;
+			}
+			else {
+				return UPDATE_STOP;
+			}
 		}
+		
 		
 	}
 	

@@ -34,12 +34,20 @@ private:
 	SDL_Rect playDest;
 	SDL_Texture* exit;
 	SDL_Rect exitDest;
+	SDL_Texture* level1;
+	SDL_Rect level1Dest;
+	SDL_Texture* level2;
+	SDL_Rect level2Dest;
+	SDL_Texture* back;
+	SDL_Rect backDest;
 	SDL_Rect background;
 	SDL_Texture* bombGraphics = nullptr;
 	Animation* bomb_animation = nullptr;
 	Animation bomb;
 	SDL_Rect bombDest;
 	int focus = 1;
+	int focusLevel = 1;
+	bool levelSelection = false;
 	bool backToMenu = false;
 };
 
