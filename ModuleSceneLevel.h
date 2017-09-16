@@ -60,6 +60,7 @@ public:
 private:
 	void CreateExternalBlocks();
 	void CreateBlocks();
+	void CreateDoor();
 	void CreateBricks();
 	void CreateEnemies();
 

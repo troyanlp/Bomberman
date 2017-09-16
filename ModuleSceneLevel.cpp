@@ -73,6 +73,7 @@ bool ModuleSceneLevel::Start()
 	InitializeLevelsList();
 	CreateExternalBlocks();
 	CreateBlocks();
+	CreateDoor();
 	CreateBricks();
 	CreateEnemies();
 
@@ -216,6 +217,18 @@ void ModuleSceneLevel::CreateBlocks()
 			Block *obj = new Block(*it, true, graphics, block);
 			Entities.push_back(obj);
 		}
+	}
+}
+
+void ModuleSceneLevel::CreateDoor()
+{
+	if (App->currentLevel == 1) {
+		Door* door = new Door(iPoint(510, 510));
+		Entities.push_back(door);
+	}
+	else {
+		Door* door = new Door(iPoint(60, 360));
+		Entities.push_back(door);
 	}
 }
 
