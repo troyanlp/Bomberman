@@ -67,7 +67,13 @@ bool ModuleSceneLevel::Start()
 	//App->particles->Enable();
 	//App->collision->Enable();
 
-	//App->audio->PlayMusic("stage1.ogg", 1.0f);
+	if (App->currentLevel == 1) {
+		App->audio->PlayMusic("Area 1.ogg", 1.0f);
+	}
+	else {
+		App->audio->PlayMusic("Area 2.ogg", 1.0f);
+	}
+	
 	
 	//create some colliders for the walls
 	InitializeLevelsList();
@@ -86,6 +92,8 @@ bool ModuleSceneLevel::Start()
 bool ModuleSceneLevel::CleanUp()
 {
 	LOG("Unloading scene");
+
+	App->audio->StopMusic();
 
  	App->textures->Unload(graphics);
 	App->player->Disable();
