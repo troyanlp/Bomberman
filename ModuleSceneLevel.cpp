@@ -71,8 +71,8 @@ bool ModuleSceneLevel::Start()
 	//create some colliders for the walls
 	CreateExternalBlocks();
 	CreateBlocks();
-	CreateBricks();
-	CreateEnemies();
+	//CreateBricks();
+	//CreateEnemies();
 
 	InitializeSquareMatrix();
 
@@ -201,39 +201,39 @@ void ModuleSceneLevel::CreateBlocks()
 
 	//Level Dependent
 	if (App->currentLevel == 1) {
-		Block *obj = new Block(iPoint(150, 100), true, graphics, block);
+		Block *obj = new Block(iPoint(150, 150), true, graphics, block);
 		Entities.push_back(obj);
 		obj = new Block(iPoint(450, 200), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(100, 250), true, graphics, block);
+		obj = new Block(iPoint(100, 200), true, graphics, block);
 		Entities.push_back(obj);
 		obj = new Block(iPoint(550, 250), true, graphics, block);
 		Entities.push_back(obj);
 		obj = new Block(iPoint(650, 350), true, graphics, block);
 		Entities.push_back(obj);
+		obj = new Block(iPoint(50, 300), true, graphics, block);
+		Entities.push_back(obj);
 		obj = new Block(iPoint(50, 450), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(50, 500), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(200, 550), true, graphics, block);
+		obj = new Block(iPoint(200, 500), true, graphics, block);
 		Entities.push_back(obj);
 	}
 	else {
-		Block *obj = new Block(iPoint(350, 200), true, graphics, block);
+		Block *obj = new Block(iPoint(350, 150), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(100, 250), true, graphics, block);
+		obj = new Block(iPoint(100, 200), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(300, 250), true, graphics, block);
+		obj = new Block(iPoint(300, 200), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(550, 350), true, graphics, block);
+		obj = new Block(iPoint(550, 300), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(50, 550), true, graphics, block);
+		obj = new Block(iPoint(50, 500), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(400, 550), true, graphics, block);
+		obj = new Block(iPoint(400, 500), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(450, 550), true, graphics, block);
+		obj = new Block(iPoint(450, 500), true, graphics, block);
 		Entities.push_back(obj);
-		obj = new Block(iPoint(600, 550), true, graphics, block);
+		obj = new Block(iPoint(600, 500), true, graphics, block);
 		Entities.push_back(obj);
 	}
 }
@@ -255,8 +255,8 @@ void ModuleSceneLevel::CreateEnemies()
 {
 	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
 	Enemies.push_back(obj);
-	Item* item = new Item(iPoint(350, 200), ILIFE);
-	Entities.push_back(item);
+	//Item* item = new Item(iPoint(150, 100), ILIFE);
+	//Entities.push_back(item);
 }
 
 void ModuleSceneLevel::InitializeSquareMatrix()
