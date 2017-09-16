@@ -34,7 +34,7 @@ Explotion::Explotion(SDL_Rect pos, SDL_Texture* gfx, ExplotionInstance instance,
 			}
 		break;
 	}
-	animation.speed = 0.1f;
+	animation.speed = 0.2f;
 	animation.loop = false;
 	current_animation = &animation;
 	//LOG("EXPLOTION!");

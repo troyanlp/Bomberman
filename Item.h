@@ -11,7 +11,8 @@ enum ItemType {
 	ILIFE,
 	ISPEED,
 	IFLAME,
-	IKILL
+	IKILL,
+	NONE
 };
 
 class Item :

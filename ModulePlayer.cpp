@@ -10,10 +10,7 @@
 #include "SDL/include/SDL.h"
 
 ModulePlayer::ModulePlayer(bool start_enabled) : Module(start_enabled)
-{
-
-	
-
+{	
 }
 
 ModulePlayer::~ModulePlayer()

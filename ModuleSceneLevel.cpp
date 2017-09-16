@@ -21,7 +21,8 @@
 #include "ModuleInput.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
-{}
+{
+}
 
 ModuleSceneLevel::~ModuleSceneLevel()
 {}
@@ -69,10 +70,11 @@ bool ModuleSceneLevel::Start()
 	//App->audio->PlayMusic("stage1.ogg", 1.0f);
 	
 	//create some colliders for the walls
+	InitializeLevelsList();
 	CreateExternalBlocks();
 	CreateBlocks();
-	//CreateBricks();
-	//CreateEnemies();
+	CreateBricks();
+	CreateEnemies();
 
 	InitializeSquareMatrix();
 
@@ -201,63 +203,85 @@ void ModuleSceneLevel::CreateBlocks()
 
 	//Level Dependent
 	if (App->currentLevel == 1) {
-		Block *obj = new Block(iPoint(150, 150), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(450, 200), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(100, 200), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(550, 250), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(650, 350), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(50, 300), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(50, 450), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(200, 500), true, graphics, block);
-		Entities.push_back(obj);
+		for (std::list<iPoint>::iterator it = internalBlocksLevel1.begin(); it != internalBlocksLevel1.end(); ++it)
+		{
+			Block *obj = new Block(*it, true, graphics, block);
+			Entities.push_back(obj);
+		}
+		
 	}
 	else {
-		Block *obj = new Block(iPoint(350, 150), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(100, 200), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(300, 200), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(550, 300), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(50, 500), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(400, 500), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(450, 500), true, graphics, block);
-		Entities.push_back(obj);
-		obj = new Block(iPoint(600, 500), true, graphics, block);
-		Entities.push_back(obj);
+		for (std::list<iPoint>::iterator it = internalBlocksLevel2.begin(); it != internalBlocksLevel2.end(); ++it)
+		{
+			Block *obj = new Block(*it, true, graphics, block);
+			Entities.push_back(obj);
+		}
 	}
 }
 
 void ModuleSceneLevel::CreateBricks()
 {
-	//SDL_Rect dest;
-	Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
+	if (App->currentLevel == 1) {
+		for (std::list<BrickInfo>::iterator it = bricksLevel1.begin(); it != bricksLevel1.end(); ++it)
+		{
+			Brick *obj = new Brick(it->position, graphics, brick);
+			if(it->lootType != ItemType::NONE) obj->AddLoot(it->lootType);
+			Entities.push_back(obj);
+		}
+
+	}
+	else {
+		for (std::list<BrickInfo>::iterator it = bricksLevel2.begin(); it != bricksLevel2.end(); ++it)
+		{
+			Brick *obj = new Brick(it->position, graphics, brick);
+			if (it->lootType != ItemType::NONE) obj->AddLoot(it->lootType);
+			Entities.push_back(obj);
+		}
+	}
+	/*Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
 	obj->AddLoot(ISPEED);
 	Entities.push_back(obj);
 	Door* door = new Door(iPoint(210, 110));
 	Entities.push_back(door);
 	obj = new Brick(iPoint(200, 100), graphics, brick);
-	Entities.push_back(obj);
+	Entities.push_back(obj);*/
 	
 }
 
 void ModuleSceneLevel::CreateEnemies()
 {
-	Enemy* obj = new Enemy(iPoint(350+10, 100+5),EnemyDirection::HORIZONTALRIGHT);
-	Enemies.push_back(obj);
+	if (App->currentLevel == 1) {
+		Enemy* obj = new Enemy(iPoint(50 + 10, 400 + 5), EnemyDirection::HORIZONTALRIGHT);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(150 + 10, 200 + 5), EnemyDirection::HORIZONTALRIGHT);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(450 + 10, 100 + 5), EnemyDirection::VERTICALDOWN);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(200 + 10, 500 + 5), EnemyDirection::HORIZONTALRIGHT);
+		Enemies.push_back(obj);
+	}
+	else {
+		Enemy* obj = new Enemy(iPoint(250 + 10, 100 + 5), EnemyDirection::VERTICALDOWN);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(350 + 10, 200 + 5), EnemyDirection::VERTICALUP);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(150 + 10, 300 + 5), EnemyDirection::VERTICALDOWN);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(550 + 10, 200 + 5), EnemyDirection::HORIZONTALRIGHT);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(300 + 10, 500 + 5), EnemyDirection::HORIZONTALRIGHT);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(350 + 10, 300 + 5), EnemyDirection::VERTICALDOWN);
+		Enemies.push_back(obj);
+		obj = new Enemy(iPoint(550 + 10, 300 + 5), EnemyDirection::VERTICALUP);
+		Enemies.push_back(obj);
+	}
+	
 	//Item* item = new Item(iPoint(150, 100), ILIFE);
 	//Entities.push_back(item);
 }
+
+
 
 void ModuleSceneLevel::InitializeSquareMatrix()
 {
@@ -566,4 +590,180 @@ void ModuleSceneLevel::GoToResult(bool result, int points)
 int ModuleSceneLevel::CheckEnemiesLeft()
 {
 	return Enemies.size();
+}
+
+void ModuleSceneLevel::InitializeLevelsList()
+{
+	internalBlocksLevel1.clear();
+	internalBlocksLevel1.push_back(iPoint(350, 150));
+	internalBlocksLevel1.push_back(iPoint(100, 200));
+	internalBlocksLevel1.push_back(iPoint(300, 200));
+	internalBlocksLevel1.push_back(iPoint(550, 300));
+	internalBlocksLevel1.push_back(iPoint(50, 500));
+	internalBlocksLevel1.push_back(iPoint(400, 500));
+	internalBlocksLevel1.push_back(iPoint(450, 500));
+	internalBlocksLevel1.push_back(iPoint(600, 500));
+	
+	internalBlocksLevel2.clear();
+	internalBlocksLevel2.push_back(iPoint(150, 150));
+	internalBlocksLevel2.push_back(iPoint(450, 200));
+	internalBlocksLevel2.push_back(iPoint(100, 200));
+	internalBlocksLevel2.push_back(iPoint(550, 250));
+	internalBlocksLevel2.push_back(iPoint(650, 350));
+	internalBlocksLevel2.push_back(iPoint(50, 300));
+	internalBlocksLevel2.push_back(iPoint(50, 450));
+	internalBlocksLevel2.push_back(iPoint(200, 500));
+
+	BrickInfo aux;
+	bricksLevel1.clear();
+	aux.position = iPoint(150, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(350, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(400, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(500, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(600, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 100); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(150, 150); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(550, 150); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(50, 300); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(300, 300); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(500, 300); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(600, 300); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 300); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(100, 500); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(150, 500); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(350, 500); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(500, 500); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 500); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(250, 200); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(350, 200); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(550, 200); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 200); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(150, 250); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(450, 250); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(50, 350); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(250, 350); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(450, 350); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 350); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(350, 400); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(450, 400); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(650, 400); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(50, 450); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(150, 450); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(350, 450); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(450, 450); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+	aux.position = iPoint(550, 450); aux.lootType = ItemType::NONE;
+	bricksLevel1.push_back(aux);
+
+
+	bricksLevel2.clear();
+	aux.position = iPoint(150, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(200, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(300, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(450, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(500, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(650, 100); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(450, 150); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(150, 200); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(200, 200); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(400, 200); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(500, 200); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(150, 250); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(250, 250); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(350, 250); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(650, 250); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(100, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(250, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(450, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(650, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(50, 350); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(250, 350); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(50, 400); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(200, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(300, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(600, 300); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(300, 400); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(400, 400); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(600, 400); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(650, 400); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(250, 450); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(550, 450); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(50, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(100, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(250, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(5000, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(600, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+	aux.position = iPoint(650, 500); aux.lootType = ItemType::NONE;
+	bricksLevel2.push_back(aux);
+
 }

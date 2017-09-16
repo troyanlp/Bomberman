@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include <list>
+#include "Item.h"
 
 struct SDL_Texture;
 struct ExplotionInstance;
@@ -27,6 +28,12 @@ struct Square {
 	iPoint position;
 	SDL_Rect squareRect;
 };
+
+struct BrickInfo {
+	iPoint position;
+	ItemType lootType = ItemType::NONE;
+};
+
 
 class ModuleSceneLevel : public Module
 {
@@ -56,6 +63,7 @@ private:
 	void CreateBricks();
 	void CreateEnemies();
 
+	void InitializeLevelsList();
 	void InitializeSquareMatrix();
 
 	void BreakBrick(SDL_Rect position);
@@ -70,8 +78,13 @@ public:
 	//Matrix of 11 rows and 15 columns
 	Square levelMap[11][15]; 
 
+
 private:
 	SDL_Rect background;
+	std::list<iPoint> internalBlocksLevel1;
+	std::list<iPoint> internalBlocksLevel2;
+	std::list<BrickInfo> bricksLevel1;
+	std::list<BrickInfo> bricksLevel2;
 };
 
 #endif // __MODULESCENELEVEL_H__
