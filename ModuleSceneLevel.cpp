@@ -327,11 +327,105 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 			if(levelMap[row][column].type == 'n') levelMap[row][column].type = '0';
 		}
 	}
-	//Bricks
-	levelMap[1][3].type = 'b';
-	levelMap[1][4].type = 'b';
+	//Bricks and extra blocks
+	if (App->currentLevel == 1) {
+		levelMap[2][7].type = 'i';
+		levelMap[3][2].type = 'i';
+		levelMap[3][6].type = 'i';
+		levelMap[9][1].type = 'i';
+		levelMap[9][8].type = 'i';
+		levelMap[9][9].type = 'i';
+		levelMap[9][12].type = 'i';
+		levelMap[5][11].type = 'i';
+
+		levelMap[1][3].type = 'b';
+		levelMap[1][7].type = 'b';
+		levelMap[1][8].type = 'b';
+		levelMap[1][10].type = 'b';
+		levelMap[1][12].type = 'b';
+		levelMap[1][13].type = 'b';
+		levelMap[2][3].type = 'b';
+		levelMap[2][11].type = 'b';
+		levelMap[3][5].type = 'b';
+		levelMap[3][7].type = 'b';
+		levelMap[3][11].type = 'b';
+		levelMap[3][13].type = 'b';
+		levelMap[4][3].type = 'b';
+		levelMap[4][9].type = 'b';
+		levelMap[5][1].type = 'b';
+		levelMap[5][6].type = 'b';
+		levelMap[5][10].type = 'b';
+		levelMap[5][12].type = 'b';
+		levelMap[5][13].type = 'b';
+		levelMap[6][1].type = 'b';
+		levelMap[6][5].type = 'b';
+		levelMap[6][9].type = 'b';
+		levelMap[6][13].type = 'b';
+		levelMap[7][7].type = 'b';
+		levelMap[7][9].type = 'b';
+		levelMap[7][13].type = 'b';
+		levelMap[8][1].type = 'b';
+		levelMap[8][3].type = 'b';
+		levelMap[8][7].type = 'b';
+		levelMap[8][9].type = 'b';
+		levelMap[8][11].type = 'b';
+		levelMap[9][2].type = 'b';
+		levelMap[9][3].type = 'b';
+		levelMap[9][7].type = 'b';
+		levelMap[9][10].type = 'b';
+		levelMap[9][13].type = 'b';
+	}
+	else
+	{
+		levelMap[2][3].type = 'i';
+		levelMap[3][2].type = 'i';
+		levelMap[3][9].type = 'i';
+		levelMap[4][11].type = 'i';
+		levelMap[5][1].type = 'i';
+		levelMap[6][13].type = 'i';
+		levelMap[8][1].type = 'i';
+		levelMap[9][4].type = 'i';
+
+		levelMap[1][3].type = 'b';
+		levelMap[1][4].type = 'b';
+		levelMap[1][6].type = 'b';
+		levelMap[1][9].type = 'b';
+		levelMap[1][10].type = 'b';
+		levelMap[1][13].type = 'b';
+		levelMap[2][9].type = 'b';
+		levelMap[3][3].type = 'b';
+		levelMap[3][4].type = 'b';
+		levelMap[3][8].type = 'b';
+		levelMap[3][10].type = 'b';
+		levelMap[4][3].type = 'b';
+		levelMap[4][5].type = 'b';
+		levelMap[4][7].type = 'b'; 
+		levelMap[4][13].type = 'b';
+		levelMap[5][2].type = 'b';
+		levelMap[5][4].type = 'b';
+		levelMap[5][5].type = 'b';
+		levelMap[5][6].type = 'b';
+		levelMap[5][9].type = 'b';
+		levelMap[5][12].type = 'b';
+		levelMap[5][13].type = 'b';
+		levelMap[6][1].type = 'b';
+		levelMap[6][5].type = 'b';
+		levelMap[7][1].type = 'b';
+		levelMap[7][6].type = 'b';
+		levelMap[7][8].type = 'b';
+		levelMap[7][12].type = 'b';
+		levelMap[7][13].type = 'b';
+		levelMap[8][5].type = 'b';
+		levelMap[8][11].type = 'b';
+		levelMap[9][1].type = 'b';
+		levelMap[9][2].type = 'b';
+		levelMap[9][5].type = 'b';
+		levelMap[9][12].type = 'b';
+		levelMap[9][13].type = 'b';
+
+	}
 	//Player
-	levelMap[2][1].type = '1';
+	levelMap[1][1].type = '1';
 
 	//Fill position and rects
 	for (row = 0; row < 11; row++) {
@@ -342,7 +436,7 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 	}
 
 	//Print matrix
-	//PrintLevelMap();
+	PrintLevelMap();
 }
 
 void ModuleSceneLevel::BreakBrick(SDL_Rect position)

@@ -180,5 +180,5 @@ void Player::Die()
 	destroyed = true;
 	//CleanUp();
 	//App->scene_level->BackToMenu();
-	App->scene_level->GoToResult(true, points);
+	App->scene_level->GoToResult(false, points);
 }

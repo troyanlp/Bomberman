@@ -134,7 +134,7 @@ bool ModuleCollision::FindCollision(const SDL_Rect rect, ColliderType extra1, Co
 			double d = sqrt(pow((*it)->rect.x - rect.x, 2) + pow((*it)->rect.y - rect.y, 2));
 			if (d < 100) {
 				if ((*it)->CheckCollision(rect)) {
-					LOG("El tipo de la colision es: %d", (*it)->type);
+					//LOG("El tipo de la colision es: %d", (*it)->type);
 					return true;
 				}
 			}
