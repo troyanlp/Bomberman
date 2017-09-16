@@ -627,9 +627,25 @@ void ModuleSceneLevel::InitializeLevelsList()
 	internalBlocksLevel2.push_back(iPoint(50, 450));
 	internalBlocksLevel2.push_back(iPoint(200, 500));
 
+	/*
+	Level 1
+	150,100 speed
+	350,200 fire
+	150,250 bomb
+	650,500 life
+
+
+	Level2
+	450,300 kill
+	200,200 bomb
+	450,150 fire
+	650,100 speed
+	650,400 life
+	*/
+
 	BrickInfo aux;
 	bricksLevel1.clear();
-	aux.position = iPoint(150, 100); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(150, 100); aux.lootType = ItemType::ISPEED;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(350, 100); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
@@ -663,17 +679,17 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(500, 500); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
-	aux.position = iPoint(650, 500); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(650, 500); aux.lootType = ItemType::ILIFE;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(250, 200); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
-	aux.position = iPoint(350, 200); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(350, 200); aux.lootType = ItemType::IFLAME;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(550, 200); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(650, 200); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
-	aux.position = iPoint(150, 250); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(150, 250); aux.lootType = ItemType::IBOMB;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(450, 250); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
@@ -714,13 +730,13 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(500, 100); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(650, 100); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(650, 100); aux.lootType = ItemType::ISPEED;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(450, 150); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(450, 150); aux.lootType = ItemType::IFLAME;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(150, 200); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(200, 200); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(200, 200); aux.lootType = ItemType::IBOMB;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(400, 200); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
@@ -738,7 +754,7 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(250, 300); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(450, 300); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(450, 300); aux.lootType = ItemType::IKILL;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(650, 300); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
@@ -760,7 +776,7 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(600, 400); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(650, 400); aux.lootType = ItemType::NONE;
+	aux.position = iPoint(650, 400); aux.lootType = ItemType::ILIFE;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(250, 450); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
