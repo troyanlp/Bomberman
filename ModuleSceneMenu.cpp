@@ -113,8 +113,6 @@ void ModuleSceneMenu::BackToMenu()
 // Update: draw background
 update_status ModuleSceneMenu::PreUpdate()
 {
-	//Draw background color
-	//App->renderer->DrawQuad(background, 0, 0, 0, 255, true);
 	if (backToMenu) {
 		if (App->fade->isFading() == false) {
 			backToMenu = false;
@@ -193,13 +191,11 @@ update_status ModuleSceneMenu::Update()
 				App->audio->PlayFx(App->confirmFx);
 				App->currentLevel = 1;
 				App->fade->FadeToBlack((Module*)App->scene_level, this);
-				//App->audio->PlayFx(fx);
 				break;
 			case 2:
 				App->audio->PlayFx(App->confirmFx);
 				App->currentLevel = 2;
 				App->fade->FadeToBlack((Module*)App->scene_level, this);
-				//App->audio->PlayFx(fx);
 				break;
 			case 3:
 				App->audio->PlayFx(App->confirmFx);

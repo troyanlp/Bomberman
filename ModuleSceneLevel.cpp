@@ -68,8 +68,6 @@ bool ModuleSceneLevel::Start()
 
 	App->player->Enable();
 	App->bombs->Enable();
-	//App->particles->Enable();
-	//App->collision->Enable();
 
 	if (App->currentLevel == 1) {
 		App->audio->PlayMusic("Audio/Area 1.ogg", 1.0f);
@@ -120,8 +118,6 @@ bool ModuleSceneLevel::CleanUp()
 		RELEASE(*it);
 	}
 	Entities.clear();
-	//App->collision->Disable();
-	//App->particles->Disable();
 	
 	return true;
 }
@@ -263,13 +259,6 @@ void ModuleSceneLevel::CreateBricks()
 			Entities.push_back(obj);
 		}
 	}
-	/*Brick* obj = new Brick(iPoint(150, 100), graphics, brick);
-	obj->AddLoot(ISPEED);
-	Entities.push_back(obj);
-	Door* door = new Door(iPoint(210, 110));
-	Entities.push_back(door);
-	obj = new Brick(iPoint(200, 100), graphics, brick);
-	Entities.push_back(obj);*/
 	
 }
 
@@ -301,9 +290,6 @@ void ModuleSceneLevel::CreateEnemies()
 		obj = new Enemy(iPoint(550 + 10, 300 + 5), EnemyDirection::VERTICALUP);
 		Enemies.push_back(obj);
 	}
-	
-	//Item* item = new Item(iPoint(150, 100), ILIFE);
-	//Entities.push_back(item);
 }
 
 

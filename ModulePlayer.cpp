@@ -220,9 +220,6 @@ iPoint ModulePlayer::CalculateBombPosition(int idPlayer)
 		else LOG("Player 2 doesnt exist!");
 	}
 
-	//aux->position.x += aux->spriteIdle.w / 2;
-	//aux->position.y += aux->spriteIdle.h / 2;
-
 	iPoint bombPosition;
 
 	if (aux != nullptr) {

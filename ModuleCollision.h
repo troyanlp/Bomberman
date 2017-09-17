@@ -75,12 +75,10 @@ public:
 	void DebugDraw();
 
 	bool FindCollision(const SDL_Rect rect, ColliderType extra1 = CNULL, ColliderType extra2 = CNULL);
-	bool CheckColliderTypes(ColliderType type, ColliderType otherType);
 
 
 private:
 
-	std::map<std::pair<ColliderType, ColliderType>, bool> collisionMatrix;
 	std::list<Collider*> colliders;
 	bool debug = true;
 };

@@ -41,7 +41,6 @@ void Door::Draw()
 
 void Door::CleanUp()
 {
-	LOG("JORNADA DE PUERTAS ABIERTAS!");
 	destroyed = true;
 	collider->to_delete = true;
 }

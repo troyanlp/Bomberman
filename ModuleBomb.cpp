@@ -29,7 +29,6 @@ bool ModuleBomb::Start()
 update_status ModuleBomb::Update()
 {	
 	//Update Bombs
-	//LOG("Active Bombs: %d", bombs.size());
 	for (list<Bomb*>::iterator it = bombs.begin(); it != bombs.end(); ++it) {
 		if ((*it)->exploded) {
 			RELEASE(*it);

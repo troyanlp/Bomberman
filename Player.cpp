@@ -141,16 +141,13 @@ void Player::ChangeAnimation(PlayerAnimation anim)
 	switch (anim) {
 	case PLAYER_LEFT:
 	case PLAYER_DOWN:
-		//collider->rect = { position.x, position.y + offsetColliderAS.y, colliderAS.w, colliderAS.h };
 		spriteDest = { position.x, position.y, spriteAS.w, spriteAS.h };
 		break;
 	case PLAYER_RIGHT:
 	case PLAYER_UP:
-		//collider->rect = { position.x, position.y + offsetColliderWD.y, colliderWD.w, colliderWD.h };
 		spriteDest = { position.x, position.y, spriteWD.w, spriteWD.h };
 		break;
 	case PLAYER_IDLE:
-		//collider->rect = { position.x, position.y + offsetColliderIdle.y, colliderIdle.w, colliderIdle.h };
 		spriteDest = { position.x, position.y, spriteIdle.w, spriteIdle.h };
 		break;
 	}
@@ -161,7 +158,6 @@ bool Player::CanMove(int x, int y)
 	SDL_Rect newPos = {position.x + offsetColliderIdle.x + x, position.y + offsetColliderIdle.y + y, 0, 0};
 	newPos.w = colliderIdle.w;
 	newPos.h = colliderIdle.h;
-	//LOG("El new pos es: %d, %d, %d, %d", newPos.x, newPos.y, newPos.w, newPos.h);
 	if (App->collision->FindCollision(newPos)) {
 		return false;
 	}
@@ -206,7 +202,5 @@ void Player::Die()
 {
 	LOG("YOU DIED!");
 	destroyed = true;
-	//CleanUp();
-	//App->scene_level->BackToMenu();
 	App->scene_level->GoToResult(false, points);
 }

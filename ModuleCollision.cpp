@@ -11,18 +11,6 @@ using namespace std;
 
 ModuleCollision::ModuleCollision()
 {
-	//Fill collision matrix
-	collisionMatrix[make_pair(CPLAYER, CEXTERNALBLOCK)] = true;
-	collisionMatrix[make_pair(CPLAYER, CINTERNALBLOCK)] = true;
-	collisionMatrix[make_pair(CPLAYER, CBRICK)] = true;
-	collisionMatrix[make_pair(CPLAYER, CITEM)] = true;
-
-	collisionMatrix[make_pair(CBOMB, CEXTERNALBLOCK)] = true;
-	collisionMatrix[make_pair(CBOMB, CINTERNALBLOCK)] = true;
-	collisionMatrix[make_pair(CBOMB, CBRICK)] = true;
-
-	//collisionMatrix[make_pair(CEXPLOTION, CPLAYER)] = true;
-	//collisionMatrix[make_pair(CEXPLOTION, CBRICK)] = true;
 }
 
 // Destructor
@@ -141,11 +129,6 @@ bool ModuleCollision::FindCollision(const SDL_Rect rect, ColliderType extra1, Co
 		}
 	}
 	return false;
-}
-
-bool ModuleCollision::CheckColliderTypes(ColliderType type, ColliderType otherType)
-{
-	return (collisionMatrix[make_pair(type, otherType)] || collisionMatrix[make_pair(otherType, type)]);
 }
 
 
