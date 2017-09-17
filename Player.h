@@ -60,6 +60,7 @@ public:
 	int flamePower;
 	int steps = 0;
 	int meters = 0;
+	int bombsPlanted = 0;
 };
 
 #endif

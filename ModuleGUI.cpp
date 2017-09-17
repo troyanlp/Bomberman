@@ -37,9 +37,25 @@ bool ModuleGUI::Start()
 	RELEASE_ARRAY(text);
 
 	text = GetCharPointer("Points: ", player1Points);
-	textSurface = TTF_RenderText_Solid(font, GetCharPointer("Points: ", player1Points), color);
+	textSurface = TTF_RenderText_Solid(font, text, color);
 	points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	pointsDest = { 5, 25, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	RELEASE_ARRAY(text);
+
+	text = GetCharPointer("Meters walked: ", 0);
+	textSurface = TTF_RenderText_Solid(font, text, color);
+	steps = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	stepsDest = { 250, 5, textSurface->clip_rect.w, textSurface->clip_rect.h };
+	SDL_FreeSurface(textSurface);
+
+	RELEASE_ARRAY(text);
+
+	text = GetCharPointer("Bombs used: ", 0);
+	textSurface = TTF_RenderText_Solid(font, text, color);
+	bombs = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	bombsDest = { 250, 25, textSurface->clip_rect.w, textSurface->clip_rect.h };
 	SDL_FreeSurface(textSurface);
 
 	RELEASE_ARRAY(text);
@@ -59,6 +75,8 @@ update_status ModuleGUI::Update()
 	//Draw text options
 	App->renderer->Blit(life, NULL, NULL, &(background), &lifeDest);
 	App->renderer->Blit(points, NULL, NULL, &(background), &pointsDest);
+	App->renderer->Blit(steps, NULL, NULL, &(background), &stepsDest);
+	App->renderer->Blit(bombs, NULL, NULL, &(background), &bombsDest);
 
 	return UPDATE_CONTINUE;
 }
@@ -113,6 +131,24 @@ void ModuleGUI::ChangePlayerPoints(int increment, int player)
 		//SDL_FreeSurface(textSurface);
 		//RELEASE_ARRAY(text);
 	}
+}
+
+void ModuleGUI::ChangeMeters(int meters)
+{
+	char* text = GetCharPointer("Meters walked: ", meters);
+	textSurface = TTF_RenderText_Solid(font, text, color);
+	steps = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+	RELEASE_ARRAY(text);
+}
+
+void ModuleGUI::ChangeBombs(int bombsUsed)
+{
+	char* text = GetCharPointer("Bombs used: ", bombsUsed);
+	textSurface = TTF_RenderText_Solid(font, text, color);
+	bombs = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+	RELEASE_ARRAY(text);
 }
 
 char * ModuleGUI::GetCharPointer(char * text, int num)

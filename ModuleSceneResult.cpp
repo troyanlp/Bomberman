@@ -39,25 +39,6 @@ bool ModuleSceneResult::Start()
 	if (App->winFx == 0) App->winFx = App->audio->LoadFx("Audio/win.ogg");
 	if (App->loseFx == 0) App->loseFx = App->audio->LoadFx("Audio/lose.ogg");
 
-	//win = true;
-	//numPoints = 1000;
-
-	/*if (win) 
-		textSurface = TTF_RenderText_Solid(font48, "You win!", color);
-	else textSurface = TTF_RenderText_Solid(font48, "You lose!", color);
-	result = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
-	resultDest = { 400-(textSurface->clip_rect.w/2), 200, textSurface->clip_rect.w, textSurface->clip_rect.h };
-	SDL_FreeSurface(textSurface);
-
-	if (win) {
-		char* text = App->gui->GetCharPointer("", numPoints);
-		textSurface = TTF_RenderText_Solid(font48, text, color);
-		points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
-		pointsDest = { 400 - (textSurface->clip_rect.w / 2), 275, textSurface->clip_rect.w, textSurface->clip_rect.h };
-		SDL_FreeSurface(textSurface);
-		RELEASE_ARRAY(text);
-	}*/
-
 	textSurface = TTF_RenderText_Solid(font16, "Press space or enter to go back to menu", color);
 	presskey = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	presskeyDest = { 400 - (textSurface->clip_rect.w / 2), 450, textSurface->clip_rect.w, textSurface->clip_rect.h };
@@ -80,19 +61,42 @@ update_status ModuleSceneResult::PreUpdate()
 	}
 
 	if (dataSet) {
-		if (win)
+		if (win) {
 			textSurface = TTF_RenderText_Solid(font48, "You win!", color);
-		else
+		}
+		else {
 			textSurface = TTF_RenderText_Solid(font48, "You lose!", color);
+		}
 		result = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 		resultDest = { 400 - (textSurface->clip_rect.w / 2), 200, textSurface->clip_rect.w, textSurface->clip_rect.h };
 		SDL_FreeSurface(textSurface);
 
 		if (win) {
-			char* text = App->gui->GetCharPointer("", numPoints);
+			char* text = App->gui->GetCharPointer("Points earned: ", numPoints);
+			textSurface = TTF_RenderText_Solid(font16, text, color);
+			tempPoints = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+			tempPointsDest = { 400 - (textSurface->clip_rect.w / 2), 275, textSurface->clip_rect.w, textSurface->clip_rect.h };
+			SDL_FreeSurface(textSurface);
+			RELEASE_ARRAY(text);
+			
+			text = App->gui->GetCharPointer("", numFinalPoints);
 			textSurface = TTF_RenderText_Solid(font48, text, color);
-			points = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
-			pointsDest = { 400 - (textSurface->clip_rect.w / 2), 275, textSurface->clip_rect.w, textSurface->clip_rect.h };
+			finalPoints = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+			finalPointsDest = { 400 - (textSurface->clip_rect.w / 2), 350, textSurface->clip_rect.w, textSurface->clip_rect.h };
+			SDL_FreeSurface(textSurface);
+			RELEASE_ARRAY(text);
+
+			text = GetMetersText(); 
+			textSurface = TTF_RenderText_Solid(font16, text, color);
+			metersPoints = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+			metersPointsDest = { 400 - (textSurface->clip_rect.w / 2), 300, textSurface->clip_rect.w, textSurface->clip_rect.h };
+			SDL_FreeSurface(textSurface);
+			RELEASE_ARRAY(text);
+
+			text = GetBombsText();
+			textSurface = TTF_RenderText_Solid(font16, text, color);
+			bombsPoints = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
+			bombsPointsDest = { 400 - (textSurface->clip_rect.w / 2), 325, textSurface->clip_rect.w, textSurface->clip_rect.h };
 			SDL_FreeSurface(textSurface);
 			RELEASE_ARRAY(text);
 		}
@@ -114,8 +118,12 @@ update_status ModuleSceneResult::Update()
 	//Draw text
 	if (dataSet) {
 		App->renderer->Blit(result, NULL, NULL, &(section), &resultDest);
-		if (win)
-			App->renderer->Blit(points, NULL, NULL, &(section), &pointsDest);
+		if (win) {
+			App->renderer->Blit(tempPoints, NULL, NULL, &(section), &tempPointsDest);
+			App->renderer->Blit(metersPoints, NULL, NULL, &(section), &metersPointsDest);
+			App->renderer->Blit(bombsPoints, NULL, NULL, &(section), &bombsPointsDest);
+			App->renderer->Blit(finalPoints, NULL, NULL, &(section), &finalPointsDest);
+		}
 		App->renderer->Blit(presskey, NULL, NULL, &(section), &presskeyDest);
 	}
 
@@ -137,6 +145,9 @@ bool ModuleSceneResult::CleanUp()
 	TTF_CloseFont(font48);
 	TTF_CloseFont(font16);
 
+	addedWalkedPoints = false;
+	addedBombPoints = false;
+
 	return true;
 }
 
@@ -146,4 +157,214 @@ void ModuleSceneResult::SetData(bool result, int playerPoints)
 	
 	win = result;
 	numPoints = playerPoints;
+}
+
+void ModuleSceneResult::SetExtraData(int meters, int bombs)
+{
+	metersWalked = meters;
+	bombsUsed = bombs;
+}
+
+char * ModuleSceneResult::GetMetersText()
+{
+	char* points = App->gui->GetCharPointer("Number of meters walked: ", metersWalked);
+	char* rating1;
+	char* rating2;
+	char* end = ")";
+	if (App->currentLevel == 1) {
+		/*
+		A -> 0-70
+		B -> 71-120
+		C -> 121-180
+		D -> >181
+		*/
+		if (metersWalked <= 70) {
+			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
+			rating2 = App->gui->GetCharPointer("-", 70);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 5000;
+			}
+		}
+		else if (metersWalked > 70 && metersWalked <= 120) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 70);
+			rating2 = App->gui->GetCharPointer("-", 120);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 2500;
+			}
+		}
+		else if (metersWalked > 120 && metersWalked <= 180) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 120);
+			rating2 = App->gui->GetCharPointer("-", 180);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 1000;
+			}
+		}
+		else if (metersWalked > 180) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 180);
+			rating2 = "-";
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints;
+			}
+		}
+
+	}
+	else {
+		/*
+		A -> 0-70
+		B -> 71-120
+		C -> 121-180
+		D -> >181
+		*/
+		if (metersWalked <= 70) {
+			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
+			rating2 = App->gui->GetCharPointer("-", 70);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 5000;
+			}
+		}
+		else if (metersWalked > 70 && metersWalked <= 120) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 70);
+			rating2 = App->gui->GetCharPointer("-", 120);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 2500;
+			}
+		}
+		else if (metersWalked > 120 && metersWalked <= 180) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 120);
+			rating2 = App->gui->GetCharPointer("-", 180);
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints + 1000;
+			}
+		}
+		else if (metersWalked > 180) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 180);
+			rating2 = "-";
+			if (!addedWalkedPoints) {
+				addedWalkedPoints = true;
+				numFinalPoints = numPoints;
+			}
+		}
+	}
+
+	// calculate the required buffer size (also accounting for the null terminator):
+	int bufferSize = strlen(points) + strlen(rating1) + strlen(rating2) + strlen(end) + 1;
+
+	// allocate enough memory for the concatenated string:
+	char* concatString = new char[bufferSize];
+
+	// copy strings one and two over to the new buffer:
+	strcpy(concatString, points);
+	strcat(concatString, rating1);
+	strcat(concatString, rating2);
+	strcat(concatString, end);
+
+	return concatString;
+}
+
+char * ModuleSceneResult::GetBombsText()
+{
+	char* points = App->gui->GetCharPointer("Number of bombs used: ", bombsUsed);
+	char* rating1;
+	char* rating2;
+	char* end = ")";
+	if (App->currentLevel == 1) {
+		/*
+		A -> 0-10
+		B -> 11-15
+		C -> 16-25
+		D -> >26
+		*/
+		if (bombsUsed <= 10) {
+			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
+			rating2 = App->gui->GetCharPointer("-", 10);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 5000;
+			}
+		}
+		else if (bombsUsed > 10 && bombsUsed <= 15) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 10);
+			rating2 = App->gui->GetCharPointer("-", 15);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 2500;
+			}
+		}
+		else if (bombsUsed > 15 && bombsUsed <= 25) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 15);
+			rating2 = App->gui->GetCharPointer("-", 25);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 1000;
+			}
+		}
+		else if (bombsUsed > 25) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 25);
+			rating2 = "-";
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+			}
+		}
+
+	}
+	else {
+		/*
+		A -> 0-10
+		B -> 11-15
+		C -> 16-25
+		D -> >26
+		*/
+		if (bombsUsed <= 10) {
+			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
+			rating2 = App->gui->GetCharPointer("-", 10);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 5000;
+			}
+		}
+		else if (bombsUsed > 10 && bombsUsed <= 15) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 10);
+			rating2 = App->gui->GetCharPointer("-", 15);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 2500;
+			}
+		}
+		else if (bombsUsed > 15 && bombsUsed <= 25) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 15);
+			rating2 = App->gui->GetCharPointer("-", 25);
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+				numFinalPoints += 1000;
+			}
+		}
+		else if (bombsUsed > 25) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 25);
+			rating2 = "-";
+			if (!addedBombPoints) {
+				addedBombPoints = true;
+			}
+		}
+	}
+
+	// calculate the required buffer size (also accounting for the null terminator):
+	int bufferSize = strlen(points) + strlen(rating1) + strlen(rating2) + strlen(end) + 1;
+
+	// allocate enough memory for the concatenated string:
+	char* concatString = new char[bufferSize];
+
+	// copy strings one and two over to the new buffer:
+	strcpy(concatString, points);
+	strcat(concatString, rating1);
+	strcat(concatString, rating2);
+	strcat(concatString, end);
+
+	return concatString;
 }

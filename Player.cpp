@@ -47,6 +47,7 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	invincibleCount = 0;
 	steps = 0;
 	meters = 0;
+	bombsPlanted = 0;
 }
 
 
@@ -58,6 +59,7 @@ void Player::Draw()
 {
 	if (steps >= 50) {
 		meters++;
+		App->gui->ChangeMeters(meters);
 		steps = 0;
 		LOG("Llevas %d metros!!",meters);
 	}
@@ -172,6 +174,8 @@ bool Player::CanPlantBomb()
 {
 	if (App->bombs->GetNumBombsFromPlayer(id) < numBombs) {
 		App->audio->PlayFx(App->plantBombFx);
+		bombsPlanted++;
+		App->gui->ChangeBombs(bombsPlanted);
 		return true;
 	}
 	else return false;

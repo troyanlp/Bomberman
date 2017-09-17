@@ -19,6 +19,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Door.h"
 #include "ModuleInput.h"
+#include "Player.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {
@@ -135,9 +136,9 @@ update_status ModuleSceneLevel::PreUpdate()
 
 update_status ModuleSceneLevel::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
-		LOG("El nivel es: %d", App->currentLevel);
-	}
+	/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		GoToResult(true, App->gui->player1Points);
+	}*/
 	
 	// Draw everything --------------------------------------
 	for (std::list<Entity*>::iterator it = Entities.begin(); it != Entities.end(); ++it) {
@@ -694,10 +695,8 @@ void ModuleSceneLevel::BackToMenu()
 void ModuleSceneLevel::GoToResult(bool result, int points)
 {
 	App->scene_result->Enable();
-	//CleanUp();
-	//App->collision->CleanUp();
-	//App->scene_level->Disable();
 	App->scene_result->SetData(result, points);
+	App->scene_result->SetExtraData(App->player->player1->meters, App->player->player1->bombsPlanted);
 	App->fade->FadeToBlack((Module*)App->scene_result, this);
 	
 	//App->scene_menu->BackToMenu();

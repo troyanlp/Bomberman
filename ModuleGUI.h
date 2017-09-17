@@ -21,6 +21,8 @@ public:
 
 	void ChangePlayerLife(int increment, int player);
 	void ChangePlayerPoints(int increment, int player);
+	void ChangeMeters(int meters);
+	void ChangeBombs(int bombsUsed);
 
 	char* GetCharPointer(char* text, int num);
 
@@ -37,6 +39,10 @@ private:
 	SDL_Rect lifeDest;
 	SDL_Texture* points;
 	SDL_Rect pointsDest;
+	SDL_Texture* steps;
+	SDL_Rect stepsDest;
+	SDL_Texture* bombs;
+	SDL_Rect bombsDest;
 	//Data
 	int player1Life = 3;
 	int player2Life = 3;
