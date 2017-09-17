@@ -45,6 +45,8 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	invincible = false;
 	invincibleShow = true;
 	invincibleCount = 0;
+	steps = 0;
+	meters = 0;
 }
 
 
@@ -54,6 +56,12 @@ Player::~Player()
 
 void Player::Draw()
 {
+	if (steps >= 50) {
+		meters++;
+		steps = 0;
+		LOG("Llevas %d metros!!",meters);
+	}
+
 	if(id == 1) points = App->gui->player1Points;
 	else points = App->gui->player2Points;
 

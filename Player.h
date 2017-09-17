@@ -58,6 +58,8 @@ public:
 	SDL_Rect spriteDest;
 	int numBombs;
 	int flamePower;
+	int steps = 0;
+	int meters = 0;
 };
 
 #endif
