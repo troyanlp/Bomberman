@@ -18,6 +18,7 @@ public:
 	~ModuleAudio();
 
 	bool Init();
+	bool Start();
 	bool CleanUp();
 
 	// Play a music file

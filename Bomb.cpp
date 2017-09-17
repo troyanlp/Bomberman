@@ -6,6 +6,7 @@
 #include "ModuleBomb.h"
 #include "ModuleSceneLevel.h"
 #include "Explotion.h"
+#include "ModuleAudio.h"
 
 
 Bomb::Bomb(int x, int y, int id, int flame, SDL_Texture* gfx) : graphics(gfx), idPlayer(id)
@@ -54,6 +55,7 @@ void Bomb::Draw()
 void Bomb::Explode()
 {
 	LOG("BOOM");
+	App->audio->PlayFx(App->explotionFX);
 	list<ExplotionInstance> ex = App->scene_level->AddExplotionToMapLevel(position.x,position.y,flameLevel, idPlayer);
 	exploded = true;
 	collider->to_delete = true;

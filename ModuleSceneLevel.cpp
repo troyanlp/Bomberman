@@ -38,6 +38,9 @@ bool ModuleSceneLevel::Start()
 	
 	graphics = App->textures->Load("Super Bomberman 5 JPN - Stage 01.png");
 
+	if (App->startFx == 0) App->startFx = App->audio->LoadFx("Audio/game_start.ogg");
+	App->audio->PlayFx(App->startFx);
+
 	//Set up background rect
 	background.h = SCREEN_HEIGHT;
 	background.w = SCREEN_WIDTH;
@@ -68,10 +71,10 @@ bool ModuleSceneLevel::Start()
 	//App->collision->Enable();
 
 	if (App->currentLevel == 1) {
-		App->audio->PlayMusic("Area 1.ogg", 1.0f);
+		App->audio->PlayMusic("Audio/Area 1.ogg", 1.0f);
 	}
 	else {
-		App->audio->PlayMusic("Area 2.ogg", 1.0f);
+		App->audio->PlayMusic("Audio/Area 2.ogg", 1.0f);
 	}
 	
 	

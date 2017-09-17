@@ -48,6 +48,11 @@ bool ModuleAudio::Init()
 	return ret;
 }
 
+bool ModuleAudio::Start()
+{
+	return true;
+}
+
 // Called before quitting
 bool ModuleAudio::CleanUp()
 {
@@ -58,8 +63,9 @@ bool ModuleAudio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	for(vector<Mix_Chunk*>::iterator it = fx.begin(); it != fx.end(); ++it)
+	for (vector<Mix_Chunk*>::iterator it = fx.begin(); it != fx.end(); ++it) {
 		Mix_FreeChunk(*it);
+	}
 
 	fx.clear();
 	Mix_CloseAudio();
@@ -122,7 +128,6 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 bool ModuleAudio::StopMusic()
 {
 	Mix_FreeMusic(music);
-	music;
 	return true;
 }
 

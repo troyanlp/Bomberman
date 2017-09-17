@@ -25,7 +25,6 @@ public:
 	SDL_Rect logo;
 	SDL_Rect logoDest;
 	iPoint position;
-	uint fx = 0;
 private:
 	TTF_Font* font;
 	SDL_Color color;

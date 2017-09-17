@@ -4,6 +4,7 @@
 #include "Explotion.h"
 #include "Bomb.h"
 #include "ModuleSceneLevel.h"
+#include "ModuleAudio.h"
 
 ModuleBomb::ModuleBomb(bool start_enabled) : Module(start_enabled)
 {
@@ -19,6 +20,8 @@ bool ModuleBomb::Start()
 	//Loading graphics
 	bombGraphics = App->textures->Load("Bomberman.png");
 	explotionGraphics = App->textures->Load("Bomberman Explotions.png");
+
+	if (App->explotionFX == 0) App->explotionFX = App->audio->LoadFx("Audio/explotion.ogg");
 
 	return true;
 }

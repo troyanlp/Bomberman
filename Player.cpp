@@ -6,6 +6,7 @@
 #include "ModuleGUI.h"
 #include "ModuleSceneLevel.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
 
 Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id), AI(AI), graphics(gfx)
 {
@@ -30,6 +31,11 @@ Player::Player(int id, bool AI, SDL_Texture* gfx, iPoint spawnPosition) : id(id)
 	
 	if(!AI) collider->type = CPLAYER;
 	else collider->type = CIA;
+
+	if (App->auxFx == 0) App->auxFx = App->audio->LoadFx("Audio/auxx.ogg");
+	if (App->dieFx == 0) App->dieFx = App->audio->LoadFx("Audio/die.ogg");
+	if (App->plantBombFx == 0) App->plantBombFx = App->audio->LoadFx("Audio/bomb.ogg");
+	if (App->itemFx == 0) App->itemFx = App->audio->LoadFx("Audio/item.ogg");
 
 	numBombs = 1;
 	flamePower = 1;
@@ -58,27 +64,32 @@ void Player::Draw()
 				Hurt();
 				break;
 			case ITEMSPEED:
+				App->audio->PlayFx(App->itemFx);
 				playerSpeed++;
 				LOG("Speed: %d", playerSpeed);
 				App->gui->ChangePlayerPoints(500, id);
 				break;
 			case ITEMBOMB:
+				App->audio->PlayFx(App->itemFx);
 				numBombs++;
 				LOG("NumBombs: %d", numBombs);
 				App->gui->ChangePlayerPoints(500, id);
 				break;
 			case ITEMFIRE:
+				App->audio->PlayFx(App->itemFx);
 				flamePower++;
 				LOG("NumBombs: %d", flamePower);
 				App->gui->ChangePlayerPoints(500, id);
 				break;
 			case ITEMLIFE:
+				App->audio->PlayFx(App->itemFx);
 				lives++;
 				App->gui->ChangePlayerLife(1, id);
 				LOG("Num Lives: %d", lives);
 				App->gui->ChangePlayerPoints(500, id);
 				break;
 			case ITEMDEATH:
+				App->audio->PlayFx(App->itemFx);
 				Die();
 				break;
 			}
@@ -151,7 +162,10 @@ bool Player::CanMove(int x, int y)
 
 bool Player::CanPlantBomb()
 {
-	if (App->bombs->GetNumBombsFromPlayer(id) < numBombs) return true;
+	if (App->bombs->GetNumBombsFromPlayer(id) < numBombs) {
+		App->audio->PlayFx(App->plantBombFx);
+		return true;
+	}
 	else return false;
 }
 
@@ -162,9 +176,11 @@ void Player::Hurt()
 		App->gui->ChangePlayerLife(-1, id);
 		LOG("AUX!");
 		if (lives == 0) {
+			App->audio->PlayFx(App->dieFx);
 			Die();
 		}
 		else {
+			App->audio->PlayFx(App->auxFx);
 			hurtTimer->Start();
 			invincible = true;
 			invincibleShow = true;

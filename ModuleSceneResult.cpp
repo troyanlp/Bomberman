@@ -7,6 +7,7 @@
 #include "ModuleSceneLevel.h"
 #include "ModuleCollision.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
 
 ModuleSceneResult::ModuleSceneResult(bool active) : Module(active)
 {
@@ -35,6 +36,8 @@ bool ModuleSceneResult::Start()
 	background.x = 0;
 	background.y = 0;
 
+	if (App->winFx == 0) App->winFx = App->audio->LoadFx("Audio/win.ogg");
+	if (App->loseFx == 0) App->loseFx = App->audio->LoadFx("Audio/lose.ogg");
 
 	//win = true;
 	//numPoints = 1000;
@@ -59,6 +62,8 @@ bool ModuleSceneResult::Start()
 	presskey = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
 	presskeyDest = { 400 - (textSurface->clip_rect.w / 2), 450, textSurface->clip_rect.w, textSurface->clip_rect.h };
 	SDL_FreeSurface(textSurface);
+
+	audioPlayed = false;
 
 	return true;
 }
@@ -101,7 +106,11 @@ update_status ModuleSceneResult::PreUpdate()
 
 update_status ModuleSceneResult::Update()
 {
-
+	if (!audioPlayed && App->fade->isFading() == false && dataSet) {
+		audioPlayed = true;
+		if (win) App->audio->PlayFx(App->winFx);
+		else App->audio->PlayFx(App->loseFx);
+	}
 	//Draw text
 	if (dataSet) {
 		App->renderer->Blit(result, NULL, NULL, &(section), &resultDest);

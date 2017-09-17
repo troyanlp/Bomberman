@@ -75,10 +75,12 @@ bool ModuleSceneMenu::Start()
 	focusLevel = 1;
 	levelSelection = false;
 
-	/*App->audio->PlayMusic("intro.ogg", 1.0f);
-	if(fx == 0)
-		fx = App->audio->LoadFx("starting.wav");
-		*/
+	if(App->bombermanFx == 0) App->bombermanFx = App->audio->LoadFx("Audio/bomberman.ogg");
+	if (App->selectFx == 0) App->selectFx = App->audio->LoadFx("Audio/select.ogg");
+	if (App->confirmFx == 0) App->confirmFx = App->audio->LoadFx("Audio/confirm.ogg");
+
+	App->audio->PlayFx(App->bombermanFx);
+		
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	//Set up background rect
@@ -148,12 +150,14 @@ update_status ModuleSceneMenu::Update()
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
 		if (levelSelection) {
 			if (focusLevel < 3) {
+				App->audio->PlayFx(App->selectFx);
 				focusLevel++;
 				bombDest.y += 50;
 			}
 		}
 		else {
 			if (focus < 2) {
+				App->audio->PlayFx(App->selectFx);
 				focus++;
 				bombDest.y += 50;
 			}
@@ -164,12 +168,14 @@ update_status ModuleSceneMenu::Update()
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 		if (levelSelection) {
 			if (focusLevel > 1) {
+				App->audio->PlayFx(App->selectFx);
 				focusLevel--;
 				bombDest.y -= 50;
 			}
 		}
 		else {
 			if (focus > 1) {
+				App->audio->PlayFx(App->selectFx);
 				focus--;
 				bombDest.y -= 50;
 			}
@@ -184,16 +190,19 @@ update_status ModuleSceneMenu::Update()
 			switch (focusLevel)
 			{
 			case 1:
+				App->audio->PlayFx(App->confirmFx);
 				App->currentLevel = 1;
 				App->fade->FadeToBlack((Module*)App->scene_level, this);
 				//App->audio->PlayFx(fx);
 				break;
 			case 2:
+				App->audio->PlayFx(App->confirmFx);
 				App->currentLevel = 2;
 				App->fade->FadeToBlack((Module*)App->scene_level, this);
 				//App->audio->PlayFx(fx);
 				break;
 			case 3:
+				App->audio->PlayFx(App->confirmFx);
 				levelSelection = false;
 				focusLevel = 1;
 				focus = 1;
@@ -203,12 +212,14 @@ update_status ModuleSceneMenu::Update()
 		}
 		else {
 			if (focus == 1) {
+				App->audio->PlayFx(App->confirmFx);
 				levelSelection = true;
 				focusLevel = 1;
 				focus = 1;
 				bombDest.y = 345;
 			}
 			else {
+				App->audio->PlayFx(App->confirmFx);
 				return UPDATE_STOP;
 			}
 		}

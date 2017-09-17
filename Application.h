@@ -56,6 +56,19 @@ public:
 	//Level
 	int currentLevel = 0;
 
+	//Audio FX
+	uint bombermanFx = 0;
+	uint selectFx = 0;
+	uint confirmFx = 0;
+	uint auxFx = 0;
+	uint dieFx = 0;
+	uint plantBombFx = 0;
+	uint winFx = 0;
+	uint loseFx = 0;
+	uint startFx = 0;
+	uint itemFx = 0;
+	uint explotionFX = 0;
+
 private:
 
 	std::list<Module*> modules;

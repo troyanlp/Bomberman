@@ -24,6 +24,7 @@ private:
 	bool dataSet = false;
 	bool win = true;
 	int numPoints = 100;
+	bool audioPlayed = false;
 	TTF_Font* font48;
 	TTF_Font* font16;
 	SDL_Color color;
