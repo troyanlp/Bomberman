@@ -80,7 +80,7 @@ public:
 private:
 
 	std::list<Collider*> colliders;
-	bool debug = true;
+	bool debug = false;
 };
 
 #endif // __ModuleCollision_H__
