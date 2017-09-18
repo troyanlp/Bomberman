@@ -735,7 +735,7 @@ void ModuleSceneLevel::InitializeLevelsList()
 
 	BrickInfo aux;
 	bricksLevel1.clear();
-	aux.position = iPoint(150, 100); aux.lootType = ItemType::ISPEED;
+	aux.position = iPoint(150, 100); aux.lootType = ItemType::IFLAME;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(350, 100); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
@@ -773,7 +773,7 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(250, 200); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
-	aux.position = iPoint(350, 200); aux.lootType = ItemType::IFLAME;
+	aux.position = iPoint(350, 200); aux.lootType = ItemType::ISPEED;
 	bricksLevel1.push_back(aux);
 	aux.position = iPoint(550, 200); aux.lootType = ItemType::NONE;
 	bricksLevel1.push_back(aux);
