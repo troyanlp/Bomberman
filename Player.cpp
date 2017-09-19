@@ -99,7 +99,7 @@ void Player::Draw()
 				App->gui->ChangePlayerPoints(500, id);
 				break;
 			case ITEMDEATH:
-				App->audio->PlayFx(App->itemFx);
+				//App->audio->PlayFx(App->itemFx);
 				Die();
 				break;
 			}
@@ -184,7 +184,7 @@ void Player::Hurt()
 		App->gui->ChangePlayerLife(-1, id);
 		LOG("AUX!");
 		if (lives == 0) {
-			App->audio->PlayFx(App->dieFx);
+			
 			Die();
 		}
 		else {
@@ -201,6 +201,7 @@ void Player::Hurt()
 void Player::Die()
 {
 	LOG("YOU DIED!");
+	App->audio->PlayFx(App->dieFx);
 	destroyed = true;
 	App->scene_level->GoToResult(false, points);
 }

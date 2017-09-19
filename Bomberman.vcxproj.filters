@@ -106,6 +106,9 @@
     <ClInclude Include="ModuleSceneResult.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="TrapSquare.h">
+      <Filter>Game Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneResult.cpp">
       <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="TrapSquare.cpp">
+      <Filter>Game Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

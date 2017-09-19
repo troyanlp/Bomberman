@@ -14,7 +14,7 @@ Enemy::Enemy(iPoint pos, EnemyDirection dir) : direction(dir)
 
 	type = ENEMY;
 
-	graphics = App->textures->Load("Enemies and items.gif");
+	graphics = App->textures->Load("Sprites/Enemies and items.gif");
 
 	// down animation
 	down.frames.push_back({ 2, 2, 15, 23 });

@@ -5,7 +5,6 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 
-//http://lazyfoo.net/SDL_tutorials/lesson06/index.php
 
 ModuleRender::ModuleRender()
 {

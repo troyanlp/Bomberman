@@ -56,10 +56,10 @@ update_status ModuleCollision::Update()
 			}
 		}
 
-		//Check if player is hurt colliding with an enemy
+		//Check if player is hurt colliding with an enemy or a trap square
 		if ((*it)->type == CPLAYER) {
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
-				if ((*it2)->type == CENEMY) {
+				if ((*it2)->type == CENEMY || (*it2)->type == CTRAP) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
 						(*it)->collided = true;
 						(*it)->message = HURT;

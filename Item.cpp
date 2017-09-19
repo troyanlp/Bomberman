@@ -16,7 +16,7 @@ Item::Item(iPoint pos, ItemType item) : itemType(item)
 	
 	type = EntityType::ITEM;
 
-	graphics = App->textures->Load("Enemies and items.gif");
+	graphics = App->textures->Load("Sprites/Enemies and items.gif");
 
 	switch (item)
 	{

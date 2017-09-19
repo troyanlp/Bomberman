@@ -18,7 +18,8 @@ public:
 		BLOCK,
 		BRICK,
 		ITEM,
-		DOOR
+		DOOR,
+		TRAP
 	};
 
 	Entity() {}

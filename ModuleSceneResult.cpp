@@ -24,8 +24,8 @@ bool ModuleSceneResult::Start()
 
 	//Text
 	color = { 255, 255, 255 };
-	font48 = TTF_OpenFont("emulogic.ttf", 48);
-	font16 = TTF_OpenFont("emulogic.ttf", 16);
+	font48 = TTF_OpenFont("Font/emulogic.ttf", 48);
+	font16 = TTF_OpenFont("Font/emulogic.ttf", 16);
 
 	//Set up section rect
 	section = { 0, 0, 800, 600 };
@@ -173,37 +173,37 @@ char * ModuleSceneResult::GetMetersText()
 	char* end = ")";
 	if (App->currentLevel == 1) {
 		/*
-		A -> 0-70
-		B -> 71-120
-		C -> 121-180
-		D -> >181
+		A -> 0-120
+		B -> 71-180
+		C -> 181-250
+		D -> >250
 		*/
-		if (metersWalked <= 70) {
+		if (metersWalked <= 120) {
 			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
-			rating2 = App->gui->GetCharPointer("-", 70);
+			rating2 = App->gui->GetCharPointer("-", 120);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 5000;
 			}
 		}
-		else if (metersWalked > 70 && metersWalked <= 120) {
-			rating1 = App->gui->GetCharPointer(" -> B+ (", 70);
-			rating2 = App->gui->GetCharPointer("-", 120);
+		else if (metersWalked > 120 && metersWalked <= 180) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 120);
+			rating2 = App->gui->GetCharPointer("-", 180);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 2500;
 			}
 		}
-		else if (metersWalked > 120 && metersWalked <= 180) {
-			rating1 = App->gui->GetCharPointer(" -> C+ (", 120);
-			rating2 = App->gui->GetCharPointer("-", 180);
+		else if (metersWalked > 180 && metersWalked <= 250) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 180);
+			rating2 = App->gui->GetCharPointer("-", 250);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 1000;
 			}
 		}
-		else if (metersWalked > 180) {
-			rating1 = App->gui->GetCharPointer(" -> D- (>", 180);
+		else if (metersWalked > 250) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 250);
 			rating2 = "-";
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
@@ -214,37 +214,37 @@ char * ModuleSceneResult::GetMetersText()
 	}
 	else {
 		/*
-		A -> 0-70
-		B -> 71-120
-		C -> 121-180
-		D -> >181
+		A -> 0-120
+		B -> 71-180
+		C -> 181-250
+		D -> >250
 		*/
-		if (metersWalked <= 70) {
+		if (metersWalked <= 120) {
 			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
-			rating2 = App->gui->GetCharPointer("-", 70);
+			rating2 = App->gui->GetCharPointer("-", 120);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 5000;
 			}
 		}
-		else if (metersWalked > 70 && metersWalked <= 120) {
-			rating1 = App->gui->GetCharPointer(" -> B+ (", 70);
-			rating2 = App->gui->GetCharPointer("-", 120);
+		else if (metersWalked > 120 && metersWalked <= 180) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 120);
+			rating2 = App->gui->GetCharPointer("-", 180);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 2500;
 			}
 		}
-		else if (metersWalked > 120 && metersWalked <= 180) {
-			rating1 = App->gui->GetCharPointer(" -> C+ (", 120);
-			rating2 = App->gui->GetCharPointer("-", 180);
+		else if (metersWalked > 180 && metersWalked <= 250) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 180);
+			rating2 = App->gui->GetCharPointer("-", 250);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 1000;
 			}
 		}
-		else if (metersWalked > 180) {
-			rating1 = App->gui->GetCharPointer(" -> D- (>", 180);
+		else if (metersWalked > 250) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 250);
 			rating2 = "-";
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
@@ -276,37 +276,37 @@ char * ModuleSceneResult::GetBombsText()
 	char* end = ")";
 	if (App->currentLevel == 1) {
 		/*
-		A -> 0-10
-		B -> 11-15
-		C -> 16-25
-		D -> >26
+		A -> 0-15
+		B -> 16-20
+		C -> 21-30
+		D -> >30
 		*/
-		if (bombsUsed <= 10) {
+		if (bombsUsed <= 15) {
 			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
-			rating2 = App->gui->GetCharPointer("-", 10);
+			rating2 = App->gui->GetCharPointer("-", 15);
 			if (!addedBombPoints) {
 				addedBombPoints = true;
 				numFinalPoints += 5000;
 			}
 		}
-		else if (bombsUsed > 10 && bombsUsed <= 15) {
-			rating1 = App->gui->GetCharPointer(" -> B+ (", 10);
-			rating2 = App->gui->GetCharPointer("-", 15);
+		else if (bombsUsed > 15 && bombsUsed <= 20) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 15);
+			rating2 = App->gui->GetCharPointer("-", 20);
 			if (!addedBombPoints) {
 				addedBombPoints = true;
 				numFinalPoints += 2500;
 			}
 		}
-		else if (bombsUsed > 15 && bombsUsed <= 25) {
-			rating1 = App->gui->GetCharPointer(" -> C+ (", 15);
-			rating2 = App->gui->GetCharPointer("-", 25);
+		else if (bombsUsed > 20 && bombsUsed <= 30) {
+			rating1 = App->gui->GetCharPointer(" -> C+ (", 20);
+			rating2 = App->gui->GetCharPointer("-", 30);
 			if (!addedBombPoints) {
 				addedBombPoints = true;
 				numFinalPoints += 1000;
 			}
 		}
-		else if (bombsUsed > 25) {
-			rating1 = App->gui->GetCharPointer(" -> D- (>", 25);
+		else if (bombsUsed > 30) {
+			rating1 = App->gui->GetCharPointer(" -> D- (>", 30);
 			rating2 = "-";
 			if (!addedBombPoints) {
 				addedBombPoints = true;

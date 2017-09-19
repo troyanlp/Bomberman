@@ -24,7 +24,7 @@ bool ModuleSceneMenu::Start()
 {
 	LOG("Loading Menu");
 	
-	graphics = App->textures->Load("bomberman_logo.png");
+	graphics = App->textures->Load("Sprites/bomberman_logo.png");
 
 	//Logo
 	logo = { 0, 0, 720, 400 };
@@ -33,7 +33,7 @@ bool ModuleSceneMenu::Start()
 
 	//Text
 	color = { 255, 255, 255 };
-	font = TTF_OpenFont("emulogic.ttf", 12);
+	font = TTF_OpenFont("Font/emulogic.ttf", 12);
 	
 	textSurface = TTF_RenderText_Solid(font, "Play", color);
 	play = SDL_CreateTextureFromSurface(App->renderer->renderer, textSurface);
@@ -61,7 +61,7 @@ bool ModuleSceneMenu::Start()
 	SDL_FreeSurface(textSurface);
 
 	//Bomb select
-	bombGraphics = App->textures->Load("Bomberman.png");
+	bombGraphics = App->textures->Load("Sprites/Bomberman.png");
 
 	bomb.frames.push_back({ 177, 11, 18, 18 });
 	bomb.frames.push_back({ 195, 11, 18, 18 });

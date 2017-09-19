@@ -11,7 +11,7 @@ Door::Door(iPoint pos)
 	type = EntityType::DOOR;
 	position = pos;
 
-	graphics = App->textures->Load("door.png");
+	graphics = App->textures->Load("Sprites/door.png");
 	doorSprite = { 0, 0, 150, 150 };
 	spriteDest = { position.x - 10, position.y - 10, 50, 50 };
 

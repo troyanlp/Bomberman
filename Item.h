@@ -24,10 +24,12 @@ public:
 
 	void Draw();
 	void CleanUp();
+public:
+	Animation animation;
 private:
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-	Animation animation;
+	
 	SDL_Rect spriteDest;
 	ItemType itemType;
 };

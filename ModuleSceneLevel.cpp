@@ -20,6 +20,7 @@
 #include "Door.h"
 #include "ModuleInput.h"
 #include "Player.h"
+#include "TrapSquare.h"
 
 ModuleSceneLevel::ModuleSceneLevel(bool active) : Module(active)
 {
@@ -37,7 +38,7 @@ bool ModuleSceneLevel::Start()
 
 	App->gui->Enable();
 	
-	graphics = App->textures->Load("Super Bomberman 5 JPN - Stage 01.png");
+	graphics = App->textures->Load("Sprites/Super Bomberman 5 JPN - Stage 01.png");
 
 	if (App->startFx == 0) App->startFx = App->audio->LoadFx("Audio/game_start.ogg");
 	App->audio->PlayFx(App->startFx);
@@ -252,6 +253,8 @@ void ModuleSceneLevel::CreateBricks()
 
 	}
 	else {
+		TrapSquare* trap = new TrapSquare(iPoint(300, 100));
+		Entities.push_back(trap);
 		for (std::list<BrickInfo>::iterator it = bricksLevel2.begin(); it != bricksLevel2.end(); ++it)
 		{
 			Brick *obj = new Brick(it->position, graphics, brick);

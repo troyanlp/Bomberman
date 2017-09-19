@@ -84,7 +84,7 @@ bool ModulePlayer::Start()
 	die.speed = 0.1f;
 	die.loop = false;
 
-	graphics = App->textures->Load("Bomberman.png");
+	graphics = App->textures->Load("Sprites/Bomberman.png");
 
 	destroyed = false;
 

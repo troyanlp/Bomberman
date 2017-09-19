@@ -17,6 +17,7 @@ enum ColliderType {
 	CBRICK,
 	CITEM,
 	CDOOR,
+	CTRAP,
 	CNULL
 };
 

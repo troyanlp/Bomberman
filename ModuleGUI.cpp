@@ -26,7 +26,7 @@ bool ModuleGUI::Start()
 
 	//Set up text
 	color = { 255, 255, 255 };
-	font = TTF_OpenFont("emulogic.ttf", 12);
+	font = TTF_OpenFont("Font/emulogic.ttf", 12);
 
 	char* text = GetCharPointer("Lives: ", player1Life);
 	textSurface = TTF_RenderText_Solid(font, text, color);

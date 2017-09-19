@@ -18,8 +18,8 @@ ModuleBomb::~ModuleBomb()
 bool ModuleBomb::Start()
 {
 	//Loading graphics
-	bombGraphics = App->textures->Load("Bomberman.png");
-	explotionGraphics = App->textures->Load("Bomberman Explotions.png");
+	bombGraphics = App->textures->Load("Sprites/Bomberman.png");
+	explotionGraphics = App->textures->Load("Sprites/Bomberman Explotions.png");
 
 	if (App->explotionFX == 0) App->explotionFX = App->audio->LoadFx("Audio/explotion.ogg");
 
