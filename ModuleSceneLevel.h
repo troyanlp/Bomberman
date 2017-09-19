@@ -61,6 +61,7 @@ private:
 	void CreateExternalBlocks();
 	void CreateBlocks();
 	void CreateDoor();
+	void CreateTrapSquares();
 	void CreateBricks();
 	void CreateEnemies();
 

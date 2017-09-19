@@ -83,6 +83,7 @@ bool ModuleSceneLevel::Start()
 	CreateExternalBlocks();
 	CreateBlocks();
 	CreateDoor();
+	CreateTrapSquares();
 	CreateBricks();
 	CreateEnemies();
 
@@ -241,6 +242,22 @@ void ModuleSceneLevel::CreateDoor()
 	}
 }
 
+void ModuleSceneLevel::CreateTrapSquares()
+{
+	if (App->currentLevel == 1) {
+		TrapSquare* trap = new TrapSquare(iPoint(450, 400));
+		Entities.push_back(trap);
+	}
+	else {
+		TrapSquare* trap = new TrapSquare(iPoint(300, 100));
+		Entities.push_back(trap);
+		trap = new TrapSquare(iPoint(150, 250));
+		Entities.push_back(trap);
+		trap = new TrapSquare(iPoint(650, 250));
+		Entities.push_back(trap);
+	}
+}
+
 void ModuleSceneLevel::CreateBricks()
 {
 	if (App->currentLevel == 1) {
@@ -253,8 +270,6 @@ void ModuleSceneLevel::CreateBricks()
 
 	}
 	else {
-		TrapSquare* trap = new TrapSquare(iPoint(300, 100));
-		Entities.push_back(trap);
 		for (std::list<BrickInfo>::iterator it = bricksLevel2.begin(); it != bricksLevel2.end(); ++it)
 		{
 			Brick *obj = new Brick(it->position, graphics, brick);
@@ -394,7 +409,6 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 		levelMap[1][10].type = 'b';
 		levelMap[1][13].type = 'b';
 		levelMap[2][9].type = 'b';
-		levelMap[3][3].type = 'b';
 		levelMap[3][4].type = 'b';
 		levelMap[3][8].type = 'b';
 		levelMap[3][10].type = 'b';
@@ -407,8 +421,6 @@ void ModuleSceneLevel::InitializeSquareMatrix()
 		levelMap[5][5].type = 'b';
 		levelMap[5][6].type = 'b';
 		levelMap[5][9].type = 'b';
-		levelMap[5][12].type = 'b';
-		levelMap[5][13].type = 'b';
 		levelMap[6][1].type = 'b';
 		levelMap[6][5].type = 'b';
 		levelMap[7][1].type = 'b';
@@ -827,8 +839,6 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(450, 150); aux.lootType = ItemType::IFLAME;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(150, 200); aux.lootType = ItemType::NONE;
-	bricksLevel2.push_back(aux);
 	aux.position = iPoint(200, 200); aux.lootType = ItemType::IBOMB;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(400, 200); aux.lootType = ItemType::NONE;
@@ -849,8 +859,6 @@ void ModuleSceneLevel::InitializeLevelsList()
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(450, 300); aux.lootType = ItemType::IKILL;
 	bricksLevel2.push_back(aux);
-	aux.position = iPoint(650, 300); aux.lootType = ItemType::NONE;
-	bricksLevel2.push_back(aux);
 	aux.position = iPoint(50, 350); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(250, 350); aux.lootType = ItemType::NONE;
@@ -860,8 +868,6 @@ void ModuleSceneLevel::InitializeLevelsList()
 	aux.position = iPoint(200, 300); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(300, 300); aux.lootType = ItemType::NONE;
-	bricksLevel2.push_back(aux);
-	aux.position = iPoint(600, 300); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);
 	aux.position = iPoint(300, 400); aux.lootType = ItemType::NONE;
 	bricksLevel2.push_back(aux);

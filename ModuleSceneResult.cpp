@@ -173,21 +173,21 @@ char * ModuleSceneResult::GetMetersText()
 	char* end = ")";
 	if (App->currentLevel == 1) {
 		/*
-		A -> 0-120
-		B -> 71-180
+		A -> 0-110
+		B -> 111-180
 		C -> 181-250
 		D -> >250
 		*/
 		if (metersWalked <= 120) {
 			rating1 = App->gui->GetCharPointer(" -> A+ (", 0);
-			rating2 = App->gui->GetCharPointer("-", 120);
+			rating2 = App->gui->GetCharPointer("-", 110);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
 				numFinalPoints = numPoints + 5000;
 			}
 		}
-		else if (metersWalked > 120 && metersWalked <= 180) {
-			rating1 = App->gui->GetCharPointer(" -> B+ (", 120);
+		else if (metersWalked > 110 && metersWalked <= 180) {
+			rating1 = App->gui->GetCharPointer(" -> B+ (", 110);
 			rating2 = App->gui->GetCharPointer("-", 180);
 			if (!addedWalkedPoints) {
 				addedWalkedPoints = true;
