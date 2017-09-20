@@ -43,8 +43,6 @@ update_status ModuleCollision::Update()
 			for (std::list<Collider*>::iterator it2 = std::next(it, 1); it2 != colliders.end(); ++it2) {
 				if ((*it2)->type == CEXPLOTION1 || (*it2)->type == CEXPLOTION2) {
 					if ((*it)->CheckCollision((*it2)->rect)) {
-						//LOG("COLISION DE PLAYER Y %d", (*it2)->type);
-						//App->player->player1->Hurt();
 						if ((*it2)->type == CEXPLOTION1 && (*it)->type == CENEMY && !(*it)->collided) App->gui->ChangePlayerPoints(1000, 1);
 						else if ((*it2)->type == CEXPLOTION2 && (*it)->type == CENEMY && !(*it)->collided) App->gui->ChangePlayerPoints(1000, 2);
 						(*it)->collided = true;
