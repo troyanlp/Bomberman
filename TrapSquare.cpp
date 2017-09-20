@@ -33,4 +33,5 @@ void TrapSquare::Draw()
 
 void TrapSquare::CleanUp()
 {
+	App->textures->Unload(graphics);
 }

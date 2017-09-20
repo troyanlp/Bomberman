@@ -58,6 +58,7 @@ public:
 	bool CleanUp();
 
 private:
+
 	void CreateExternalBlocks();
 	void CreateBlocks();
 	void CreateDoor();
